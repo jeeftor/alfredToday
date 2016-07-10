@@ -1,10 +1,14 @@
+from workflow import Workflow, web, Workflow3, ICON_INFO
 
-from workflow import Workflow, web, Workflow3
+__version__ = '0.5'
+
+
 from workflow.background import run_in_background, is_running
 from keychain import get_username_and_password, get_regex, get_server
 import os, sys
 from os.path import expanduser
 home = expanduser("~")
+
 
 def get_cache_directory():
 
@@ -152,5 +156,17 @@ def utc_to_local(utc_dt):
 
 
 if __name__ == u"__main__":
-    wf = Workflow(libraries=['./lib'])
+    wf = Workflow(libraries=['./lib'],update_settings={
+        'github_slug': 'jeeftor/alfredToday',
+        'version': __version__,
+        'frequency': 7
+    })
+
+    if wf.update_available:
+        # Add a notification to top of Script Filter results
+        wf.add_item('New version available',
+                    'Action this item to install the update',
+                    autocomplete='workflow:update',
+                    icon=ICON_INFO)
+
     sys.exit(wf.run(main))
