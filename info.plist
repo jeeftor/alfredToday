@@ -21,6 +21,19 @@
 		</array>
 		<key>3F81D499-33A5-44E8-8D22-F6309229F43B</key>
 		<array/>
+		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>6AE08695-EE61-42D3-91F0-5CC3F4D9432D</key>
 		<array>
 			<dict>
@@ -87,6 +100,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>set value</string>
+				<key>subtext</key>
+				<string>{query}</string>
+				<key>text</key>
+				<string>{var:text_to_display}</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>argumenttype</key>
@@ -132,27 +166,6 @@ python keychain.py</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>set value</string>
-				<key>subtext</key>
-				<string>{query}</string>
-				<key>text</key>
-				<string>{var:text_to_display}</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -178,19 +191,6 @@ python StoreData.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.transform</string>
-			<key>uid</key>
-			<string>C648C777-D441-4C9C-97A0-F561B76C99BA</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argument</key>
 				<string>{query}</string>
 				<key>variables</key>
@@ -203,6 +203,19 @@ python StoreData.py $query</string>
 			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
 			<string>0ABF3E4E-934B-4EE9-9C6B-BA10DF534B47</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.transform</string>
+			<key>uid</key>
+			<string>C648C777-D441-4C9C-97A0-F561B76C99BA</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -230,7 +243,7 @@ python StoreData.py $query</string>
 				<key>script</key>
 				<string>query=$1
 
-python today.py</string>
+python today.py 0</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -270,6 +283,50 @@ python today.py</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>tomorrow</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Loading Calendar</string>
+				<key>script</key>
+				<string>query=$1
+python today.py 1</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>~/devel/exchangeAPI/today.py</string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Tomorrow</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>629EE274-2500-46EC-8DA5-35CD866A56C9</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>The Today Menu workflow will connect via EWS to a Microsoft Exchange server (ONLY USING BASIC AUTHORIZATION) and do a query to pull down the "Whats going on today" menu.  
@@ -296,6 +353,13 @@ If you use LYNC or SKYPE and embed meetings in your evetns this workflow can als
 			<integer>650</integer>
 			<key>ypos</key>
 			<integer>60</integer>
+		</dict>
+		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
+		<dict>
+			<key>xpos</key>
+			<integer>40</integer>
+			<key>ypos</key>
+			<integer>340</integer>
 		</dict>
 		<key>6AE08695-EE61-42D3-91F0-5CC3F4D9432D</key>
 		<dict>

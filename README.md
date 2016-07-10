@@ -12,10 +12,17 @@ You can click **shift** on an entry to load a **QuickLook** preview of the item.
 
 ![picture](docs/sample.png)
 
+# Usage
+
+Available Commands:
+
+* **Today** (shows the today list)
+* **Tomorrow** (shows list for tomorrow)
+* **tc** (loads configuration)
 
 # Configuration
 
-You can see configuration items with the **tc** command
+You can see configuration items with the **tc** command and make changes
 
 ##**Username** and **Password**
 
@@ -48,7 +55,6 @@ If you are using Skype or Lync and embed an online meeting you have can use a re
 ```perl
 (https:\/\/meet.alfred.com[^"]*)
 ```
-
 
 Type **tc** to open the configuration menu, select the Regex Option
 ![regex_cfg](docs/regex_cfg.png)

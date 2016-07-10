@@ -1,6 +1,6 @@
 from workflow import Workflow, web, Workflow3, ICON_INFO
 
-__version__ = '0.7'
+__version__ = '0.8'
 
 
 from workflow.background import run_in_background, is_running
@@ -30,6 +30,14 @@ def get_cache_directory():
 def main(wf):
     from pytz import timezone
 
+    args = wf.args
+    date_offset = 0
+    if len(args) > 0:
+        date_offset = int(args[0])
+
+
+    #DATE=date -v +1d +"%A, %B %d %Y : [%m/%d]"
+
     URL, using_default_server = get_server(wf)
     USERNAME, PASSWORD = get_username_and_password()
     REGEX = get_regex(wf)
@@ -52,6 +60,7 @@ def main(wf):
     # Python exchange stuff
     from lib.pyexchange import Exchange2010Service, ExchangeBasicAuthConnection
     import re
+    import  datetime
     from datetime import datetime
 
     # Set up the connection to Exchange
@@ -62,10 +71,15 @@ def main(wf):
     service = Exchange2010Service(connection)
 
 
-    morning = timezone("US/Eastern").localize(datetime.today().replace(hour=0, minute=0, second=1))
-    night = timezone("US/Eastern").localize(datetime.today().replace(hour=23, minute=59, second=59))
+    morning = timezone("US/Eastern").localize(datetime.today().replace(hour=0, minute=0, second=1) + timedelta(days=date_offset))
+    night = timezone("US/Eastern").localize(datetime.today().replace(hour=23, minute=59, second=59) + timedelta(days=date_offset))
+
     start_search = morning.astimezone(pytz.utc)
     end_search = night.astimezone(pytz.utc)
+
+
+    date_text = night.strftime("%A %B %d %Y")
+    date_text_numeric = night.strftime("%m/%d/%y")
 
     try:
         # You can set event properties when you instantiate the event...
@@ -83,8 +97,10 @@ def main(wf):
     p = re.compile(REGEX)
 
     if len(event_list.events) == 0:
-        wf.add_item('Calendar is empty for today')
+        wf.add_item('Calendar is empty for today',date_text,icon='date_span.png')
         wf.send_feedback()
+    else:
+        wf.add_item(date_text, date_text_numeric, icon='date_span.png')
 
     # Process Events
     for event in event_list.events:
@@ -102,12 +118,11 @@ def main(wf):
         else:
             description_url = ""
 
+        lync_url = None
         if online_meeting == u'true':
             match = re.search(p, body_html)
             if match:
                 lync_url = match.group(1)
-        else:
-            lync_url = None
 
         time_string = start_datetime.strftime("%I:%M %p") + " - " + end_datetime.strftime("%I:%M %p")
 
