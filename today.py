@@ -1,6 +1,6 @@
 from workflow import Workflow, web, Workflow3, ICON_INFO
 
-__version__ = '0.5'
+__version__ = '0.6'
 
 
 from workflow.background import run_in_background, is_running
