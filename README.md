@@ -32,10 +32,14 @@ security add-generic-password -a USER@DOMAIN -s exchange.password.org -w PASSWOR
 
 ## Exchange Server
 
+This workflow uses a version of PyExchange modified to use **Basic Authorization** instead of **NTLM** to connect to the exchange server.  According to Microsoft NTLM is only available for internal exchange servers - so its possible this workflow will only work with cloud hosted servers.  
+
+The default server is `https://outlook.office365.com/EWS/Exchange.asmx`.  This _is_ a configurable option, however, I do not have any different exchange servers to test against so please let me know if it actually works
+
 
 ## Regex
 
-If you are using Skype or Lync and embed an online meeting you have can use a regular expression to parse this text out.
+If you are using Skype or Lync and embed an online meeting you have can use a regular expression to parse this text out.  Ideally this should work with other meeting types, however, again I do not have access to other options to try.
 
 ![regex](docs/online_url.png)
 
@@ -44,8 +48,14 @@ If you are using Skype or Lync and embed an online meeting you have can use a re
 ```perl
 (https:\/\/meet.alfred.com[^"]*)
 ```
+
+
 Type **tc** to open the configuration menu, select the Regex Option
 ![regex_cfg](docs/regex_cfg.png)
 And enter your regex
 ![regex_cfg](docs/regex_enter.png)
+
+#Feedback & Help
+
+Please open an issue on `Github` and/or post on [alfred forum link](http://www.alfredforum.com/topic/9223-today-menu-for-microsoft-exchange-servers/)
 

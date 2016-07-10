@@ -286,7 +286,7 @@ If you use LYNC or SKYPE and embed meetings in your evetns this workflow can als
 			<key>xpos</key>
 			<integer>490</integer>
 			<key>ypos</key>
-			<integer>460</integer>
+			<integer>90</integer>
 		</dict>
 		<key>3F81D499-33A5-44E8-8D22-F6309229F43B</key>
 		<dict>
@@ -295,42 +295,44 @@ If you use LYNC or SKYPE and embed meetings in your evetns this workflow can als
 			<key>xpos</key>
 			<integer>650</integer>
 			<key>ypos</key>
-			<integer>430</integer>
+			<integer>60</integer>
 		</dict>
 		<key>6AE08695-EE61-42D3-91F0-5CC3F4D9432D</key>
 		<dict>
+			<key>note</key>
+			<string>Configuration Object</string>
 			<key>xpos</key>
 			<integer>60</integer>
 			<key>ypos</key>
-			<integer>430</integer>
+			<integer>60</integer>
 		</dict>
 		<key>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</key>
 		<dict>
 			<key>xpos</key>
 			<integer>230</integer>
 			<key>ypos</key>
-			<integer>590</integer>
+			<integer>220</integer>
 		</dict>
 		<key>9685A5A9-008A-40CA-836D-5F71CD1D7481</key>
 		<dict>
 			<key>xpos</key>
 			<integer>40</integer>
 			<key>ypos</key>
-			<integer>590</integer>
+			<integer>220</integer>
 		</dict>
 		<key>C648C777-D441-4C9C-97A0-F561B76C99BA</key>
 		<dict>
 			<key>xpos</key>
-			<integer>420</integer>
+			<integer>410</integer>
 			<key>ypos</key>
-			<integer>460</integer>
+			<integer>90</integer>
 		</dict>
 		<key>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</key>
 		<dict>
 			<key>xpos</key>
 			<integer>230</integer>
 			<key>ypos</key>
-			<integer>430</integer>
+			<integer>60</integer>
 		</dict>
 	</dict>
 	<key>version</key>
