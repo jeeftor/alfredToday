@@ -39,6 +39,13 @@ def main(wf):
 
 
 
+    if wf.update_available:
+        # Add a notification to top of Script Filter results
+        wf.add_item('New version available',
+                    'Action this item to install the update',
+                    autocomplete='workflow:update',
+                    icon=ICON_INFO)
+
 
 
 
@@ -161,12 +168,5 @@ if __name__ == u"__main__":
         'version': __version__,
         'frequency': 7
     })
-
-    if wf.update_available:
-        # Add a notification to top of Script Filter results
-        wf.add_item('New version available',
-                    'Action this item to install the update',
-                    autocomplete='workflow:update',
-                    icon=ICON_INFO)
 
     sys.exit(wf.run(main))
