@@ -1,0 +1,10 @@
+requests_ntlm/__init__.py,sha256=YVPaGT8uI0zUtH2d-a-Z9OiBppV1r7QGVQZWcay-pq4,69
+requests_ntlm/requests_ntlm.py,sha256=dOm7bvTzpvP78rfiVTbHYjeUkzKK_Wycue0pp7eCIAo,5593
+requests_ntlm-0.3.0.dist-info/DESCRIPTION.rst,sha256=OCTuuN6LcWulhHS3d5rfjdsQtW22n7HENFRh6jC6ego,10
+requests_ntlm-0.3.0.dist-info/METADATA,sha256=kGEGgYd4IFk5rt9H7PZmXcUAbKd9cz428lBj4iP_4YQ,861
+requests_ntlm-0.3.0.dist-info/RECORD,,
+requests_ntlm-0.3.0.dist-info/WHEEL,sha256=o2k-Qa-RMNIJmUdIc7KU6VWR_ErNRbWNlxDIpl7lm34,110
+requests_ntlm-0.3.0.dist-info/metadata.json,sha256=o7JalNUCnkPy__o170MZue9V-eLoj88HWkNxFu37OQQ,993
+requests_ntlm-0.3.0.dist-info/top_level.txt,sha256=W4Rl0Y5Xd899MZzl84o1HBzllzS1o5FCEvzuxVxsTAA,14
+requests_ntlm/__init__.pyc,,
+requests_ntlm/requests_ntlm.pyc,,

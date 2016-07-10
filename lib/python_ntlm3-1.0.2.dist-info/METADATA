@@ -1,0 +1,21 @@
+Metadata-Version: 2.0
+Name: python-ntlm3
+Version: 1.0.2
+Summary: Python 3 compatible NTLM library
+Home-page: https://github.com/trustrachel/python-ntlm3
+Author: Rachel Sanders
+Author-email: rachel@trustrachel.com
+License: GNU Lesser GPL
+Platform: UNKNOWN
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Requires-Dist: six
+
+This package allows Python clients running on any operating
+system to provide NTLM authentication to a supporting server.
+
+
