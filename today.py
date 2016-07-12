@@ -26,6 +26,9 @@ def get_cache_directory():
 
 def main(wf):
     from pytz import timezone
+    import time
+
+    action_start_time = time.time()
 
     args = wf.args
     date_offset = 0
@@ -96,7 +99,7 @@ def main(wf):
         wf.add_item('Calendar is empty for today',date_text,icon='date_span.png')
         wf.send_feedback()
     else:
-        wf.add_item(date_text, date_text_numeric, icon='date_span.png')
+        first_menu_entry = wf.add_item(date_text, date_text_numeric, icon='date_span.png')
 
     # Process Events
     for event in event_list.events:
@@ -152,7 +155,8 @@ def main(wf):
                 lync_subtitle = "        " + lync_url
                 wf.add_item(lync_title, lync_subtitle, arg=lync_url, valid=True, icon='skype.png')
 
-
+    action_elapsed_time = time.time() - action_start_time
+    first_menu_entry.subtitle = first_menu_entry.subtitle + " query time: " + "{:.1f}".format(action_elapsed_time) + " seconds"
     wf.send_feedback()
 
 def write_file(name, html):
