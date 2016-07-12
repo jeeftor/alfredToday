@@ -1337,7 +1337,7 @@ class Workflow(object):
         The cache directory is a subdirectory of Alfred's own cache directory in
         ``~/Library/Caches``. The full path is:
 
-        ``~/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/<bundle id>``
+        ``~/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/<bundle id>``
 
         :returns: full path to workflow's cache directory
         :rtype: ``unicode``

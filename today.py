@@ -1,7 +1,7 @@
 from workflow import Workflow, web, Workflow3, ICON_INFO
 
 from workflow.background import run_in_background, is_running
-from keychain import get_login, get_password, get_regex, get_server
+from settings import get_login, get_password, get_regex, get_server
 import os, sys
 from os.path import expanduser
 home = expanduser("~")
@@ -85,9 +85,8 @@ def main(wf):
         wf.add_item('Unable to Connect to exchange server', icon='disclaimer.png')
         wf.send_feedback()
 
-    # wf.add_item('Start', str(event_list.start))
-    # wf.add_item('End', str(event_list.end))
-
+    wf.cache_data('event_list', event_list)
+    #wf.open_cachedir()
 
     if len(event_list.events) == 0:
         wf.add_item('Calendar is empty for today',date_text,icon='date_span.png')
@@ -111,6 +110,7 @@ def write_file(name, html):
     return filename
 
 def process_event(event):
+
     import re
     REGEX = get_regex(wf)
 
@@ -177,7 +177,7 @@ def utc_to_local(utc_dt):
 
 
 if __name__ == u"__main__":
-    wf = Workflow(libraries=['./lib'],update_settings={
+    wf = Workflow3(libraries=['./lib'],update_settings={
         'github_slug': 'jeeftor/alfredToday',
         'frequency': 7
     })

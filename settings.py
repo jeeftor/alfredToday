@@ -156,11 +156,11 @@ def main(wf):
 
     server, using_default = get_server(wf)
     if not using_default:
-        server_item = wf.add_item('Exchange Server URL', server, arg=server, valid=True, icon='ok.png')
+        server_item = wf.add_item('Exchange Server URL', server, arg=server, copytext=server, valid=True, icon='ok.png')
         server_item.setvar('text_to_display', 'Exchange Server:')
         server_item.setvar('settings_value', 'exchange_server')
     else:
-        server_item = wf.add_item('Exchange Server URL (Using Default)', DEFAULT_SERVER, arg=DEFAULT_SERVER, valid=True, icon=ICON_NOTE)
+        server_item = wf.add_item('Exchange Server URL (Using Default)', DEFAULT_SERVER, copytext=server, arg=DEFAULT_SERVER, valid=True, icon=ICON_NOTE)
         server_item.setvar('text_to_display', 'Exchange Server:')
         server_item.setvar('settings_value', 'exchange_server')
 
@@ -171,7 +171,7 @@ def main(wf):
 
     if regex is not None:
         regex = get_regex(wf)
-        it = wf.add_item('Meeting Detection Regex', regex, arg=regex, valid=True, icon='ok.png')
+        it = wf.add_item('Meeting Detection Regex', regex, arg=regex, copytext=regex, valid=True, icon='ok.png')
         it.setvar('text_to_display', 'Regex:')
     else:
         it = wf.add_item('Meeting Detection Regex Not Set', 'Select this item to set', valid=True,
