@@ -1,8 +1,5 @@
 from workflow import Workflow, web, Workflow3, ICON_INFO
 
-__version__ = '0.9'
-
-
 from workflow.background import run_in_background, is_running
 from keychain import get_login, get_password, get_regex, get_server
 import os, sys
@@ -182,8 +179,11 @@ def utc_to_local(utc_dt):
 if __name__ == u"__main__":
     wf = Workflow(libraries=['./lib'],update_settings={
         'github_slug': 'jeeftor/alfredToday',
-        'version': __version__,
         'frequency': 7
     })
+
+    if wf.update_available:
+        # Download new version and tell Alfred to install it
+        wf.start_update()
 
     sys.exit(wf.run(main))
