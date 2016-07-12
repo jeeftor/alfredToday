@@ -24,18 +24,17 @@ Available Commands:
 
 You can see configuration items with the **tc** command and make changes
 
+![config](docs/options.gif)
+
 ##**Username** and **Password**
 
 The workflow will extract these entries out of the OSX keychain from the keychain entry for `outlook.office365.com`
 
-If for some reason you do not have this value you will get an error message like:
+If your keychain does not contain this value, or you wish to use a different account than that which is auto detected you can manually set a username and password.
 
 ![error](docs/keychain_error.png)
 
-
-```bash
-security add-generic-password -a USER@DOMAIN -s exchange.password.org -w PASSWORD
-```
+If you've logged into the Outlook / Exchange online website you should have this value.  If auto-detect does not work just select both the **Login** and **Password** options to set the correct credentials for login. 
 
 ## Exchange Server
 
@@ -44,22 +43,39 @@ This workflow uses a version of PyExchange modified to use **Basic Authorization
 The default server is `https://outlook.office365.com/EWS/Exchange.asmx`.  This _is_ a configurable option, however, I do not have any different exchange servers to test against so please let me know if it actually works
 
 
-## Regex
+## Regex & detecting Online Meetings
 
-If you are using Skype or Lync and embed an online meeting you have can use a regular expression to parse this text out.  Ideally this should work with other meeting types, however, again I do not have access to other options to try.
+If you are using Skype, Lync and a calendar entry has an embedded online meeting URL, the workflow can be configured to detect and extract these URLs.
 
-![regex](docs/online_url.png)
+For example if your online meeting URL is defined in text similar to 
 
-  For example if your online meeting URL is `http://meet.alfred.com/alfred/332344` you could use a regex of
+    "http://meet.github.com/alfred/332344"
+
+you could use a regex of
 
 ```perl
 (https:\/\/meet.alfred.com[^"]*)
 ```
+to extract these meeting URLs
+
 
 Type **tc** to open the configuration menu, select the Regex Option
 ![regex_cfg](docs/regex_cfg.png)
 And enter your regex
 ![regex_cfg](docs/regex_enter.png)
+
+This regular expression basically says:
+
+```
+  -- The () around the expression say to group everything inside
+  -- look for anything that starts with http or https
+  -- followed by ://
+  -- followed by meet.github
+  -- and then anything up until the 1st quotation mark
+```
+
+
+
 
 #Feedback & Help
 

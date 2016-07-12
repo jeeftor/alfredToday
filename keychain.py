@@ -27,7 +27,7 @@ def get_server(wf):
         return server, False
 
 def get_regex(wf):
-    return get_value_from_settings(wf, 'exchange_regex')
+    return get_value_from_settings(wf, 'regex')
 
 def get_stored_login(wf):
     return get_value_from_settings(wf, 'exchange_login')
