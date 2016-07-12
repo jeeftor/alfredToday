@@ -1,17 +1,17 @@
 from workflow import Workflow, web, Workflow3, ICON_INFO
 
-__version__ = '0.8'
+__version__ = '0.9'
 
 
 from workflow.background import run_in_background, is_running
-from keychain import get_username_and_password, get_regex, get_server
+from keychain import get_login, get_password, get_regex, get_server
 import os, sys
 from os.path import expanduser
 home = expanduser("~")
 
 
 def get_cache_directory():
-
+    import errno
     # Create cache directory for mii pictures - if it doesnt exist
     cache_dir = home + '/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/org.jeef.today'
     if not os.path.exists(cache_dir):
@@ -39,7 +39,8 @@ def main(wf):
     #DATE=date -v +1d +"%A, %B %d %Y : [%m/%d]"
 
     URL, using_default_server = get_server(wf)
-    USERNAME, PASSWORD = get_username_and_password()
+    USERNAME = get_login(wf, False)
+    PASSWORD = get_password(wf, False)
     REGEX = get_regex(wf)
 
     import pytz, datetime
@@ -93,8 +94,6 @@ def main(wf):
     # wf.add_item('Start', str(event_list.start))
     # wf.add_item('End', str(event_list.end))
 
-    # Match pattern for LYNC
-    p = re.compile(REGEX)
 
     if len(event_list.events) == 0:
         wf.add_item('Calendar is empty for today',date_text,icon='date_span.png')
@@ -119,10 +118,13 @@ def main(wf):
             description_url = ""
 
         lync_url = None
-        if online_meeting == u'true':
-            match = re.search(p, body_html)
-            if match:
-                lync_url = match.group(1)
+        if not REGEX is None:
+            # Match pattern for LYNC
+            p = re.compile(REGEX)
+            if online_meeting == u'true':
+                match = re.search(p, body_html)
+                if match:
+                    lync_url = match.group(1)
 
         time_string = start_datetime.strftime("%I:%M %p") + " - " + end_datetime.strftime("%I:%M %p")
 

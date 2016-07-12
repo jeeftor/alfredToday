@@ -19,6 +19,8 @@
 				<false/>
 			</dict>
 		</array>
+		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
+		<array/>
 		<key>3F81D499-33A5-44E8-8D22-F6309229F43B</key>
 		<array/>
 		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
@@ -39,6 +41,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>6CB617B9-B4FE-4CA5-9806-FA07E8C7DAB5</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>361EEA91-97CF-4908-8628-5F29198F42E6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -107,7 +122,7 @@
 				<key>subtext</key>
 				<string>{query}</string>
 				<key>text</key>
-				<string>{var:text_to_display}</string>
+				<string>Set {var:text_to_display}</string>
 				<key>withspace</key>
 				<true/>
 			</dict>
@@ -218,6 +233,58 @@ python StoreData.py $query</string>
 			<string>C648C777-D441-4C9C-97A0-F561B76C99BA</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>fixedorder</key>
+				<true/>
+				<key>items</key>
+				<string>[{"title":"Keep Today Configuration As-Is","arg":"False","subtitle":"Dont do anything"},{"title":"Reset Today Configuration to Default","arg":"True","subtitle":"This will restore the workflow to its default state"}]</string>
+				<key>keyword</key>
+				<string>tcreset</string>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Clear Options</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.listfilter</string>
+			<key>uid</key>
+			<string>6CB617B9-B4FE-4CA5-9806-FA07E8C7DAB5</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+python reset.py $query</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>361EEA91-97CF-4908-8628-5F29198F42E6</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -341,9 +408,16 @@ If you use LYNC or SKYPE and embed meetings in your evetns this workflow can als
 			<key>note</key>
 			<string>Sets what value to store for the storage option</string>
 			<key>xpos</key>
-			<integer>490</integer>
+			<integer>520</integer>
 			<key>ypos</key>
 			<integer>90</integer>
+		</dict>
+		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
+		<dict>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>220</integer>
 		</dict>
 		<key>3F81D499-33A5-44E8-8D22-F6309229F43B</key>
 		<dict>
@@ -357,9 +431,9 @@ If you use LYNC or SKYPE and embed meetings in your evetns this workflow can als
 		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
 		<dict>
 			<key>xpos</key>
-			<integer>40</integer>
+			<integer>30</integer>
 			<key>ypos</key>
-			<integer>340</integer>
+			<integer>540</integer>
 		</dict>
 		<key>6AE08695-EE61-42D3-91F0-5CC3F4D9432D</key>
 		<dict>
@@ -373,28 +447,37 @@ If you use LYNC or SKYPE and embed meetings in your evetns this workflow can als
 		<key>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>230</integer>
+			<integer>220</integer>
+			<key>ypos</key>
+			<integer>420</integer>
+		</dict>
+		<key>6CB617B9-B4FE-4CA5-9806-FA07E8C7DAB5</key>
+		<dict>
+			<key>note</key>
+			<string>Reset all stored data for the workflow</string>
+			<key>xpos</key>
+			<integer>70</integer>
 			<key>ypos</key>
 			<integer>220</integer>
 		</dict>
 		<key>9685A5A9-008A-40CA-836D-5F71CD1D7481</key>
 		<dict>
 			<key>xpos</key>
-			<integer>40</integer>
+			<integer>30</integer>
 			<key>ypos</key>
-			<integer>220</integer>
+			<integer>420</integer>
 		</dict>
 		<key>C648C777-D441-4C9C-97A0-F561B76C99BA</key>
 		<dict>
 			<key>xpos</key>
-			<integer>410</integer>
+			<integer>420</integer>
 			<key>ypos</key>
 			<integer>90</integer>
 		</dict>
 		<key>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</key>
 		<dict>
 			<key>xpos</key>
-			<integer>230</integer>
+			<integer>250</integer>
 			<key>ypos</key>
 			<integer>60</integer>
 		</dict>
