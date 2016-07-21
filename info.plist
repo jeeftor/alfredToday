@@ -518,11 +518,26 @@ python doubleQuery.py 1</string>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>The Today Menu workflow will connect via EWS to a Microsoft Exchange server (ONLY USING BASIC AUTHORIZATION) and do a query to pull down the "Whats going on today" menu.  
+	<string>Today Menu 2.0
 
-It "may" be stuck on East Coast time for the time being - although tihs will eveentually likely get updated?  
+Shows a today menu from Google Calendar and Microsoft Exchange 365
 
-If you use LYNC or SKYPE and embed meetings in your evetns this workflow can also try to parse those guys out.</string>
+If you are using exchange currently it will only connect via EWS to a Microsoft Exchange server (ONLY USING BASIC AUTHORIZATION) and do a query to pull down the "Whats going on today" menu.  
+
+It "may" be stuck on East Coast time for the time being
+
+Uses a configurable cache
+
+If you use LYNC or SKYPE and embed meetings in your evetns this workflow can also try to parse those guys out.
+
+Will parse hangout meetings from list
+
+
+Commands:
+
+tc (config)
+today 
+tomorrow</string>
 	<key>uidata</key>
 	<dict>
 		<key>0ABF3E4E-934B-4EE9-9C6B-BA10DF534B47</key>
@@ -639,7 +654,7 @@ If you use LYNC or SKYPE and embed meetings in your evetns this workflow can als
 		</dict>
 	</dict>
 	<key>version</key>
-	<string></string>
+	<string>2.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>

@@ -8,7 +8,8 @@ This workflow will load a **Today** view from both Exchange365 and Google calend
 ####Version 2.0 - Outlook + Google Support
 
 Version two of this add-on supports both **Google** and **Microsoft Exchange** calendars.  
-
+#Installation
+Grab the latest release [here](https://github.com/jeeftor/alfredToday/releases) 
 #Usage
 
 You can use the following commands
