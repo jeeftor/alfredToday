@@ -55,7 +55,6 @@ def query_google_calendar(wf, start_search, end_search, date_offset):
         event_list = eventsResult.get('items', [])
         return event_list
     except IOError:
-        wf.add_item("Google calendar error")
         return []
 
 
@@ -63,8 +62,8 @@ def query_exchange_server(wf, start_search, end_search, date_offset):
     """Runs a query against an exchange server for either today or a date offset by `date_offset`"""
     from lib.pyexchange import Exchange2010Service, ExchangeBasicAuthConnection
 
-    Workflow3().logger.info("Refreshing Data Cache [Outlook]")
-    wf.logger.info(Workflow3().cachedir)
+    wf.logger.info("Refreshing Data Cache [Outlook]")
+    wf.logger.info(wf.cachedir)
 
     # Get data from disk
     exchange_url, using_default_server = get_server(wf)
@@ -81,16 +80,10 @@ def query_exchange_server(wf, start_search, end_search, date_offset):
     try:
         # You can set event properties when you instantiate the event...
         event_list = service.calendar().list_events(start=start_search, end=end_search, details=True)
-
-        # cache_key = 'event_list.' + str(date_offset)
-        # wf.cache_data(cache_key, event_list)
         return event_list.events
 
     except:
-        exchange_error = wf.add_item('Unable to Connect to exchange server', icon='disclaimer.png')
-        # exchange_error
-        #wf.send_feedback()
-        return []
+        return None
 
 
 
@@ -134,7 +127,6 @@ def main(wf):
 
     def outlook_wrapper():
         """Wrapper around outlook query so can be used with caching"""
-
         return query_exchange_server(wf,start_outlook, end_outlook, date_offset)
 
     # Format date text for displays
@@ -158,7 +150,12 @@ def main(wf):
 
     if use_exchange:
         outlook_events = wf.cached_data(outlook_cache_key, outlook_wrapper, max_age=cache_time)
-        event_count += len(outlook_events)
+
+        if outlook_events is None:
+            wf.add_item('Unable to Connect to exchange server', '', icon='disclaimer.png')
+            outlook_events = []
+        else:
+            event_count += len(outlook_events)
     else:
         outlook_events = []
 
