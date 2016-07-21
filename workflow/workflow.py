@@ -1350,7 +1350,7 @@ class Workflow(object):
         else:
             dirpath = os.path.join(
                 os.path.expanduser(
-                    '~/Library/Caches/com.runningwithcrayons.Alfred-2/'
+                    '~/Library/Caches/com.runningwithcrayons.Alfred-3/'
                     'Workflow Data/'),
                 self.bundleid)
 

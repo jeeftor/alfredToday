@@ -26,6 +26,15 @@ def get_server(wf):
     else:
         return server, False
 
+def get_timezone(wf):
+    """Returns the timezone as stored on disk - defaults to US/Eastern """
+    stored_timezone = get_value_from_settings(wf, 'timezone')
+    if stored_timezone is None:
+        return "US/Eastern", True
+    else:
+        return stored_timezone, False
+
+
 def get_regex(wf):
     return get_value_from_settings(wf, 'regex')
 
@@ -47,6 +56,24 @@ def get_value_from_settings(wf, value):
     except KeyError:
        return None
 
+def get_value_from_settings_with_default_int(wf, value, default_value):
+    """Returns either a value as set in the settings file or a default as specified by caller"""
+    try:
+        ret = wf.settings[value]['value']
+        return int(ret)
+    except KeyError:
+        return default_value
+
+
+def get_value_from_settings_with_default_boolean(wf, value, default_value):
+    """Returns either a value as set in the settings file or a default as specified by caller"""
+    try:
+        ret = wf.settings[value]['value']
+        if ret == u'0':
+            return False
+        return True
+    except KeyError:
+        return default_value
 
 def autodetect_password(wf):
     from subprocess import Popen, PIPE
@@ -91,18 +118,19 @@ def get_login(wf, show_alfred_items=True):
             ret = None
         else:
             if show_alfred_items:
-                login_item = wf.add_item('Login', "(autodetcted) " + auto_login, arg=auto_login, valid=True, icon='ok.png')
+                login_item = wf.add_item('Exchange Login', "(autodetcted) " + auto_login, arg=auto_login, valid=True, icon='ok.png')
             ret = auto_login
 
     else:
         if show_alfred_items:
-            login_item = wf.add_item('Login', stored_login, arg=stored_login, valid=True, icon='ok.png')
+            login_item = wf.add_item('Exchange Login', stored_login, arg=stored_login, valid=True, icon='ok.png')
         ret = stored_login
 
     if show_alfred_items:
-        login_item.setvar('text_to_display', 'Login:')
+        login_item.setvar('text_to_display', 'Exchange Login:')
         login_item.setvar('settings_value' , 'exchange_login')
-    return ret
+
+    return
 
 
 def get_password(wf, show_alfred_items=True):
@@ -113,20 +141,20 @@ def get_password(wf, show_alfred_items=True):
 
         if auto_password is None:
             if show_alfred_items:
-                password_item = wf.add_item('Please set Password', 'Could not auto detect password from keychain for ' + CREDENTIAL_ENTRY, valid=True, icon=ICON_WARNING)
+                password_item = wf.add_item('Please set Exchange Password', 'Could not auto detect password from keychain for ' + CREDENTIAL_ENTRY, valid=True, icon=ICON_WARNING)
             ret = None
         else:
             if show_alfred_items:
-                password_item = wf.add_item('Password stored in keychain', '(auto detected from keychain)', valid=True, icon='ok.png')
+                password_item = wf.add_item('Exchange Password stored in keychain', '(auto detected from keychain)', valid=True, icon='ok.png')
             ret = auto_password
 
     else:
         if show_alfred_items:
-            password_item = wf.add_item('Password stored in keychain', 'xxxxxxxxxx', valid=True, icon='ok.png')
+            password_item = wf.add_item('Exchange Password stored in keychain', 'xxxxxxxxxx', valid=True, icon='ok.png')
         ret = stored_password
 
     if show_alfred_items:
-        password_item.setvar('text_to_display','Password')
+        password_item.setvar('text_to_display','Exchange Password')
         password_item.setvar('settings_value' ,'password')
     return ret
 
@@ -146,38 +174,80 @@ def main(wf):
     # Default items for workflow
 
     wf.add_item('Today workflow configuration Menu', icon='gear.png')
-
-    get_login(wf)
-    get_password(wf)
-
-    #################
-    ## Load Server ##
-    #################
-
-    server, using_default = get_server(wf)
-    if not using_default:
-        server_item = wf.add_item('Exchange Server URL', server, arg=server, copytext=server, valid=True, icon='ok.png')
-        server_item.setvar('text_to_display', 'Exchange Server:')
-        server_item.setvar('settings_value', 'exchange_server')
+    use_google   = get_value_from_settings_with_default_boolean(wf, 'use_google', True)
+    if not use_google:
+        google_toggle = wf.add_item('Google calendar disabled', 'Toggle this to enable support', valid=True, arg="refresh", icon="googleNo.png")
+        google_toggle.setvar('value_to_store', True)
     else:
-        server_item = wf.add_item('Exchange Server URL (Using Default)', DEFAULT_SERVER, copytext=server, arg=DEFAULT_SERVER, valid=True, icon=ICON_NOTE)
-        server_item.setvar('text_to_display', 'Exchange Server:')
-        server_item.setvar('settings_value', 'exchange_server')
+        google_toggle = wf.add_item('Google calendar disabled', 'Toggle this to enable support', valid=True, arg="refresh", icon="googleYes.png")
+        google_toggle.setvar('value_to_store', False)
 
-    ########################
-    ## Load Regex Settings #
-    ########################
-    regex = get_regex(wf)
+    google_toggle.setvar('settings_value', 'use_google')
+    google_toggle.setvar('text_to_display', 'Google Calendar')
 
-    if regex is not None:
+    use_exchange = get_value_from_settings_with_default_boolean(wf, 'use_exchange', True)
+    if not use_exchange:
+        exchange_toggle = wf.add_item('Exchange support disabled', 'Toggle this to enable exchange support', valid=True, arg="refresh", icon='outlookNo.png')
+        exchange_toggle.setvar('settings_value', 'use_exchange')
+        exchange_toggle.setvar('value_to_store', True)
+        exchange_toggle.setvar('text_to_display', 'Use Exchange Server')
+    else:
+
+        exchange_toggle = wf.add_item('Exchange support enabled', 'Toggle this to disable exchange support', valid=True, arg="refresh", icon="outlookYes.png")
+
+        exchange_toggle.setvar('settings_value', 'use_exchange')
+        exchange_toggle.setvar('value_to_store', False)
+        exchange_toggle.setvar('text_to_display', 'Use Exchange Server')
+
+        get_login(wf)
+        get_password(wf)
+        tz = get_timezone(wf)
+
+        #################
+        ## Load Server ##
+        #################
+
+        server, using_default = get_server(wf)
+        if not using_default:
+            server_item = wf.add_item('Exchange Server URL', server, arg=server, copytext=server, valid=True, icon='ok.png')
+            server_item.setvar('text_to_display', 'Exchange Server:')
+            server_item.setvar('settings_value', 'exchange_server')
+        else:
+            server_item = wf.add_item('Exchange Server URL (Using Default)', DEFAULT_SERVER, copytext=server, arg=DEFAULT_SERVER, valid=True, icon=ICON_NOTE)
+            server_item.setvar('text_to_display', 'Exchange Server:')
+            server_item.setvar('settings_value', 'exchange_server')
+
+        ########################
+        ## Load Regex Settings #
+        ########################
         regex = get_regex(wf)
-        it = wf.add_item('Meeting Detection Regex', regex, arg=regex, copytext=regex, valid=True, icon='ok.png')
-        it.setvar('text_to_display', 'Regex:')
-    else:
-        it = wf.add_item('Meeting Detection Regex Not Set', 'Select this item to set', valid=True,
-                    icon=ICON_WARNING)
-        it.setvar('text_to_display','Regex:')
-        it.setvar('settings_value', 'regex')
+
+        if regex is not None:
+            regex = get_regex(wf)
+            it = wf.add_item('Exchange Detection Regex', regex, arg=regex, copytext=regex, valid=True, icon='ok.png')
+            it.setvar('text_to_display', 'Regex:')
+        else:
+            it = wf.add_item('Meeting Detection Regex Not Set', 'Select this item to set', valid=True,
+                        icon=ICON_WARNING)
+            it.setvar('text_to_display','Regex:')
+            it.setvar('settings_value', 'regex')
+
+
+    cache_time = get_value_from_settings_with_default_int(wf, 'cache_time', 30)
+
+    cache_item = wf.add_item('Cache Time: ' + str(cache_time) + " seconds",'This is the time between refreshing the calendar data cache',arg=cache_time, icon='hourglass.png', valid=True)
+    cache_item.setvar('text_to_display', 'Cache time in seconds')
+    cache_item.setvar('settings_value', 'cache_time')
+
+    # Timezone supressed for now - may not be required
+    # timezone_string, using_default_timezone = get_timezone(wf)
+    # timezone_subtitle = timezone_string
+    # if using_default_timezone:
+    #     timezone_subtitle += " [DEFAULT]"
+    #
+    # tz_item = wf.add_item("Using Timezone", timezone_subtitle, valid=True, arg=timezone_string, icon="timezone.png")
+    # tz_item.setvar('text_to_display', 'Time Zone:')
+    # tz_item.setvar('settings_value', 'timezone')
 
     wf.send_feedback()
 

@@ -12,7 +12,7 @@ def main(wf):
             wf.delete_password('today.workflow.password')
         except PasswordNotFound:
             pass
-        for value in ['exchange_login', 'regex', 'exchange_server']:
+        for value in ['exchange_login', 'regex', 'exchange_server', 'timezone']:
             try:
                 del wf.settings[value]
             except AttributeError:

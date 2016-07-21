@@ -1,5 +1,48 @@
-#Today Workflow
+#Today Workflow for Outlook365 and Google Calendar
 
+
+![today](docs/today.png)
+
+This workflow will load a **Today** view from both Exchange365 and Google calendars.  It will interleave the events, extract relevant meeting information and allow you to open links directly to your **Hangout** or **Skype** meeting - if one exists.
+
+####Version 2.0 - Outlook + Google Support
+
+Version two of this add-on supports both **Google** and **Microsoft Exchange** calendars.  
+
+#Usage
+
+You can use the following commands
+
+Available Commands:
+
+* **Today** (shows the today list)
+* **Tomorrow** (shows list for tomorrow)
+* **tc** (loads configuration)
+
+
+
+
+
+
+#Authenticating against Google Calendar.  
+
+The Google portion of this workflow uses oauth2 to authenticate with google and access your calendar.  The first time you run the command it should open a web browser and prompt your for permission.  
+
+Once permission is granted it will store a file called
+
+```bash
+~/.credentials/calendar-alfred-today.json
+```
+
+
+If you want to block access to this application perform a google [Security Checkup](https://security.google.com/settings/security/secureaccount) and look for the item similar to:
+
+![security](docs/googlePermission.png)
+
+and click **Remove**.  If you wish to re-authenticate make sure you remove the credentials file in your home directory
+
+
+#Outlook
 
 Use **today** to open the workflow and **tc** to open the config menu
 
@@ -12,19 +55,12 @@ You can click **shift** on an entry to load a **QuickLook** preview of the item.
 
 ![picture](docs/sample.png)
 
-# Usage
-
-Available Commands:
-
-* **Today** (shows the today list)
-* **Tomorrow** (shows list for tomorrow)
-* **tc** (loads configuration)
 
 # Configuration
 
 You can see configuration items with the **tc** command and make changes
 
-![config](docs/options.gif)
+![config](docs/config.png)
 
 ##**Username** and **Password**
 
@@ -81,3 +117,6 @@ This regular expression basically says:
 
 Please open an issue on `Github` and/or post on [alfred forum link](http://www.alfredforum.com/topic/9223-today-menu-for-microsoft-exchange-servers/)
 
+#Icons
+
+Most icons in this project came from: [Icons8](https://icons8.com/web-app/new-icons/all)

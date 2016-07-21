@@ -19,6 +19,8 @@
 				<false/>
 			</dict>
 		</array>
+		<key>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</key>
+		<array/>
 		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
 		<array/>
 		<key>3F81D499-33A5-44E8-8D22-F6309229F43B</key>
@@ -36,11 +38,24 @@
 				<false/>
 			</dict>
 		</array>
-		<key>6AE08695-EE61-42D3-91F0-5CC3F4D9432D</key>
+		<key>67A81BBE-1261-4883-8590-56E22BC259EB</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>6AE08695-EE61-42D3-91F0-5CC3F4D9432D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>C9DAF303-DE18-4AF4-BFC2-882DA3F30140</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -75,11 +90,47 @@
 				<false/>
 			</dict>
 		</array>
+		<key>BF83BB0D-9D59-416E-8049-8F1E25A79367</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>C648C777-D441-4C9C-97A0-F561B76C99BA</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>0ABF3E4E-934B-4EE9-9C6B-BA10DF534B47</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>C9DAF303-DE18-4AF4-BFC2-882DA3F30140</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>BF83BB0D-9D59-416E-8049-8F1E25A79367</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>67A81BBE-1261-4883-8590-56E22BC259EB</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -112,27 +163,6 @@
 	<string>Today Menu</string>
 	<key>objects</key>
 	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>set value</string>
-				<key>subtext</key>
-				<string>{query}</string>
-				<key>text</key>
-				<string>Set {var:text_to_display}</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -199,9 +229,95 @@ python StoreData.py $query</string>
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
+			<string>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>C9DAF303-DE18-4AF4-BFC2-882DA3F30140</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>refresh</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>BF83BB0D-9D59-416E-8049-8F1E25A79367</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>set value</string>
+				<key>subtext</key>
+				<string>{query}</string>
+				<key>text</key>
+				<string>Set {var:text_to_display}</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+python StoreData.py $query</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
 			<string>3F81D499-33A5-44E8-8D22-F6309229F43B</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.transform</string>
+			<key>uid</key>
+			<string>C648C777-D441-4C9C-97A0-F561B76C99BA</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -224,13 +340,19 @@ python StoreData.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>type</key>
-				<integer>0</integer>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>refresh</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.utility.transform</string>
+			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
-			<string>C648C777-D441-4C9C-97A0-F561B76C99BA</string>
+			<string>67A81BBE-1261-4883-8590-56E22BC259EB</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -248,7 +370,7 @@ python StoreData.py $query</string>
 				<key>runningsubtext</key>
 				<string></string>
 				<key>subtext</key>
-				<string></string>
+				<string>Reset options to default</string>
 				<key>title</key>
 				<string>Clear Options</string>
 				<key>withspace</key>
@@ -290,9 +412,9 @@ python reset.py $query</string>
 			<key>config</key>
 			<dict>
 				<key>alfredfiltersresults</key>
-				<false/>
+				<true/>
 				<key>argumenttype</key>
-				<integer>2</integer>
+				<integer>1</integer>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
@@ -310,7 +432,7 @@ python reset.py $query</string>
 				<key>script</key>
 				<string>query=$1
 
-python today.py 0</string>
+python doubleQuery.py 0</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -320,14 +442,58 @@ python today.py 0</string>
 				<key>title</key>
 				<string>Today</string>
 				<key>type</key>
-				<integer>0</integer>
+				<integer>5</integer>
 				<key>withspace</key>
-				<false/>
+				<true/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>9685A5A9-008A-40CA-836D-5F71CD1D7481</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>tomorrow</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Loading Calendar Data (this can take a few seconds)</string>
+				<key>script</key>
+				<string>query=$1
+python doubleQuery.py 1</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>~/devel/exchangeAPI/today.py</string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Tomorrow</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>629EE274-2500-46EC-8DA5-35CD866A56C9</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -350,50 +516,6 @@ python today.py 0</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>tomorrow</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Loading Calendar Data (this can take a few seconds)</string>
-				<key>script</key>
-				<string>query=$1
-python today.py 1</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string>~/devel/exchangeAPI/today.py</string>
-				<key>subtext</key>
-				<string></string>
-				<key>title</key>
-				<string>Tomorrow</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>629EE274-2500-46EC-8DA5-35CD866A56C9</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
 	</array>
 	<key>readme</key>
 	<string>The Today Menu workflow will connect via EWS to a Microsoft Exchange server (ONLY USING BASIC AUTHORIZATION) and do a query to pull down the "Whats going on today" menu.  
@@ -408,48 +530,66 @@ If you use LYNC or SKYPE and embed meetings in your evetns this workflow can als
 			<key>note</key>
 			<string>Sets what value to store for the storage option</string>
 			<key>xpos</key>
-			<integer>520</integer>
+			<integer>650</integer>
 			<key>ypos</key>
-			<integer>90</integer>
+			<integer>390</integer>
+		</dict>
+		<key>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</key>
+		<dict>
+			<key>note</key>
+			<string>Stores configuraiton data to disk</string>
+			<key>xpos</key>
+			<integer>430</integer>
+			<key>ypos</key>
+			<integer>120</integer>
 		</dict>
 		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
 		<dict>
 			<key>xpos</key>
-			<integer>250</integer>
+			<integer>300</integer>
 			<key>ypos</key>
-			<integer>220</integer>
+			<integer>520</integer>
 		</dict>
 		<key>3F81D499-33A5-44E8-8D22-F6309229F43B</key>
 		<dict>
 			<key>note</key>
 			<string>Stores configuraiton data to disk</string>
 			<key>xpos</key>
-			<integer>650</integer>
+			<integer>750</integer>
 			<key>ypos</key>
-			<integer>60</integer>
+			<integer>360</integer>
 		</dict>
 		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
 		<dict>
 			<key>xpos</key>
-			<integer>70</integer>
+			<integer>60</integer>
 			<key>ypos</key>
-			<integer>510</integer>
+			<integer>890</integer>
+		</dict>
+		<key>67A81BBE-1261-4883-8590-56E22BC259EB</key>
+		<dict>
+			<key>note</key>
+			<string>Filter on non 'refersh' arguments</string>
+			<key>xpos</key>
+			<integer>290</integer>
+			<key>ypos</key>
+			<integer>390</integer>
 		</dict>
 		<key>6AE08695-EE61-42D3-91F0-5CC3F4D9432D</key>
 		<dict>
 			<key>note</key>
 			<string>Configuration Object</string>
 			<key>xpos</key>
-			<integer>60</integer>
+			<integer>20</integer>
 			<key>ypos</key>
-			<integer>60</integer>
+			<integer>120</integer>
 		</dict>
 		<key>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>260</integer>
+			<integer>540</integer>
 			<key>ypos</key>
-			<integer>390</integer>
+			<integer>910</integer>
 		</dict>
 		<key>6CB617B9-B4FE-4CA5-9806-FA07E8C7DAB5</key>
 		<dict>
@@ -458,28 +598,44 @@ If you use LYNC or SKYPE and embed meetings in your evetns this workflow can als
 			<key>xpos</key>
 			<integer>70</integer>
 			<key>ypos</key>
-			<integer>220</integer>
+			<integer>520</integer>
 		</dict>
 		<key>9685A5A9-008A-40CA-836D-5F71CD1D7481</key>
 		<dict>
 			<key>xpos</key>
-			<integer>70</integer>
+			<integer>60</integer>
 			<key>ypos</key>
-			<integer>390</integer>
+			<integer>730</integer>
+		</dict>
+		<key>BF83BB0D-9D59-416E-8049-8F1E25A79367</key>
+		<dict>
+			<key>note</key>
+			<string>Store &amp; Refresh Filter</string>
+			<key>xpos</key>
+			<integer>320</integer>
+			<key>ypos</key>
+			<integer>150</integer>
 		</dict>
 		<key>C648C777-D441-4C9C-97A0-F561B76C99BA</key>
 		<dict>
 			<key>xpos</key>
-			<integer>420</integer>
+			<integer>550</integer>
 			<key>ypos</key>
-			<integer>90</integer>
+			<integer>390</integer>
+		</dict>
+		<key>C9DAF303-DE18-4AF4-BFC2-882DA3F30140</key>
+		<dict>
+			<key>xpos</key>
+			<integer>170</integer>
+			<key>ypos</key>
+			<integer>150</integer>
 		</dict>
 		<key>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</key>
 		<dict>
 			<key>xpos</key>
-			<integer>250</integer>
+			<integer>380</integer>
 			<key>ypos</key>
-			<integer>60</integer>
+			<integer>360</integer>
 		</dict>
 	</dict>
 	<key>version</key>
