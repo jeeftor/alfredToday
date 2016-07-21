@@ -171,12 +171,23 @@ def main(wf):
         return
 
     # Build Header
-    first_menu_entry = wf.add_item(date_text, date_text_numeric, icon='date_span.png')
+    icon_file = 'date_span.png'
+
+    if use_exchange and use_google:
+        icon_file = 'iconBoth.png'
+    elif use_exchange:
+        icon_file = 'iconOutlook.png'
+    elif use_google:
+        icon_file = 'iconGoogle.png'
+
+    first_menu_entry = wf.add_item(date_text, date_text_numeric, icon=icon_file)
 
     # Process events
     process_events(wf, outlook_events, google_events)
 
     action_elapsed_time = time.time() - action_start_time
+
+
 
     if using_cached_data:
         first_menu_entry.subtitle = first_menu_entry.subtitle + " using cached data"

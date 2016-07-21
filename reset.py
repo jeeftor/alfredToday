@@ -21,7 +21,7 @@ def main(wf):
                 pass
     else:
         pass
-    notify('Today Menu', 'Reset to defaults')
+    #notify('Today Menu', 'Reset to defaults')
 
 if __name__ == u"__main__":
     wf = Workflow3(libraries=['./lib'])

@@ -166,6 +166,50 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+python StoreData.py $query</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>refresh</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>BF83BB0D-9D59-416E-8049-8F1E25A79367</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>argumenttype</key>
@@ -209,31 +253,6 @@ python settings.py</string>
 			<integer>2</integer>
 		</dict>
 		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>query=$1
-
-python StoreData.py $query</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.junction</string>
 			<key>uid</key>
@@ -249,35 +268,14 @@ python StoreData.py $query</string>
 				<key>matchcasesensitive</key>
 				<true/>
 				<key>matchmode</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>matchstring</key>
 				<string>refresh</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
-			<string>BF83BB0D-9D59-416E-8049-8F1E25A79367</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>set value</string>
-				<key>subtext</key>
-				<string>{query}</string>
-				<key>text</key>
-				<string>Set {var:text_to_display}</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
+			<string>67A81BBE-1261-4883-8590-56E22BC259EB</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -305,6 +303,27 @@ python StoreData.py $query</string>
 			<string>3F81D499-33A5-44E8-8D22-F6309229F43B</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>set value</string>
+				<key>subtext</key>
+				<string>{query}</string>
+				<key>text</key>
+				<string>Set {var:text_to_display}</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -340,52 +359,6 @@ python StoreData.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>inputstring</key>
-				<string>{query}</string>
-				<key>matchcasesensitive</key>
-				<true/>
-				<key>matchmode</key>
-				<integer>1</integer>
-				<key>matchstring</key>
-				<string>refresh</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.filter</string>
-			<key>uid</key>
-			<string>67A81BBE-1261-4883-8590-56E22BC259EB</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>fixedorder</key>
-				<true/>
-				<key>items</key>
-				<string>[{"title":"Keep Today Configuration As-Is","arg":"False","subtitle":"Dont do anything"},{"title":"Reset Today Configuration to Default","arg":"True","subtitle":"This will restore the workflow to its default state"}]</string>
-				<key>keyword</key>
-				<string>tcreset</string>
-				<key>runningsubtext</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Reset options to default</string>
-				<key>title</key>
-				<string>Clear Options</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.listfilter</string>
-			<key>uid</key>
-			<string>6CB617B9-B4FE-4CA5-9806-FA07E8C7DAB5</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -407,6 +380,33 @@ python reset.py $query</string>
 			<string>361EEA91-97CF-4908-8628-5F29198F42E6</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>fixedorder</key>
+				<true/>
+				<key>items</key>
+				<string>[{"imagefile":"6849d05ab42b9360457406b5fc4e3b15aff5ecd7.png","title":"Keep Today Configuration As-Is","arg":"False","subtitle":"Dont do anything"},{"imagefile":"cb1a140b227f1b20db44a5f639f1d74237d5a6a2.png","title":"Reset Today Configuration to Default","arg":"True","subtitle":"This will restore the workflow to its default state"}]</string>
+				<key>keyword</key>
+				<string>tcreset</string>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Reset options to default</string>
+				<key>title</key>
+				<string>Clear Options</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.listfilter</string>
+			<key>uid</key>
+			<string>6CB617B9-B4FE-4CA5-9806-FA07E8C7DAB5</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -456,6 +456,25 @@ python doubleQuery.py 0</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>argumenttype</key>
@@ -497,25 +516,6 @@ python doubleQuery.py 1</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>browser</key>
-				<string></string>
-				<key>spaces</key>
-				<string></string>
-				<key>url</key>
-				<string>{query}</string>
-				<key>utf8</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openurl</string>
-			<key>uid</key>
-			<string>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
 	</array>
 	<key>readme</key>
 	<string>Today Menu 2.0
@@ -545,9 +545,9 @@ tomorrow</string>
 			<key>note</key>
 			<string>Sets what value to store for the storage option</string>
 			<key>xpos</key>
-			<integer>650</integer>
+			<integer>690</integer>
 			<key>ypos</key>
-			<integer>390</integer>
+			<integer>280</integer>
 		</dict>
 		<key>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</key>
 		<dict>
@@ -556,7 +556,7 @@ tomorrow</string>
 			<key>xpos</key>
 			<integer>430</integer>
 			<key>ypos</key>
-			<integer>120</integer>
+			<integer>90</integer>
 		</dict>
 		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
 		<dict>
@@ -570,9 +570,9 @@ tomorrow</string>
 			<key>note</key>
 			<string>Stores configuraiton data to disk</string>
 			<key>xpos</key>
-			<integer>750</integer>
+			<integer>790</integer>
 			<key>ypos</key>
-			<integer>360</integer>
+			<integer>250</integer>
 		</dict>
 		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
 		<dict>
@@ -586,25 +586,25 @@ tomorrow</string>
 			<key>note</key>
 			<string>Filter on non 'refersh' arguments</string>
 			<key>xpos</key>
-			<integer>290</integer>
+			<integer>310</integer>
 			<key>ypos</key>
-			<integer>390</integer>
+			<integer>220</integer>
 		</dict>
 		<key>6AE08695-EE61-42D3-91F0-5CC3F4D9432D</key>
 		<dict>
 			<key>note</key>
 			<string>Configuration Object</string>
 			<key>xpos</key>
-			<integer>20</integer>
+			<integer>10</integer>
 			<key>ypos</key>
-			<integer>120</integer>
+			<integer>140</integer>
 		</dict>
 		<key>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>540</integer>
+			<integer>320</integer>
 			<key>ypos</key>
-			<integer>910</integer>
+			<integer>800</integer>
 		</dict>
 		<key>6CB617B9-B4FE-4CA5-9806-FA07E8C7DAB5</key>
 		<dict>
@@ -627,30 +627,32 @@ tomorrow</string>
 			<key>note</key>
 			<string>Store &amp; Refresh Filter</string>
 			<key>xpos</key>
-			<integer>320</integer>
+			<integer>310</integer>
 			<key>ypos</key>
-			<integer>150</integer>
+			<integer>120</integer>
 		</dict>
 		<key>C648C777-D441-4C9C-97A0-F561B76C99BA</key>
 		<dict>
 			<key>xpos</key>
-			<integer>550</integer>
+			<integer>590</integer>
 			<key>ypos</key>
-			<integer>390</integer>
+			<integer>280</integer>
 		</dict>
 		<key>C9DAF303-DE18-4AF4-BFC2-882DA3F30140</key>
 		<dict>
+			<key>note</key>
+			<string>There are two types of settings - toggle settings and stored values.</string>
 			<key>xpos</key>
-			<integer>170</integer>
+			<integer>180</integer>
 			<key>ypos</key>
-			<integer>150</integer>
+			<integer>170</integer>
 		</dict>
 		<key>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</key>
 		<dict>
 			<key>xpos</key>
-			<integer>380</integer>
+			<integer>420</integer>
 			<key>ypos</key>
-			<integer>360</integer>
+			<integer>250</integer>
 		</dict>
 	</dict>
 	<key>version</key>
