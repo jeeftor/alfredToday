@@ -47,13 +47,13 @@ def query_google_calendar(wf, start_search, end_search, date_offset):
     store = oauth2client.file.Storage(credential_path)
     credentials = store.get()
     if not credentials:
-        flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
-        flow.user_agent = APPLICATION_NAME
-        credentials = tools.run_flow(flow, store, None, http=HTTP_INSTANCE)
+        return None
+        # flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
+        # flow.user_agent = APPLICATION_NAME
+        # credentials = tools.run_flow(flow, store, None, http=HTTP_INSTANCE)
 
     if credentials.invalid:
         return None
-
 
     http = credentials.authorize(HTTP_INSTANCE)
     service = discovery.build('calendar', 'v3', http=http)
@@ -171,7 +171,7 @@ def main(wf):
         google_events  = wf.cached_data(google_cache_key, google_wrapper, max_age=cache_time)
 
         if google_events is None:
-            wf.add_item('Unable to connect to Google', 'Authorization or Connection error', icon='disclaimer.png')
+            wf.add_item('Unable to connect to Google', 'Authorization or Connection error - use tc to reauthorize', icon='disclaimer.png')
             google_events = []
         else:
             event_count += len(google_events)
