@@ -656,7 +656,7 @@ tomorrow</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>2.0</string>
+	<string>2.0.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>

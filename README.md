@@ -5,9 +5,15 @@
 
 This workflow will load a **Today** view from both Exchange365 and Google calendars.  It will interleave the events, extract relevant meeting information and allow you to open links directly to your **Hangout** or **Skype** meeting - if one exists.
 
-####Version 2.0 - Outlook + Google Support
 
 Version two of this add-on supports both **Google** and **Microsoft Exchange** calendars.  
+
+###Version History
+* Version 2.0 - Outlook + Google Support
+* Version 2.0.1: Exchange Credential Fix
+* Version 2.0.2: Dateutil.parser added to lib list
+
+
 #Installation
 Grab the latest release [here](https://github.com/jeeftor/alfredToday/releases) 
 #Usage
@@ -116,7 +122,7 @@ This regular expression basically says:
 
 #Feedback & Help
 
-Please open an [issue](https://github.com/jeeftor/alfredToday/issues) and/or post on [alfred forum link](http://www.alfredforum.com/topic/9223-today-menu-for-microsoft-exchange-servers/)
+Please open an [issue](https://github.com/jeeftor/alfredToday/issues) and/or post on [alfred forum link](http://www.alfredforum.com/topic/9271-today-view-for-google-calendar-and-microsoft-exchange/?p=46109)
 
 #Icons
 
