@@ -174,7 +174,7 @@ def main(wf):
     # Default items for workflow
 
     wf.add_item('Today workflow configuration Menu', icon='gear.png')
-    use_google   = get_value_from_settings_with_default_boolean(wf, 'use_google', True)
+    use_google   = get_value_from_settings_with_default_boolean(wf, 'use_google', False)
     if not use_google:
         google_toggle = wf.add_item('Google calendar disabled', 'Toggle this to enable support', valid=True, arg="refresh", icon="googleNo.png")
         google_toggle.setvar('value_to_store', True)
@@ -185,7 +185,7 @@ def main(wf):
     google_toggle.setvar('settings_value', 'use_google')
     google_toggle.setvar('text_to_display', 'Google Calendar')
 
-    use_exchange = get_value_from_settings_with_default_boolean(wf, 'use_exchange', True)
+    use_exchange = get_value_from_settings_with_default_boolean(wf, 'use_exchange', False)
     if not use_exchange:
         exchange_toggle = wf.add_item('Exchange support disabled', 'Toggle this to enable exchange support', valid=True, arg="refresh", icon='outlookNo.png')
         exchange_toggle.setvar('settings_value', 'use_exchange')

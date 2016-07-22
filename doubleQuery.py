@@ -5,10 +5,18 @@ import sys, os
 
 
 
+
 def query_google_calendar(wf, start_search, end_search, date_offset):
     """Queries against the GoogleCalendar API and does magical things (hopefully)"""
 
+
+
+
+
+
     Workflow3().logger.info("Refreshing Data Cache [Google]")
+    import os
+    sys.path.insert(0, '/Users/jstein/devel/gcal/lib')
 
     # Load Imports
     import os
@@ -18,6 +26,7 @@ def query_google_calendar(wf, start_search, end_search, date_offset):
     import oauth2client
     from oauth2client import client
     from oauth2client import tools
+
 
 
     # If modifying these scopes, delete your previously saved credentials
@@ -34,18 +43,17 @@ def query_google_calendar(wf, start_search, end_search, date_offset):
         os.makedirs(credential_dir)
     credential_path = os.path.join(credential_dir, 'calendar-alfred-today.json')
 
-    flags = None
-
     # Store fancy credential things
     store = oauth2client.file.Storage(credential_path)
     credentials = store.get()
-    if not credentials or credentials.invalid:
+    if not credentials:
         flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
         flow.user_agent = APPLICATION_NAME
-        if flags:
-            credentials = tools.run_flow(flow, store, flags, http=HTTP_INSTANCE)
-        else:  # Needed only for compatibility with Python 2.6
-            credentials = tools.run(flow, store)
+        credentials = tools.run_flow(flow, store, None, http=HTTP_INSTANCE)
+
+    if credentials.invalid:
+        return None
+
 
     http = credentials.authorize(HTTP_INSTANCE)
     service = discovery.build('calendar', 'v3', http=http)
@@ -152,7 +160,7 @@ def main(wf):
         outlook_events = wf.cached_data(outlook_cache_key, outlook_wrapper, max_age=cache_time)
 
         if outlook_events is None:
-            wf.add_item('Unable to Connect to exchange server', '', icon='disclaimer.png')
+            wf.add_item('Unable to connect to exchange server', '', icon='disclaimer.png')
             outlook_events = []
         else:
             event_count += len(outlook_events)
@@ -161,7 +169,12 @@ def main(wf):
 
     if use_google:
         google_events  = wf.cached_data(google_cache_key, google_wrapper, max_age=cache_time)
-        event_count += len(google_events)
+
+        if google_events is None:
+            wf.add_item('Unable to connect to Google', 'Authorization or Connection error', icon='disclaimer.png')
+            google_events = []
+        else:
+            event_count += len(google_events)
     else:
         google_events = []
 
