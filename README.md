@@ -16,6 +16,7 @@ Version two of this add-on supports both **Google** and **Microsoft Exchange** c
 
 #Installation
 Grab the latest release [here](https://github.com/jeeftor/alfredToday/releases) 
+
 #Usage
 
 You can use the following commands
@@ -31,22 +32,26 @@ Available Commands:
 
 
 
-#Authenticating against Google Calendar.  
+#Authenticating against Google Calendar (oauth)
 
-The Google portion of this workflow uses oauth2 to authenticate with google and access your calendar.  The first time you run the command it should open a web browser and prompt your for permission.  
+The Google portion of this workflow uses oauth2 to authenticate with google and access your calendar.  When you enabled Google support via the **tc** command the script "should" open a screen in your web browswer similar to
 
-Once permission is granted it will store a file called
+![auth](docs/auth.png)
+
+When you hit allow this will store a file in you home directory called 
 
 ```bash
 ~/.credentials/calendar-alfred-today.json
 ```
-
+This file is an authorization key that will allow the software to work.  If you are running into issues please ask for help in the [issue](https://github.com/jeeftor/alfredToday/issues) section or on the [alfred forum link](http://www.alfredforum.com/topic/9271-today-view-for-google-calendar-and-microsoft-exchange/?p=46109).  
 
 If you want to block access to this application perform a google [Security Checkup](https://security.google.com/settings/security/secureaccount) and look for the item similar to:
 
 ![security](docs/googlePermission.png)
 
-and click **Remove**.  If you wish to re-authenticate make sure you remove the credentials file in your home directory
+and click **Remove**.  
+
+If you wish to re-authenticate make sure you remove the credentials file in your home directory
 
 
 #Outlook
@@ -122,7 +127,7 @@ This regular expression basically says:
 
 #Feedback & Help
 
-Please open an [issue](https://github.com/jeeftor/alfredToday/issues) and/or post on [alfred forum link](http://www.alfredforum.com/topic/9271-today-view-for-google-calendar-and-microsoft-exchange/?p=46109)
+Please open an [issue](https://github.com/jeeftor/alfredToday/issues) and/or post on [alfred forum link](http://www.alfredforum.com/topic/9271-today-view-for-google-calendar-and-microsoft-exchange/?p=46109).  You can also download a potentially not up to date versino from [Packal](http://www.packal.org/workflow/today-menu)
 
 #Icons
 
