@@ -42,7 +42,7 @@ def process_google_event(wf, event):
     # Pick icon color based on end time
     now = datetime.now(pytz.utc)
     if dateutil.parser.parse(enddt) < now:
-        wf.add_item(title, subtitle, arg=url, valid=False, icon="icon_gray.png")
+        wf.add_item(title, subtitle, arg=url, valid=False, icon="eventGoogleGray.png")
     else:
         wf.add_item(title, subtitle, arg=url, icon='eventGoogle.png', valid=True)
         try:
@@ -74,8 +74,10 @@ def process_events(wf, outlook_events, google_events):
         current_google_event = google_events[g]
         current_outlook_event = outlook_events[o]
 
-        outlook_start = utc_to_local(current_outlook_event.start).replace(tzinfo=utc)
+        outlook_start = current_outlook_event.start #utc_to_local(current_outlook_event.start).replace(tzinfo=utc)
         google_start  = dateutil.parser.parse(current_google_event['start'].get('dateTime'))
+
+        outlook_start.replace(tzinfo=google_start.tzinfo)
 
 
         if google_start < outlook_start:
@@ -137,7 +139,7 @@ def process_outlook_event(wf, event):
     # Pick icon color based on end time
     now = datetime.now()
     if end_datetime < now:
-        wf.add_item(title, subtitle, type=u'file', arg=description_url, valid=False, icon="icon_gray.png")
+        wf.add_item(title, subtitle, type=u'file', arg=description_url, valid=False, icon="eventOutlookGray.png")
     else:
 
         if event.is_all_day:

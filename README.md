@@ -12,7 +12,7 @@ Version two of this add-on supports both **Google** and **Microsoft Exchange** c
 * Version 2.0 - Outlook + Google Support
 * Version 2.0.1: Exchange Credential Fix
 * Version 2.0.2: Dateutil.parser added to lib list
-
+* Version 2.0.3: Correct event time interleaving
 
 #Installation
 Grab the latest release [here](https://github.com/jeeftor/alfredToday/releases) 
