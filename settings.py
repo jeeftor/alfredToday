@@ -179,7 +179,7 @@ def main(wf):
         google_toggle = wf.add_item('Google calendar disabled', 'Toggle this to enable support', valid=True, arg="refresh", icon="googleNo.png")
         google_toggle.setvar('value_to_store', True)
     else:
-        google_toggle = wf.add_item('Google calendar disabled', 'Toggle this to enable support', valid=True, arg="refresh", icon="googleYes.png")
+        google_toggle = wf.add_item('Google calendar enabled', 'Toggle this to enable support', valid=True, arg="refresh", icon="googleYes.png")
         google_toggle.setvar('value_to_store', False)
 
     google_toggle.setvar('settings_value', 'use_google')
@@ -250,7 +250,6 @@ def main(wf):
     # tz_item.setvar('settings_value', 'timezone')
 
     wf.send_feedback()
-
 
 if __name__ == u"__main__":
     wf = Workflow3(libraries=['./lib'])
