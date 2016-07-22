@@ -130,7 +130,7 @@ def get_login(wf, show_alfred_items=True):
         login_item.setvar('text_to_display', 'Exchange Login:')
         login_item.setvar('settings_value' , 'exchange_login')
 
-    return
+    return ret
 
 
 def get_password(wf, show_alfred_items=True):
