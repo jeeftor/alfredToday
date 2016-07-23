@@ -63,7 +63,7 @@ def query_google_calendar(wf, start_search, end_search, date_offset):
         event_list = eventsResult.get('items', [])
         return event_list
     except IOError:
-        return []
+        return None
 
 
 def query_exchange_server(wf, start_search, end_search, date_offset):
@@ -155,11 +155,14 @@ def main(wf):
         return
 
     event_count = 0
+    error_state = False
 
     if use_exchange:
         outlook_events = wf.cached_data(outlook_cache_key, outlook_wrapper, max_age=cache_time)
 
         if outlook_events is None:
+            error_state = True
+
             wf.add_item('Unable to connect to exchange server', '', icon='disclaimer.png')
             outlook_events = []
         else:
@@ -168,22 +171,35 @@ def main(wf):
         outlook_events = []
 
     if use_google:
-        google_events  = wf.cached_data(google_cache_key, google_wrapper, max_age=cache_time)
+        try:
+            google_events  = wf.cached_data(google_cache_key, google_wrapper, max_age=cache_time)
+        except:
+            google_events = None
 
         if google_events is None:
-            wf.add_item('Unable to connect to Google', 'Authorization or Connection error - use tc to reauthorize', icon='disclaimer.png')
+
+            error_state = True
+
+            import httplib
+            conn = httplib.HTTPConnection("www.google.com")
+            try:
+                conn.request("HEAD", "/")
+                wf.add_item('Unable to connect to Google', 'Authorization or Connection error - use tc to reauthorize',
+                            icon='disclaimer.png')
+            except:  # Connectivity Error
+                wf.add_item('Unable to connect to Google', 'Check your internet connection or proxy settings',
+                            icon='disclaimer.png')
+
+
+
             google_events = []
         else:
             event_count += len(google_events)
     else:
         google_events = []
 
-    if event_count == 0:
-        wf.add_item('Calendar is empty for today', date_text, icon='date_span.png')
-        wf.send_feedback()
-        return
 
-    # Build Header
+        # Build Header
     icon_file = 'date_span.png'
 
     if use_exchange and use_google:
@@ -192,6 +208,15 @@ def main(wf):
         icon_file = 'iconOutlook.png'
     elif use_google:
         icon_file = 'iconGoogle.png'
+
+
+    if event_count == 0:
+        if error_state is False:
+            wf.add_item('Calendar is empty for today', date_text, icon=icon_file)
+        wf.send_feedback()
+        return
+
+
 
     first_menu_entry = wf.add_item(date_text, date_text_numeric, icon=icon_file)
 

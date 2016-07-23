@@ -18,7 +18,20 @@ def main(wf):
 
         # wf.store_data(key, value)
         text = os.environ['text_to_display']
-        notify('Updated ' + text, "To: " + value)
+
+        if key == 'use_google':
+            if value == '0':
+                notify("Google Calendar Support", u'\u274C Disabled')
+            else:
+                notify("Google Calendar Support", u'\u2705 Enabled')
+        elif key == 'use_exchange':
+            if '0' == value:
+                notify("Exchange Server Support", u'\u274c Disabled')
+            else:
+                notify("Exchange Server Support", u'\u2705 Enabled')
+        else:
+            notify('Updated ' + text, "To: " + value)
+
 
 if __name__ == u"__main__":
     wf = Workflow3(libraries=['./lib'])
