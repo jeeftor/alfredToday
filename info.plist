@@ -236,21 +236,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>inputstring</key>
-				<string>{var:settings_value}</string>
-				<key>matchcasesensitive</key>
-				<true/>
-				<key>matchmode</key>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+python StoreData.py $query</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
 				<integer>0</integer>
-				<key>matchstring</key>
-				<string>use_google</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.utility.filter</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>83FB8DCA-2FEC-4B0A-94E5-E1E35F80F549</string>
+			<string>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -274,27 +280,21 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>query=$1
-
-python StoreData.py $query</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
+				<key>inputstring</key>
+				<string>{var:settings_value}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
 				<integer>0</integer>
+				<key>matchstring</key>
+				<string>use_google</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.script</string>
+			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
-			<string>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</string>
+			<string>83FB8DCA-2FEC-4B0A-94E5-E1E35F80F549</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -681,16 +681,16 @@ tomorrow</string>
 			<key>note</key>
 			<string>Stores configuraiton data to disk</string>
 			<key>xpos</key>
-			<integer>430</integer>
+			<integer>420</integer>
 			<key>ypos</key>
-			<integer>90</integer>
+			<integer>60</integer>
 		</dict>
 		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
 		<dict>
 			<key>xpos</key>
-			<integer>300</integer>
+			<integer>280</integer>
 			<key>ypos</key>
-			<integer>520</integer>
+			<integer>420</integer>
 		</dict>
 		<key>3F81D499-33A5-44E8-8D22-F6309229F43B</key>
 		<dict>
@@ -704,9 +704,9 @@ tomorrow</string>
 		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
 		<dict>
 			<key>xpos</key>
-			<integer>60</integer>
+			<integer>40</integer>
 			<key>ypos</key>
-			<integer>890</integer>
+			<integer>790</integer>
 		</dict>
 		<key>67A81BBE-1261-4883-8590-56E22BC259EB</key>
 		<dict>
@@ -729,18 +729,18 @@ tomorrow</string>
 		<key>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>320</integer>
+			<integer>300</integer>
 			<key>ypos</key>
-			<integer>800</integer>
+			<integer>700</integer>
 		</dict>
 		<key>6CB617B9-B4FE-4CA5-9806-FA07E8C7DAB5</key>
 		<dict>
 			<key>note</key>
 			<string>Reset all stored data for the workflow</string>
 			<key>xpos</key>
-			<integer>70</integer>
+			<integer>50</integer>
 			<key>ypos</key>
-			<integer>520</integer>
+			<integer>420</integer>
 		</dict>
 		<key>7B433338-B013-4871-9B80-8C2013262197</key>
 		<dict>
@@ -751,26 +751,30 @@ tomorrow</string>
 		</dict>
 		<key>83FB8DCA-2FEC-4B0A-94E5-E1E35F80F549</key>
 		<dict>
+			<key>colorindex</key>
+			<integer>5</integer>
 			<key>note</key>
-			<string>{var:settings_value} == 'use_google'</string>
+			<string>If modifying google calendar settings</string>
 			<key>xpos</key>
-			<integer>600</integer>
+			<integer>610</integer>
 			<key>ypos</key>
-			<integer>60</integer>
+			<integer>80</integer>
 		</dict>
 		<key>9685A5A9-008A-40CA-836D-5F71CD1D7481</key>
 		<dict>
 			<key>xpos</key>
-			<integer>60</integer>
+			<integer>110</integer>
 			<key>ypos</key>
-			<integer>730</integer>
+			<integer>600</integer>
 		</dict>
 		<key>9916EA2D-97B9-45BC-BAF6-C04A41BD96D3</key>
 		<dict>
+			<key>colorindex</key>
+			<integer>5</integer>
 			<key>note</key>
 			<string>Authorize GCAL</string>
 			<key>xpos</key>
-			<integer>840</integer>
+			<integer>830</integer>
 			<key>ypos</key>
 			<integer>40</integer>
 		</dict>
@@ -808,8 +812,10 @@ tomorrow</string>
 		</dict>
 		<key>E54262CD-7EE8-42E4-A277-823EB0492941</key>
 		<dict>
+			<key>colorindex</key>
+			<integer>5</integer>
 			<key>note</key>
-			<string>{var:settings_value} == 'use_google'</string>
+			<string>And calendar is being enabled</string>
 			<key>xpos</key>
 			<integer>720</integer>
 			<key>ypos</key>

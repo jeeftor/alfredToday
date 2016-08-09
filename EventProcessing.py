@@ -21,8 +21,12 @@ def process_google_event(wf, event):
     import dateutil.parser
     import pytz
 
-    startdt = event['start'].get('dateTime')
-    enddt = event['end']['dateTime']
+    try:
+        startdt = event['start'].get('dateTime')
+        enddt = event['end']['dateTime']
+    except KeyError:
+        startdt = event['start'].get('date') + "T00:00:00.000Z"
+        enddt = event['end']['date'] + "T23:59:59.000Z"
 
     start = dateutil.parser.parse(startdt).strftime('%I:%M %p')
     end = dateutil.parser.parse(enddt).strftime('%I:%M %p')
@@ -75,7 +79,17 @@ def process_events(wf, outlook_events, google_events):
         current_outlook_event = outlook_events[o]
 
         outlook_start = current_outlook_event.start #utc_to_local(current_outlook_event.start).replace(tzinfo=utc)
-        google_start  = dateutil.parser.parse(current_google_event['start'].get('dateTime'))
+
+        google_date_time = current_google_event['start'].get('dateTime')
+        if google_date_time is None:
+            google_start = dateutil.parser.parse(current_google_event['start'].get('date') + "T00:00:00.000Z")
+        else:
+            google_start  = dateutil.parser.parse(google_date_time)
+
+
+        outlook_start.replace(tzinfo=google_start.tzinfo)
+
+
 
         outlook_start.replace(tzinfo=google_start.tzinfo)
 
