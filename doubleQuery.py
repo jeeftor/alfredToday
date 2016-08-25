@@ -1,17 +1,13 @@
 from workflow import Workflow3, ICON_INFO
 from settings import get_login, get_password, get_regex, get_server
 import sys, os
-
+from workflow.background import run_in_background, is_running
 
 
 
 
 def query_google_calendar(wf, start_search, end_search, date_offset):
     """Queries against the GoogleCalendar API and does magical things (hopefully)"""
-
-
-
-
 
 
     Workflow3().logger.info("Refreshing Data Cache [Google]")
@@ -26,7 +22,6 @@ def query_google_calendar(wf, start_search, end_search, date_offset):
     import oauth2client
     from oauth2client import client
     from oauth2client import tools
-
 
 
     # If modifying these scopes, delete your previously saved credentials
@@ -142,6 +137,7 @@ def main(wf):
     outlook_cache_key = 'event_list.outlook.' + str(date_offset)
     google_cache_key =  'event_list.google.' + str(date_offset)
 
+
     using_cached_data = wf.cached_data_fresh('use_exchange', cache_time) and wf.cached_data_fresh('use_google', cache_time)
 
     use_exchange = get_value_from_settings_with_default_boolean(wf, 'use_exchange', True)
@@ -214,15 +210,12 @@ def main(wf):
         wf.send_feedback()
         return
 
-
-
     first_menu_entry = wf.add_item(date_text, date_text_numeric, icon=icon_file)
 
     # Process events
     process_events(wf, outlook_events, google_events)
 
     action_elapsed_time = time.time() - action_start_time
-
 
 
     if using_cached_data:
