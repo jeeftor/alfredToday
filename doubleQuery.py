@@ -116,8 +116,6 @@ def main(wf):
 
     cache_time = get_value_from_settings_with_default_int(wf, 'cache_time', 30)
 
-    date_offset = 0
-
     morning = timezone("US/Eastern").localize(datetime.today().replace(hour=0, minute=0, second=1) + timedelta(days=date_offset))
     night = timezone("US/Eastern").localize(datetime.today().replace(hour=23, minute=59, second=59) + timedelta(days=date_offset))
 

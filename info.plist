@@ -763,9 +763,9 @@ tomorrow</string>
 		<key>9685A5A9-008A-40CA-836D-5F71CD1D7481</key>
 		<dict>
 			<key>xpos</key>
-			<integer>110</integer>
+			<integer>40</integer>
 			<key>ypos</key>
-			<integer>600</integer>
+			<integer>610</integer>
 		</dict>
 		<key>9916EA2D-97B9-45BC-BAF6-C04A41BD96D3</key>
 		<dict>
@@ -823,7 +823,7 @@ tomorrow</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>2.1</string>
+	<string>2.2</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>
