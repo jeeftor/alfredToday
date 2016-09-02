@@ -13,6 +13,8 @@ Version two of this add-on supports both **Google** and **Microsoft Exchange** c
 * Version 2.0.1: Exchange Credential Fix
 * Version 2.0.2: Dateutil.parser added to lib list
 * Version 2.0.3: Correct event time interleaving
+* Version 3.0: HUGE SPEEDUPS.  Requires Alfred 3.1 
+
 
 #Installation
 Grab the latest release [here](https://github.com/jeeftor/alfredToday/releases) 

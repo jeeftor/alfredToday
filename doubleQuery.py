@@ -134,7 +134,11 @@ def main(wf):
     date_text = night.strftime("%A %B %d %Y")
     date_text_numeric = night.strftime("%m/%d/%y")
 
-    outlook_cache_key = 'event_list.outlook.' + str(date_offset)
+    outlook_cache_key = "exchange.Today"
+    if date_offset == 1:
+        outlook_cache_key = "exchange.Tomorrow"
+
+    # outlook_cache_key = 'event_list.outlook.' + str(date_offset)
     google_cache_key =  'event_list.google.' + str(date_offset)
 
 
@@ -153,6 +157,22 @@ def main(wf):
 
     if use_exchange:
         outlook_events = wf.cached_data(outlook_cache_key, outlook_wrapper, max_age=cache_time)
+
+        cmd = ['/usr/bin/python',
+               wf.workflowfile('updateOutlook.py'),
+               start_outlook.strftime("%Y-%m-%d-%H:%M:%S"),
+               end_outlook.strftime("%Y-%m-%d-%H:%M:%S"),
+               str(date_offset)]
+
+         #Fire off in the background the script to update things! :)
+        run_in_background('update_exchange', cmd)
+        #
+        # if is_running('update_exchange'):
+        #     wf.logger.debug('Update already in the background running')
+        # else:
+        wf.logger.info(len(outlook_events))
+        wf.logger.info(wf.cachedir)
+
 
         if outlook_events is None:
             error_state = True

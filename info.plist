@@ -19,6 +19,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>1E30DB2A-00F2-4C02-89B0-2C51CBEF5231</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>629EE274-2500-46EC-8DA5-35CD866A56C9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</key>
 		<array>
 			<dict>
@@ -35,6 +48,21 @@
 		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
 		<array/>
 		<key>3F81D499-33A5-44E8-8D22-F6309229F43B</key>
+		<array/>
+		<key>41AF5BED-C2EE-4FDC-B9DF-AFDEB347F6A8</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>BB49C951-D08C-4C86-88D1-E55D150207DD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>5396CADE-8847-4968-9A2F-051C2730315E</key>
 		<array/>
 		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
 		<array>
@@ -88,6 +116,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>76384EE5-7AB7-4FE2-8C3E-606BDCD5D54C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>5396CADE-8847-4968-9A2F-051C2730315E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>83FB8DCA-2FEC-4B0A-94E5-E1E35F80F549</key>
 		<array>
 			<dict>
@@ -101,11 +142,49 @@
 				<false/>
 			</dict>
 		</array>
+		<key>93885FA3-1489-43F1-ABDC-C30454BCE345</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9685A5A9-008A-40CA-836D-5F71CD1D7481</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>9685A5A9-008A-40CA-836D-5F71CD1D7481</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>B95A7CF4-4AF9-4388-8B53-E8CB6F3350FC</key>
+		<array/>
+		<key>BB49C951-D08C-4C86-88D1-E55D150207DD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>76384EE5-7AB7-4FE2-8C3E-606BDCD5D54C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>B95A7CF4-4AF9-4388-8B53-E8CB6F3350FC</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -390,6 +469,27 @@ python settings.py</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>set value</string>
+				<key>subtext</key>
+				<string>{query}</string>
+				<key>text</key>
+				<string>Set {var:text_to_display}</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -411,27 +511,6 @@ python StoreData.py $query</string>
 			<string>3F81D499-33A5-44E8-8D22-F6309229F43B</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>set value</string>
-				<key>subtext</key>
-				<string>{query}</string>
-				<key>text</key>
-				<string>Set {var:text_to_display}</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -486,31 +565,6 @@ python StoreData.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>query=$1
-
-python reset.py $query</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>361EEA91-97CF-4908-8628-5F29198F42E6</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>fixedorder</key>
@@ -538,6 +592,31 @@ python reset.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+python reset.py $query</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>361EEA91-97CF-4908-8628-5F29198F42E6</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<true/>
 				<key>argumenttype</key>
@@ -559,13 +638,14 @@ python reset.py $query</string>
 				<key>script</key>
 				<string>query=$1
 
-python doubleQuery.py 0</string>
+python doubleQuery.py 0
+</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
 				<string>~/devel/exchangeAPI/today.py</string>
 				<key>subtext</key>
-				<string></string>
+				<string>Today</string>
 				<key>title</key>
 				<string>Today</string>
 				<key>type</key>
@@ -579,6 +659,19 @@ python doubleQuery.py 0</string>
 			<string>9685A5A9-008A-40CA-836D-5F71CD1D7481</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>triggerid</key>
+				<string>Today</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>93885FA3-1489-43F1-ABDC-C30454BCE345</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -643,9 +736,101 @@ python doubleQuery.py 1</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>triggerid</key>
+				<string>Tomorrow</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>1E30DB2A-00F2-4C02-89B0-2C51CBEF5231</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>externaltriggerid</key>
+				<string>{var:day}</string>
+				<key>passinputasargument</key>
+				<false/>
+				<key>passvariables</key>
+				<false/>
+				<key>workflowbundleid</key>
+				<string>self</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.callexternaltrigger</string>
+			<key>uid</key>
+			<string>5396CADE-8847-4968-9A2F-051C2730315E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.hidealfred</string>
+			<key>uid</key>
+			<string>76384EE5-7AB7-4FE2-8C3E-606BDCD5D54C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>triggerid</key>
+				<string>NotifyOfUpdate</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>41AF5BED-C2EE-4FDC-B9DF-AFDEB347F6A8</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>{query}</string>
+				<key>variables</key>
+				<dict>
+					<key>day</key>
+					<string>{query}</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>BB49C951-D08C-4C86-88D1-E55D150207DD</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>View has been refreshed</string>
+				<key>title</key>
+				<string>{query} Data Changed</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>B95A7CF4-4AF9-4388-8B53-E8CB6F3350FC</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
-	<string>Today Menu 2.0
+	<string>Today Menu 3.0
 
 Shows a today menu from Google Calendar and Microsoft Exchange 365
 
@@ -676,6 +861,15 @@ tomorrow</string>
 			<key>ypos</key>
 			<integer>280</integer>
 		</dict>
+		<key>1E30DB2A-00F2-4C02-89B0-2C51CBEF5231</key>
+		<dict>
+			<key>note</key>
+			<string>External trigger that allows for autorefresh</string>
+			<key>xpos</key>
+			<integer>110</integer>
+			<key>ypos</key>
+			<integer>790</integer>
+		</dict>
 		<key>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</key>
 		<dict>
 			<key>note</key>
@@ -701,10 +895,30 @@ tomorrow</string>
 			<key>ypos</key>
 			<integer>250</integer>
 		</dict>
+		<key>41AF5BED-C2EE-4FDC-B9DF-AFDEB347F6A8</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>8</integer>
+			<key>note</key>
+			<string>Apple script entry point for causing data refresh</string>
+			<key>xpos</key>
+			<integer>100</integer>
+			<key>ypos</key>
+			<integer>950</integer>
+		</dict>
+		<key>5396CADE-8847-4968-9A2F-051C2730315E</key>
+		<dict>
+			<key>note</key>
+			<string>Re-open either Today or Tomorrow</string>
+			<key>xpos</key>
+			<integer>610</integer>
+			<key>ypos</key>
+			<integer>890</integer>
+		</dict>
 		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
 		<dict>
 			<key>xpos</key>
-			<integer>40</integer>
+			<integer>310</integer>
 			<key>ypos</key>
 			<integer>790</integer>
 		</dict>
@@ -729,7 +943,7 @@ tomorrow</string>
 		<key>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>300</integer>
+			<integer>570</integer>
 			<key>ypos</key>
 			<integer>700</integer>
 		</dict>
@@ -741,6 +955,15 @@ tomorrow</string>
 			<integer>50</integer>
 			<key>ypos</key>
 			<integer>420</integer>
+		</dict>
+		<key>76384EE5-7AB7-4FE2-8C3E-606BDCD5D54C</key>
+		<dict>
+			<key>note</key>
+			<string>clear out alfred</string>
+			<key>xpos</key>
+			<integer>510</integer>
+			<key>ypos</key>
+			<integer>940</integer>
 		</dict>
 		<key>7B433338-B013-4871-9B80-8C2013262197</key>
 		<dict>
@@ -760,10 +983,19 @@ tomorrow</string>
 			<key>ypos</key>
 			<integer>80</integer>
 		</dict>
+		<key>93885FA3-1489-43F1-ABDC-C30454BCE345</key>
+		<dict>
+			<key>note</key>
+			<string>External trigger that allows an auto-refersh to happen</string>
+			<key>xpos</key>
+			<integer>110</integer>
+			<key>ypos</key>
+			<integer>610</integer>
+		</dict>
 		<key>9685A5A9-008A-40CA-836D-5F71CD1D7481</key>
 		<dict>
 			<key>xpos</key>
-			<integer>40</integer>
+			<integer>310</integer>
 			<key>ypos</key>
 			<integer>610</integer>
 		</dict>
@@ -777,6 +1009,24 @@ tomorrow</string>
 			<integer>830</integer>
 			<key>ypos</key>
 			<integer>40</integer>
+		</dict>
+		<key>B95A7CF4-4AF9-4388-8B53-E8CB6F3350FC</key>
+		<dict>
+			<key>note</key>
+			<string>notify of updates</string>
+			<key>xpos</key>
+			<integer>610</integer>
+			<key>ypos</key>
+			<integer>1050</integer>
+		</dict>
+		<key>BB49C951-D08C-4C86-88D1-E55D150207DD</key>
+		<dict>
+			<key>note</key>
+			<string>Store the argument hopefully either Today or Tomorrow into a variable that will be used to re-trigger the calendar display</string>
+			<key>xpos</key>
+			<integer>380</integer>
+			<key>ypos</key>
+			<integer>980</integer>
 		</dict>
 		<key>BF83BB0D-9D59-416E-8049-8F1E25A79367</key>
 		<dict>
@@ -823,7 +1073,7 @@ tomorrow</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>2.2</string>
+	<string>3</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>

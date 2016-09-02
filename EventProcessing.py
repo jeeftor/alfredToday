@@ -133,7 +133,7 @@ def process_outlook_event(wf, event):
     if not REGEX is None:
         # Match pattern for LYNC
         p = re.compile(REGEX)
-        if online_meeting == u'true':
+        if online_meeting == u'true' and body_html:
             match = re.search(p, body_html)
             if match:
                 lync_url = match.group(1)
