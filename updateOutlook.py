@@ -48,17 +48,17 @@ def query_exchange_server(wf, start_search, end_search, date_offset):
     except:
         return None
 
+EVENT_FIELD_NAMES = ['_id', 'end', 'start', 'html_body', 'subject']
+
+def serialize_event(event):
+    """ returns a string that serializes selected fields from an event"""
+    return ''.join(['%s' % getattr(event, ff) for ff in EVENT_FIELD_NAMES])
+
 
 def build_event_set(events):
-    fields_to_scan = ['_id', 'end', 'start', 'html_body', 'subject']
-    ret = []
-    for event in events:
-        event_string = ""
-        for field in fields_to_scan:
-            event_string += str(getattr(event, field))
-        ret.append(event_string)
-    return Set(ret)
-
+    """returns a set"""
+    # this bad boy uses set comprehensions (note the parens)
+    return (serialize_event(evt) for evt in events)
 
 def main(wf):
     import pytz
