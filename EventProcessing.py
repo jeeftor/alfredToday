@@ -1,12 +1,16 @@
 from workflow import Workflow3
+from workflow.workflow3 import  Item3
+
 #import calendar
 #from datetime import datetime, timedelta
 from settings import get_login, get_password, get_regex, get_server, get_timezone
 import calendar
 from datetime import datetime, timedelta
-
 import logging
 import logging.handlers
+
+PAST_ITEMS =  []
+FUTURE_ITEMS = []
 
 def write_file(wf, name, html):
     filename = wf.cachedir + "/" + str(name) + ".html"
@@ -46,14 +50,14 @@ def process_google_event(wf, event):
     # Pick icon color based on end time
     now = datetime.now(pytz.utc)
     if dateutil.parser.parse(enddt) < now:
-        wf.add_item(title, subtitle, arg=url, valid=False, icon="eventGoogleGray.png")
+        PAST_ITEMS.append(Item3(title, subtitle, arg=url, valid=False, icon="eventGoogleGray.png"))
     else:
-        wf.add_item(title, subtitle, arg=url, icon='eventGoogle.png', valid=True)
+        FUTURE_ITEMS.append(Item3(title, subtitle, arg=url, icon='eventGoogle.png', valid=True))
         try:
             hangout_url = event['hangoutLink']
             hangout_title = u'\u21aa Join Hangout'
             hangout_subtitle = "        " + hangout_url
-            wf.add_item(hangout_title, hangout_subtitle, arg=hangout_url, valid=True, icon='hangout.png')
+            FUTURE_ITEMS.append(Item3(hangout_title, hangout_subtitle, arg=hangout_url, valid=True, icon='hangout.png'))
         except:
             pass
 
@@ -73,6 +77,7 @@ def process_events(wf, outlook_events, google_events):
     o = 0
     g = 0
 
+
     while g < google_count and o < outlook_count:
 
         current_google_event = google_events[g]
@@ -88,9 +93,6 @@ def process_events(wf, outlook_events, google_events):
 
 
         outlook_start.replace(tzinfo=google_start.tzinfo)
-
-
-
         outlook_start.replace(tzinfo=google_start.tzinfo)
 
 
@@ -109,6 +111,12 @@ def process_events(wf, outlook_events, google_events):
     while o < outlook_count:
         process_outlook_event(wf, outlook_events[o])
         o += 1
+
+    for item in FUTURE_ITEMS + PAST_ITEMS:
+        for k in wf.variables:
+            item.setvar(k, wf.variables[k])
+        wf._items.append(item)
+
 
 
 def process_outlook_event(wf, event):
@@ -139,7 +147,6 @@ def process_outlook_event(wf, event):
                 lync_url = match.group(1)
 
 
-
     time_string = start_datetime.strftime("%I:%M %p") + " - " + end_datetime.strftime("%I:%M %p")
 
     title = subject
@@ -153,19 +160,26 @@ def process_outlook_event(wf, event):
     # Pick icon color based on end time
     now = datetime.now()
     if end_datetime < now:
-        wf.add_item(title, subtitle, type=u'file', arg=description_url, valid=False, icon="eventOutlookGray.png")
+        PAST_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="eventOutlookGray.png"))
+        # wf.add_item(title, subtitle, type=u'file', arg=description_url, valid=False, icon="eventOutlookGray.png")
+
     else:
 
         if event.is_all_day:
-            wf.add_item(title, subtitle, type=u'file', arg=description_url, valid=False, icon="eventOutlook.png")
+            FUTURE_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="eventOutlook.png"))
         else:
-            wf.add_item(title, subtitle, type=u'file', arg=description_url, valid=False, icon="eventOutlook.png")
+            FUTURE_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="eventOutlook.png"))
+
 
         if lync_url != None:
             # subtitle += " [" + lync_url + "]"
             lync_title = u'\u21aa Join Meeting'
             lync_subtitle = "        " + lync_url
-            wf.add_item(lync_title, lync_subtitle, arg=lync_url, valid=True, icon='skype.png')
+            FUTURE_ITEMS.append(Item3(lync_title, lync_subtitle, arg=lync_url, valid=True, icon='skype.png'))
+
+
+
+
 
 
 

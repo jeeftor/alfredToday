@@ -166,13 +166,6 @@ def main(wf):
 
          #Fire off in the background the script to update things! :)
         run_in_background('update_exchange', cmd)
-        #
-        # if is_running('update_exchange'):
-        #     wf.logger.debug('Update already in the background running')
-        # else:
-        wf.logger.info(len(outlook_events))
-        wf.logger.info(wf.cachedir)
-
 
         if outlook_events is None:
             error_state = True
@@ -226,7 +219,7 @@ def main(wf):
 
     if event_count == 0:
         if error_state is False:
-            wf.add_item('Calendar is empty for today', date_text, icon=icon_file)
+            wf.add_item('Calendar is empty', date_text, icon=icon_file)
         wf.send_feedback()
         return
 
