@@ -2,7 +2,7 @@
 
 
 from workflow import Workflow3, ICON_INFO
-from settings import get_login, get_password, get_regex, get_server
+from settings import get_login, get_password, get_regex, get_server, get_value_from_settings_with_default_boolean
 import sys, os
 from workflow.background import run_in_background, is_running
 from sets import Set
@@ -24,7 +24,7 @@ def asquote(astr):
 
 def query_exchange_server(wf, start_search, end_search, date_offset):
     """Runs a query against an exchange server for either today or a date offset by `date_offset`"""
-    from lib.pyexchange import Exchange2010Service, ExchangeBasicAuthConnection
+    from lib.pyexchange import Exchange2010Service, ExchangeBasicAuthConnection, ExchangeNTLMAuthConnection
 
     wf.logger.info("Refreshing Data Cache [Outlook]")
     wf.logger.info(wf.cachedir)
@@ -33,13 +33,21 @@ def query_exchange_server(wf, start_search, end_search, date_offset):
     exchange_url, using_default_server = get_server(wf)
     exchange_username = get_login(wf, False)
     exchange_password = get_password(wf, False)
+    using_ntlm = get_value_from_settings_with_default_boolean(wf, 'use_ntlm', False)
 
-    # Set up the connection to Exchange
-    connection = ExchangeBasicAuthConnection(url=exchange_url,
-                                             username=exchange_username,
-                                             password=exchange_password)
+    if not using_ntlm:
+        # Set up the connection to Exchange
+        connection = ExchangeBasicAuthConnection(url=exchange_url,
+                                                 username=exchange_username,
+                                                 password=exchange_password)
+    else:
+        connection = ExchangeNTLMAuthConnection(url=exchange_url,
+                                                username=exchange_username,
+                                                password=exchange_password)
 
     service = Exchange2010Service(connection)
+
+
 
     try:
         # You can set event properties when you instantiate the event...

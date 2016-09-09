@@ -233,11 +233,31 @@ def main(wf):
             it.setvar('settings_value', 'regex')
 
 
+        using_ntlm = get_value_from_settings_with_default_boolean(wf, 'use_ntlm', False)
+        if not using_ntlm:
+            ntlm_item = wf.add_item('Using NTLM Authentication: ' + str(using_ntlm),
+                                    'For an internal exchange server this should be enabled',
+                                    valid=True, arg="refresh", icon='no.png')
+
+            ntlm_item.setvar('text_to_display', 'Use NTLM Auth:')
+            ntlm_item.setvar('settings_value', 'use_ntlm')
+            ntlm_item.setvar('value_to_store', True)
+        else:
+            ntlm_item = wf.add_item('Using NTLM Authentication: ' + str(using_ntlm),
+                                    'For an internal exchange server this should be enabled',
+                                    valid=True, arg="refresh", icon='ok.png')
+            ntlm_item.setvar('text_to_display', 'Use NTLM Auth:')
+            ntlm_item.setvar('settings_value', 'use_ntlm')
+            ntlm_item.setvar('value_to_store', False)
+
     cache_time = get_value_from_settings_with_default_int(wf, 'cache_time', 30)
 
-    cache_item = wf.add_item('Cache Time: ' + str(cache_time) + " seconds",'This is the time between refreshing the calendar data cache',arg=cache_time, icon='hourglass.png', valid=True)
+    cache_item = wf.add_item('Cache Time: ' + str(cache_time) + " seconds",'This is the time between refreshing the calendar data cache',
+                             arg=cache_time, icon='hourglass.png', valid=True)
     cache_item.setvar('text_to_display', 'Cache time in seconds')
     cache_item.setvar('settings_value', 'cache_time')
+
+
 
     # Timezone supressed for now - may not be required
     # timezone_string, using_default_timezone = get_timezone(wf)

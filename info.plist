@@ -4,6 +4,8 @@
 <dict>
 	<key>bundleid</key>
 	<string>org.jeef.today</string>
+	<key>category</key>
+	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
 		<key>0ABF3E4E-934B-4EE9-9C6B-BA10DF534B47</key>
@@ -282,11 +284,11 @@
 	<key>createdby</key>
 	<string>Jeff Stein</string>
 	<key>description</key>
-	<string>Exchange Server Today Menu</string>
+	<string>Outlook &amp; Google Today Menu</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Today Menu</string>
+	<string>Alfred Today</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -849,7 +851,9 @@ Commands:
 
 tc (config)
 today 
-tomorrow</string>
+tomorrow
+
+Prelim NTLM support</string>
 	<key>uidata</key>
 	<dict>
 		<key>0ABF3E4E-934B-4EE9-9C6B-BA10DF534B47</key>
@@ -882,7 +886,7 @@ tomorrow</string>
 		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
 		<dict>
 			<key>xpos</key>
-			<integer>280</integer>
+			<integer>340</integer>
 			<key>ypos</key>
 			<integer>420</integer>
 		</dict>
@@ -904,7 +908,7 @@ tomorrow</string>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<integer>950</integer>
+			<integer>1090</integer>
 		</dict>
 		<key>5396CADE-8847-4968-9A2F-051C2730315E</key>
 		<dict>
@@ -913,7 +917,7 @@ tomorrow</string>
 			<key>xpos</key>
 			<integer>610</integer>
 			<key>ypos</key>
-			<integer>890</integer>
+			<integer>1030</integer>
 		</dict>
 		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
 		<dict>
@@ -943,16 +947,16 @@ tomorrow</string>
 		<key>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>570</integer>
+			<integer>520</integer>
 			<key>ypos</key>
-			<integer>700</integer>
+			<integer>690</integer>
 		</dict>
 		<key>6CB617B9-B4FE-4CA5-9806-FA07E8C7DAB5</key>
 		<dict>
 			<key>note</key>
 			<string>Reset all stored data for the workflow</string>
 			<key>xpos</key>
-			<integer>50</integer>
+			<integer>110</integer>
 			<key>ypos</key>
 			<integer>420</integer>
 		</dict>
@@ -963,7 +967,7 @@ tomorrow</string>
 			<key>xpos</key>
 			<integer>510</integer>
 			<key>ypos</key>
-			<integer>940</integer>
+			<integer>1080</integer>
 		</dict>
 		<key>7B433338-B013-4871-9B80-8C2013262197</key>
 		<dict>
@@ -1006,7 +1010,7 @@ tomorrow</string>
 			<key>note</key>
 			<string>Authorize GCAL</string>
 			<key>xpos</key>
-			<integer>830</integer>
+			<integer>800</integer>
 			<key>ypos</key>
 			<integer>40</integer>
 		</dict>
@@ -1017,7 +1021,7 @@ tomorrow</string>
 			<key>xpos</key>
 			<integer>610</integer>
 			<key>ypos</key>
-			<integer>1050</integer>
+			<integer>1190</integer>
 		</dict>
 		<key>BB49C951-D08C-4C86-88D1-E55D150207DD</key>
 		<dict>
@@ -1026,7 +1030,7 @@ tomorrow</string>
 			<key>xpos</key>
 			<integer>380</integer>
 			<key>ypos</key>
-			<integer>980</integer>
+			<integer>1120</integer>
 		</dict>
 		<key>BF83BB0D-9D59-416E-8049-8F1E25A79367</key>
 		<dict>
@@ -1067,13 +1071,13 @@ tomorrow</string>
 			<key>note</key>
 			<string>And calendar is being enabled</string>
 			<key>xpos</key>
-			<integer>720</integer>
+			<integer>700</integer>
 			<key>ypos</key>
 			<integer>70</integer>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>3.1</string>
+	<string>3.2</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>

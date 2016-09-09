@@ -29,6 +29,20 @@ def main(wf):
                 notify("Exchange Server Support", u'\u274c Disabled')
             else:
                 notify("Exchange Server Support", u'\u2705 Enabled')
+        elif key == 'use_ntlm':
+
+            def exchangeFilter(filename):
+                return 'exchange' in filename
+
+            # Clear outlook events because we are changing the auth type
+            wf.clear_cache(exchangeFilter)
+
+           # outlook_events = wf.cached_data(outlook_cache_key, outlook_wrapper, max_age=cache_time)
+
+            if '0' == value:
+                notify("NTLM Authentication", u'\u274c Disabled')
+            else:
+                notify("NTLM Authentication", u'\u2705 Enabled')
         else:
             notify('Updated ' + text, "To: " + value)
 
