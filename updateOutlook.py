@@ -101,20 +101,19 @@ def main(wf):
     old_events = wf.cached_data(cache_key)
     wf.cache_data(cache_key, query_exchange_server(wf, start_outlook, end_outlook, date_offset))
     new_events = wf.cached_data(cache_key)
-    new_set = build_event_set(new_events)
-    old_set = build_event_set(old_events)
+    if new_events is not None:
+        new_set = build_event_set(new_events)
+        old_set = build_event_set(old_events)
 
-    cmd = 'tell application "Alfred 3" to run trigger "NotifyOfUpdate" in workflow "org.jeef.today" with argument "' + notify_key + '"'
+        cmd = 'tell application "Alfred 3" to run trigger "NotifyOfUpdate" in workflow "org.jeef.today" with argument "' + notify_key + '"'
 
-    if len(new_set.symmetric_difference(old_set)) > 0:
-        wf.logger.debug('Refreshing view')
-        asrun(cmd)
+        if len(new_set.symmetric_difference(old_set)) > 0:
+            wf.logger.debug('Refreshing view')
+            asrun(cmd)
 
-    wf.logger.debug(cache_key)
-    wf.logger.debug(date_offset)
+        wf.logger.debug(cache_key)
+        wf.logger.debug(date_offset)
 
-
-    # events = wf.cached_data(cache_key, wrapper, max_age=0)
 
 if __name__ == '__main__':
     wf = Workflow3(libraries=['./lib'])
