@@ -6,9 +6,11 @@ from workflow.background import run_in_background, is_running
 
 
 
+
 def query_google_calendar(wf, start_search, end_search, date_offset):
     """Queries against the GoogleCalendar API and does magical things (hopefully)"""
 
+    wf.logger.info("Querying Google Calendar " + str(start_search) + " " + str(end_search) + " " + str(date_offset))
 
     Workflow3().logger.info("Refreshing Data Cache [Google]")
     import os
@@ -56,6 +58,7 @@ def query_google_calendar(wf, start_search, end_search, date_offset):
     try:
         eventsResult = service.events().list(calendarId='primary', timeMin=start_search, timeMax=end_search, singleEvents=True, orderBy='startTime').execute()
         event_list = eventsResult.get('items', [])
+        wf.logger.info("Google returned " + str(len(event_list)) + " events")
         return event_list
     except IOError:
         return None
@@ -129,11 +132,16 @@ def main(wf):
 
     def google_wrapper():
         """A wrapper around doing a google query so this can be used with a cache function"""
+        wf.logger.info("calling google_wrapper()")
+        wf.logger.info("     param: start_google = " + str(start_google))
+        wf.logger.info("     param:   end_google = " + str(stop_google))
+        wf.logger.info("     param:   date_offse = " + str(date_offset))
 
         return query_google_calendar(wf, start_google, stop_google, date_offset)
 
     def outlook_wrapper():
         """Wrapper around outlook query so can be used with caching"""
+
         return query_exchange_server(wf,start_outlook, end_outlook, date_offset)
 
     # Format date text for displays
@@ -176,7 +184,7 @@ def main(wf):
         if outlook_events is None:
             error_state = True
 
-            wf.add_item('Unable to connect to exchange server', 'Check your connectivity or NTLM auth settings', icon='disclaimer.png')
+            wf.add_item('Unable to connect to exchange server', 'Check your connectivity or NTLM auth settings', icon='img/disclaimer.png')
             outlook_events = []
         else:
             event_count += len(outlook_events)
@@ -186,7 +194,14 @@ def main(wf):
     if use_google:
         try:
             google_events  = wf.cached_data(google_cache_key, google_wrapper, max_age=cache_time)
-        except:
+        except Exception as ex:
+            template = "An exception of type {0} occured. Arguments:\n{1!r}"
+            message = template.format(type(ex).__name__, ex.args)
+            wf.logger.info(message)
+            wf.logger.info("Google -- Cache error")
+            import traceback
+            wf.logger.info(traceback.format_exc())
+
             google_events = None
 
         if google_events is None:
@@ -198,12 +213,16 @@ def main(wf):
             try:
                 conn.request("HEAD", "/")
                 wf.add_item('Unable to connect to Google', 'Authorization or Connection error - use tc to reauthorize',
-                            icon='disclaimer.png')
-            except:  # Connectivity Error
+                            icon='img/disclaimer.png')
+            except Exception as ex:
+                wf.logger.info("Unable to connect to google")
+                template = "An exception of type {0} occured. Arguments:\n{1!r}"
+                message = template.format(type(ex).__name__, ex.args)
+                wf.logger.info(message)
+                import traceback
+                wf.logger.info(traceback.format_exc())
                 wf.add_item('Unable to connect to Google', 'Check your internet connection or proxy settings',
-                            icon='disclaimer.png')
-
-
+                            icon='img/disclaimer.png')
 
             google_events = []
         else:
@@ -211,17 +230,19 @@ def main(wf):
     else:
         google_events = []
 
-
         # Build Header
-    icon_file = 'date_span.png'
+    icon_file = 'img/date_span.png'
 
     if use_exchange and use_google:
-        icon_file = 'iconBoth.png'
+        icon_file = 'img/iconBoth.png'
     elif use_exchange:
-        icon_file = 'iconOutlook.png'
+        icon_file = 'img/iconOutlook.png'
     elif use_google:
-        icon_file = 'iconGoogle.png'
+        icon_file = 'img/iconGoogle.png'
 
+    wf.logger.info("Event Count   Google: " + str(len(google_events)))
+    wf.logger.info("Event Count Exchange: " + str(len(outlook_events)))
+    wf.logger.info("Event Count    Total: " + str(event_count))
 
     if event_count == 0:
         if error_state is False:
@@ -248,5 +269,9 @@ def main(wf):
 
 
 if __name__ == '__main__':
-    wf = Workflow3(libraries=['./lib'])
+    wf = Workflow3(libraries=['./lib'],
+                   update_settings={
+                       'github_slug': 'jeeftor/alfredToday',
+                       'frequency': 7}
+                   )
     wf.run(main)

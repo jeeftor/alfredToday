@@ -572,7 +572,7 @@ python StoreData.py $query</string>
 				<key>fixedorder</key>
 				<true/>
 				<key>items</key>
-				<string>[{"imagefile":"6849d05ab42b9360457406b5fc4e3b15aff5ecd7.png","title":"Keep Today Configuration As-Is","arg":"False","subtitle":"Dont do anything"},{"imagefile":"cb1a140b227f1b20db44a5f639f1d74237d5a6a2.png","title":"Reset Today Configuration to Default","arg":"True","subtitle":"This will restore the workflow to its default state"}]</string>
+				<string>[{"imagefile":"f7dae7a6ca3b9b6a319f5a97f92e1813dfe4ba6e.png","title":"Keep Today Configuration As-Is","arg":"False","subtitle":"Dont do anything"},{"imagefile":"7ba8e77fb67d07bcb74791c616bd47339941b528.png","title":"Reset Today Configuration to Default","arg":"True","subtitle":"This will restore the workflow to its default state"}]</string>
 				<key>keyword</key>
 				<string>tcreset</string>
 				<key>runningsubtext</key>

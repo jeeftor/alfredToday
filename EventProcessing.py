@@ -50,14 +50,14 @@ def process_google_event(wf, event):
     # Pick icon color based on end time
     now = datetime.now(pytz.utc)
     if dateutil.parser.parse(enddt) < now:
-        PAST_ITEMS.append(Item3(title, subtitle, arg=url, valid=False, icon="eventGoogleGray.png"))
+        PAST_ITEMS.append(Item3(title, subtitle, arg=url, valid=False, icon="img/eventGoogleGray.png"))
     else:
         FUTURE_ITEMS.append(Item3(title, subtitle, arg=url, icon='eventGoogle.png', valid=True))
         try:
             hangout_url = event['hangoutLink']
             hangout_title = u'\u21aa Join Hangout'
             hangout_subtitle = "        " + hangout_url
-            FUTURE_ITEMS.append(Item3(hangout_title, hangout_subtitle, arg=hangout_url, valid=True, icon='hangout.png'))
+            FUTURE_ITEMS.append(Item3(hangout_title, hangout_subtitle, arg=hangout_url, valid=True, icon='img/hangout.png'))
         except:
             pass
 
@@ -160,28 +160,22 @@ def process_outlook_event(wf, event):
     # Pick icon color based on end time
     now = datetime.now()
     if end_datetime < now:
-        PAST_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="eventOutlookGray.png"))
+        PAST_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="img/eventOutlookGray.png"))
         # wf.add_item(title, subtitle, type=u'file', arg=description_url, valid=False, icon="eventOutlookGray.png")
 
     else:
 
         if event.is_all_day:
-            FUTURE_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="eventOutlook.png"))
+            FUTURE_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="img/eventOutlook.png"))
         else:
-            FUTURE_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="eventOutlook.png"))
+            FUTURE_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="img/eventOutlook.png"))
 
 
         if lync_url != None:
             # subtitle += " [" + lync_url + "]"
             lync_title = u'\u21aa Join Meeting'
             lync_subtitle = "        " + lync_url
-            FUTURE_ITEMS.append(Item3(lync_title, lync_subtitle, arg=lync_url, valid=True, icon='skype.png'))
-
-
-
-
-
-
+            FUTURE_ITEMS.append(Item3(lync_title, lync_subtitle, arg=lync_url, valid=True, icon='img/skype.png'))
 
 
 def utc_to_local(utc_dt):
