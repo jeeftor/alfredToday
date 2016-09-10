@@ -12,7 +12,10 @@ def remove_google_credentials():
         os.makedirs(credential_dir)
     credential_path = os.path.join(credential_dir,
                                    'calendar-alfred-today.json')
-    os.remove(credential_path)
+    try:
+        os.remove(credential_path)
+    except:
+        pass
     wf.logger.info("Deleting credentials at: " + credential_path)
 
 
@@ -29,7 +32,7 @@ def main(wf):
             wf.delete_password('today.workflow.password')
         except PasswordNotFound:
             pass
-        for value in ['exchange_login', 'regex', 'exchange_server', 'timezone']:
+        for value in ['exchange_login', 'exchange_server', 'timezone', 'use_exchange', 'use_google']:
             try:
                 del wf.settings[value]
             except AttributeError:

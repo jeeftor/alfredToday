@@ -158,8 +158,8 @@ def main(wf):
 
     using_cached_data = wf.cached_data_fresh('use_exchange', cache_time) and wf.cached_data_fresh('use_google', cache_time)
 
-    use_exchange = get_value_from_settings_with_default_boolean(wf, 'use_exchange', True)
-    use_google   = get_value_from_settings_with_default_boolean(wf, 'use_google', True)
+    use_exchange = get_value_from_settings_with_default_boolean(wf, 'use_exchange', False)
+    use_google   = get_value_from_settings_with_default_boolean(wf, 'use_google', False)
 
     if not use_google and not use_exchange:
         wf.add_item('Calendars are disabled','use the tc command to setup a calendar', icon=ICON_INFO, arg="tc")
