@@ -26,8 +26,8 @@ def query_exchange_server(wf, start_search, end_search, date_offset):
     """Runs a query against an exchange server for either today or a date offset by `date_offset`"""
     from lib.pyexchange import Exchange2010Service, ExchangeBasicAuthConnection, ExchangeNTLMAuthConnection
 
-    wf.logger.info("Refreshing Data Cache [Outlook]")
-    wf.logger.info(wf.cachedir)
+    log.info("BG: Refreshing Data Cache [Outlook]")
+    log.info(wf.cachedir)
 
     # Get data from disk
     exchange_url, using_default_server = get_server(wf)
@@ -36,6 +36,7 @@ def query_exchange_server(wf, start_search, end_search, date_offset):
     using_ntlm = get_value_from_settings_with_default_boolean(wf, 'use_ntlm', False)
 
     if not using_ntlm:
+        log.info("BG: Outlook connection - External Server - Basic Auth")
         # Set up the connection to Exchange
         connection = ExchangeBasicAuthConnection(url=exchange_url,
                                                  username=exchange_username,
@@ -44,6 +45,7 @@ def query_exchange_server(wf, start_search, end_search, date_offset):
         connection = ExchangeNTLMAuthConnection(url=exchange_url,
                                                 username=exchange_username,
                                                 password=exchange_password)
+        log.info("BG: Outlook connection - Internal NTML")
 
     service = Exchange2010Service(connection)
 
@@ -52,6 +54,8 @@ def query_exchange_server(wf, start_search, end_search, date_offset):
     try:
         # You can set event properties when you instantiate the event...
         event_list = service.calendar().list_events(start=start_search, end=end_search, details=True)
+
+        log.info("BG: Event count: " + str(len(event_list)))
         return event_list.events
     except:
         return None
@@ -111,10 +115,11 @@ def main(wf):
             wf.logger.debug('Refreshing view')
             asrun(cmd)
 
-        wf.logger.debug(cache_key)
-        wf.logger.debug(date_offset)
+        log.debug(cache_key)
+        log.debug(date_offset)
 
 
 if __name__ == '__main__':
     wf = Workflow3(libraries=['./lib'])
+    log = wf.logger
     wf.run(main)

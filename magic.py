@@ -15,9 +15,9 @@ def main(wf):
         query = wf.args[0]
 
     log.debug('query : {!r}'.format(query))
-
-    wf.add_item("workflow:magic", "List available magic arguments.", arg="workflow:magic",
-                autocomplete="workflow:magic", icon=ICON_INFO)
+    #
+    # wf.add_item("workflow:magic", "List available magic arguments.", arg="workflow:magic",
+    #             autocomplete="workflow:magic", icon=ICON_INFO)
     wf.add_item("workflow:help",
                 "Open workflow’s help URL in default web browser. This URL is specified in the help_url argument to Workflow.",
                 arg="workflow:help", autocomplete="workflow:help", icon=ICON_INFO)

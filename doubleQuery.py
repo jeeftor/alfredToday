@@ -1,11 +1,12 @@
+# encoding: utf-8
+
 from workflow import Workflow3, ICON_INFO
 from settings import get_login, get_password, get_regex, get_server, get_value_from_settings_with_default_boolean
 import sys, os
 from workflow.background import run_in_background, is_running
 
-
-
-
+UPDATE_SETTINGS = {'github_slug': 'jeeftor/alfredToday'}
+HELP_URL = 'https://github.com/jeeftor/AlfredToday'
 
 def query_google_calendar(wf, start_search, end_search, date_offset):
     """Queries against the GoogleCalendar API and does magical things (hopefully)"""
@@ -102,6 +103,20 @@ def query_exchange_server(wf, start_search, end_search, date_offset):
 
 
 def main(wf):
+
+    if wf.update_available:
+
+        wf.add_item('A newer version is available',
+                    '↩ to install update',
+                    autocomplete='workflow:update',
+                    icon='update-available.png')
+
+    query = None
+    if len(wf.args):
+        query = wf.args[0]
+
+    log.debug('query : {!r}'.format(query))
+
     from EventProcessing import process_outlook_event, process_google_event, process_events
     import pytz
     from pytz import timezone
@@ -268,10 +283,13 @@ def main(wf):
     wf.send_feedback()
 
 
+
 if __name__ == '__main__':
     wf = Workflow3(libraries=['./lib'],
+                   help_url=HELP_URL,
                    update_settings={
                        'github_slug': 'jeeftor/alfredToday',
                        'frequency': 7}
                    )
+    log = wf.logger
     wf.run(main)

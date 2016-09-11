@@ -125,7 +125,9 @@ This regular expression basically says:
 ```
 
 
+#Debug Options
 
+The command **dbgtoday** will list all the debug options available for the workflow
 
 #Feedback & Help
 

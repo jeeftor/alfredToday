@@ -21,6 +21,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>0FFCFA12-FE76-4503-8F66-7EF220E79580</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E16892EC-6868-47BF-86C6-E9F44CE2B123</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>1E30DB2A-00F2-4C02-89B0-2C51CBEF5231</key>
 		<array>
 			<dict>
@@ -623,6 +636,67 @@ python reset.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>E16892EC-6868-47BF-86C6-E9F44CE2B123</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>dbgtoday</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Debug Menu for Today</string>
+				<key>script</key>
+				<string>python magic.py "{query}"
+</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Open debug menu</string>
+				<key>title</key>
+				<string>Today (debug)</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>0FFCFA12-FE76-4503-8F66-7EF220E79580</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<true/>
 				<key>argumenttype</key>
@@ -856,6 +930,7 @@ Commands:
 tc (config)
 today 
 tomorrow
+dbgtoday (Lists debug menu to open log and stuff)
 
 Prelim NTLM support</string>
 	<key>uidata</key>
@@ -868,6 +943,13 @@ Prelim NTLM support</string>
 			<integer>690</integer>
 			<key>ypos</key>
 			<integer>280</integer>
+		</dict>
+		<key>0FFCFA12-FE76-4503-8F66-7EF220E79580</key>
+		<dict>
+			<key>xpos</key>
+			<integer>630</integer>
+			<key>ypos</key>
+			<integer>490</integer>
 		</dict>
 		<key>1E30DB2A-00F2-4C02-89B0-2C51CBEF5231</key>
 		<dict>
@@ -1068,6 +1150,13 @@ Prelim NTLM support</string>
 			<key>ypos</key>
 			<integer>250</integer>
 		</dict>
+		<key>E16892EC-6868-47BF-86C6-E9F44CE2B123</key>
+		<dict>
+			<key>xpos</key>
+			<integer>880</integer>
+			<key>ypos</key>
+			<integer>480</integer>
+		</dict>
 		<key>E54262CD-7EE8-42E4-A277-823EB0492941</key>
 		<dict>
 			<key>colorindex</key>
@@ -1081,7 +1170,7 @@ Prelim NTLM support</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>3.4.4</string>
+	<string>3.5.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>
