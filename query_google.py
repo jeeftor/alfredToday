@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from updateOutlook import asrun, asquote
+from query_exchange import asrun, asquote
 from workflow import Workflow3, ICON_INFO
 import subprocess
 
@@ -120,13 +120,16 @@ def main(wf):
     new_events = wf.cached_data(cache_key)
 
 
+    def lambda_func(x):
+        x['id'] + ":" + x['update'] + str(x.get(u'start').get(u'dateTime','All_Day'))
+
     if new_events is not None:
-        new_set = set(map(lambda x: x['id'] + ':' + x['updated'], new_events)) or set()
+        new_set = set(map(lambda x: lambda_func(x), new_events)) or set()
     else:
         new_set = set()
 
     if old_events is not None:
-        old_set = set(map(lambda x: x['id'] + ':' + x['updated'], old_events)) or set()
+        old_set = set(map(lambda x: lambda_func(x), old_events)) or set()
     else:
         old_set = set()
 

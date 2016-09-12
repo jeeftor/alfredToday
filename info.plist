@@ -312,7 +312,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>python authorizeGoogle.py</string>
+				<string>python authorize_google.py</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -337,7 +337,7 @@
 				<key>script</key>
 				<string>query=$1
 
-python StoreData.py $query</string>
+python store_data.py $query</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -512,7 +512,7 @@ python settings.py</string>
 				<key>script</key>
 				<string>query=$1
 
-python StoreData.py $query</string>
+python store_data.py $query</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -713,8 +713,7 @@ python reset.py $query</string>
 				<string>Loading Calendar Data (this can take a few seconds)</string>
 				<key>script</key>
 				<string>query=$1
-
-python doubleQuery.py 0
+python today.py 0 "$query"
 </string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
@@ -791,7 +790,7 @@ python doubleQuery.py 0
 				<string>Loading Calendar Data (this can take a few seconds)</string>
 				<key>script</key>
 				<string>query=$1
-python doubleQuery.py 0 "$query"
+python today.py 0 "$query"
 </string>
 				<key>scriptargtype</key>
 				<integer>1</integer>

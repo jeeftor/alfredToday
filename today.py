@@ -9,9 +9,9 @@ HELP_URL = 'https://github.com/jeeftor/AlfredToday'
 
 def main(wf):
 
-    from EventProcessing import process_events
-    from updateOutlook   import query_exchange_server
-    from updateGoogle    import query_google_calendar
+    from event_processor import process_events
+    from query_exchange   import query_exchange_server
+    from query_google    import query_google_calendar
 
     import pytz
     from pytz import timezone
@@ -45,7 +45,7 @@ def main(wf):
     action_start_time = time.time()
 
     # Find out cache time
-    cache_time = get_value_from_settings_with_default_int(wf, 'cache_time', 30)
+    cache_time = get_value_from_settings_with_default_int(wf, 'cache_time', 1800)
 
     morning = timezone("US/Eastern").localize(datetime.today().replace(hour=0, minute=0, second=1) + timedelta(days=date_offset))
     night = timezone("US/Eastern").localize(datetime.today().replace(hour=23, minute=59, second=59) + timedelta(days=date_offset))
@@ -95,7 +95,7 @@ def main(wf):
         outlook_events = wf.cached_data(outlook_cache_key, outlook_wrapper, max_age=cache_time)
 
         cmd = ['/usr/bin/python',
-               wf.workflowfile('updateOutlook.py'),
+               wf.workflowfile('query_exchange.py'),
                start_outlook.strftime("%Y-%m-%d-%H:%M:%S"),
                end_outlook.strftime("%Y-%m-%d-%H:%M:%S"),
                str(date_offset)]
@@ -118,28 +118,25 @@ def main(wf):
 
         for e in google_events:
 
-            wf.logger.debug(' '.join(['**FG --- Google:', str(e['start']['dateTime']), e.get('summary','NoTitle')]))
+
+
+            wf.logger.debug(' '.join(['**FG --- Google:', str(e.get(u'start').get(u'dateTime','All Day')), e.get('summary','NoTitle')]))
 
         cmd = ['/usr/bin/python',
-               wf.workflowfile('updateGoogle.py'),
+               wf.workflowfile('query_google.py'),
                start_google,
                stop_google,
                str(date_offset)]
         # Fire off in the background the script to update things! :)
         run_in_background('update_google', cmd)
 
-        #
-        #
-        #
-        # except Exception as ex:
-        #     template = "An exception of type {0} occured. Arguments:\n{1!r}"
-        #     message = template.format(type(ex).__name__, ex.args)
-        #     wf.logger.info(message)
-        #     wf.logger.info("Google -- Cache error")
-        #     import traceback
-        #     wf.logger.info(traceback.format_exc())
-        #
-        #     google_events = None
+
+
+
+
+
+
+
 
         if google_events is None:
 
