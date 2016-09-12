@@ -26,6 +26,8 @@ def query_exchange_server(wf, start_search, end_search, date_offset):
     """Runs a query against an exchange server for either today or a date offset by `date_offset`"""
     from lib.pyexchange import Exchange2010Service, ExchangeBasicAuthConnection, ExchangeNTLMAuthConnection
 
+    log = wf.logger
+
     log.info("BG: Refreshing Data Cache [Outlook]")
     log.info(wf.cachedir)
 
@@ -49,13 +51,11 @@ def query_exchange_server(wf, start_search, end_search, date_offset):
 
     service = Exchange2010Service(connection)
 
-
-
     try:
         # You can set event properties when you instantiate the event...
         event_list = service.calendar().list_events(start=start_search, end=end_search, details=True)
 
-        log.info("BG: Event count: " + str(len(event_list)))
+        log.info("BG: Event count: " + str(event_list.count))
         return event_list.events
     except:
         return None
@@ -90,21 +90,23 @@ def main(wf):
     start_outlook = datetime.strptime(start_param, format)#.astimezone(pytz.utc)
     end_outlook = datetime.strptime(end_param, format)#.astimezone(pytz.utc)
 
-    # cache_key = start_outlook.strftime("%Y%m%d") + ".exchange"
 
     def wrapper():
         return query_exchange_server(wf, start_outlook, end_outlook, date_offset)
 
 
-    cache_key = "exchange.Today"
-    if date_offset == "1":
-        cache_key = "exchange.Tomorrow"
-
+    cache_key = "exchange.Today" if (date_offset == "1") else "exchange.Tomorrow"
     notify_key = cache_key.replace('exchange.','')
 
+    # Compare Old events to New events to see if something changed
     old_events = wf.cached_data(cache_key)
+
+    # Force rewrite the cache
     wf.cache_data(cache_key, query_exchange_server(wf, start_outlook, end_outlook, date_offset))
+
+    # Compare the new "pulled" data against what was in the cache
     new_events = wf.cached_data(cache_key)
+
     if new_events is not None:
         new_set = build_event_set(new_events)
         old_set = build_event_set(old_events)

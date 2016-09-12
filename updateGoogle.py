@@ -1,0 +1,152 @@
+# encoding: utf-8
+
+from updateOutlook import asrun, asquote
+from workflow import Workflow3, ICON_INFO
+import subprocess
+
+def query_google_calendar(wf, start_search, end_search, date_offset):
+    """Queries against the GoogleCalendar API and does magical things (hopefully)"""
+    log = wf.logger
+
+    log.info("BG: Querying Google Calendar")
+    log.info("BG:     param: start_google = " + str(start_search))
+    log.info("BG:     param:   end_google = " + str(end_search))
+    log.info("BG:     param:   date_offset = " + str(date_offset))
+
+
+    # Load Imports
+    import os
+    import httplib2
+    import dateutil.parser
+    from apiclient import discovery
+    import oauth2client
+    from oauth2client import client
+    from oauth2client import tools
+
+
+    # If modifying these scopes, delete your previously saved credentials
+    # at ~/.credentials/calendar-python-quickstart.json
+    SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
+    CLIENT_SECRET_FILE = 'client_secret.json'
+    APPLICATION_NAME = 'Alfred Today'
+    HTTP_INSTANCE = httplib2.Http( disable_ssl_certificate_validation=True)
+
+    # Load OAuth2.0 credentials
+    home_dir = os.path.expanduser('~')
+    credential_dir = os.path.join(home_dir, '.credentials')
+    if not os.path.exists(credential_dir):
+        os.makedirs(credential_dir)
+    credential_path = os.path.join(credential_dir, 'calendar-alfred-today.json')
+
+    # Store fancy credential things
+    store = oauth2client.file.Storage(credential_path)
+    credentials = store.get()
+    if not credentials:
+        return None
+        # flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
+        # flow.user_agent = APPLICATION_NAME
+        # credentials = tools.run_flow(flow, store, None, http=HTTP_INSTANCE)
+
+    if credentials.invalid:
+        return None
+
+    http = credentials.authorize(HTTP_INSTANCE)
+    service = discovery.build('calendar', 'v3', http=http)
+
+    try:
+        eventsResult = service.events().list(calendarId='primary', timeMin=start_search, timeMax=end_search, singleEvents=True, orderBy='startTime').execute()
+        event_list = eventsResult.get('items', [])
+        log.info("Google returned " + str(len(event_list)) + " events")
+        return event_list
+    except IOError as ex:
+        template = "An exception of type {0} occured. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        log.info(message)
+        log.info("Google -- Cache error")
+        import traceback
+        log.info(traceback.format_exc())
+
+        return None
+
+
+def main(wf):
+    import pytz
+    from pytz import timezone
+    from datetime import timedelta, datetime
+
+    from settings import get_value_from_settings_with_default_boolean, get_value_from_settings_with_default_int
+    import time
+
+    query = None
+    if len(wf.args):
+        query = wf.args[0]
+    log.debug('BG: query : {!r}'.format(query))
+
+    # Get arguments to call
+    args = wf.args
+
+    if len(wf.args) > 1:
+        wf.logger.debug(args)
+        start_google = args[0]  # "2016-08-26-04:00:01"
+        stop_google = args[1]  # "2016-08-27-03:59:59"
+        date_offset = args[2]
+    else:
+        date_offset = 0
+        morning = timezone("US/Eastern").localize(datetime.today().replace(hour=0, minute=0, second=1) + timedelta(days=date_offset))
+        night = timezone("US/Eastern").localize(datetime.today().replace(hour=23, minute=59, second=59) + timedelta(days=date_offset))
+        # #Setup start time for query
+        start_google  = morning.astimezone(pytz.utc).isoformat()
+        stop_google   = night.astimezone(pytz.utc).isoformat()
+
+    def wrapper():
+        """A wrapper around doing a google query so this can be used with a cache function"""
+        return query_google_calendar(wf, start_google, stop_google, date_offset)
+
+    cache_key = "google.Today" if (date_offset in ['0',0]) else  "google.Tomorrow"
+
+    notify_key = cache_key.replace('google.', '')
+
+    log.debug("-- BG: CacheKey (Google)   " + cache_key)
+    log.debug("-- BG: CacheKey (Condition)   " + str(date_offset == 0))
+    log.debug("-- BG: CacheKey (Condition)   " + str(date_offset == '0'))
+
+    # Compare old events to new events to see if somethign is changed
+    old_events = wf.cached_data(cache_key)
+
+    # Force reqruite
+    wf.cache_data(cache_key, wrapper())
+
+    # Compare new pulled events aginst what was in the cache
+    new_events = wf.cached_data(cache_key)
+
+
+    if new_events is not None:
+        new_set = set(map(lambda x: x['id'] + ':' + x['updated'], new_events)) or set()
+    else:
+        new_set = set()
+
+    if old_events is not None:
+        old_set = set(map(lambda x: x['id'] + ':' + x['updated'], old_events)) or set()
+    else:
+        old_set = set()
+
+    cmd = 'tell application "Alfred 3" to run trigger "NotifyOfUpdate" in workflow "org.jeef.today" with argument "' + notify_key + '"'
+
+    number_of_changed_events = len(new_set.symmetric_difference(old_set))
+    if  number_of_changed_events  > 0:
+        wf.logger.debug('BG -- Google: Refresh required ')
+        wf.logger.debug('BG -- Google: ' + str(number_of_changed_events ) + " events changed")
+
+        evts = wf.cached_data(cache_key)
+        for e in evts:
+            wf.logger.debug(' '.join(['**BG --- Google:', str(e['start']['dateTime']), e.get('summary', 'NoTitle')]))
+
+        asrun(cmd)
+
+    log.debug(cache_key)
+    log.debug(date_offset)
+
+if __name__ == '__main__':
+    wf = Workflow3(libraries=['./lib'])
+    log = wf.logger
+    wf.run(main)

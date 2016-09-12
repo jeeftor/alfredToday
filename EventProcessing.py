@@ -38,7 +38,7 @@ def process_google_event(wf, event):
     time_string = start + " - " + end
 
     subtitle = time_string
-    title = event['summary']
+    title = event.get('summary','No Title')
     url = event['htmlLink']
 
     try:
@@ -52,7 +52,7 @@ def process_google_event(wf, event):
     if dateutil.parser.parse(enddt) < now:
         PAST_ITEMS.append(Item3(title, subtitle, arg=url, valid=False, icon="img/eventGoogleGray.png"))
     else:
-        FUTURE_ITEMS.append(Item3(title, subtitle, arg=url, icon='eventGoogle.png', valid=True))
+        FUTURE_ITEMS.append(Item3(title, subtitle, arg=url, icon='img/eventGoogle.png', valid=True))
         try:
             hangout_url = event['hangoutLink']
             hangout_title = u'\u21aa Join Hangout'
