@@ -3,7 +3,7 @@ import sys
 from query_exchange import asrun, asquote
 from workflow import Workflow3, ICON_INFO
 import subprocess
-
+from today import  get_cache_key
 def query_google_calendar(wf, start_search, end_search, date_offset):
     """Queries against the GoogleCalendar API and does magical things (hopefully)"""
     log = wf.logger
@@ -103,7 +103,9 @@ def main(wf):
         """A wrapper around doing a google query so this can be used with a cache function"""
         return query_google_calendar(wf, start_google, stop_google, date_offset)
 
-    cache_key = "google.Today" if (date_offset in ['0',0]) else  "google.Tomorrow"
+
+    cache_key = get_cache_key('google', date_offset)
+
     notify_key = cache_key.replace('google.', '')
 
     log.debug("-- BG: CacheKey  (Google)   " + cache_key)

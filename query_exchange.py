@@ -7,6 +7,7 @@ import sys, os
 from workflow.background import run_in_background, is_running
 from sets import Set
 import subprocess
+from today import get_cache_key
 
 def asrun(ascript):
     "Run the given AppleScript and return the standard output and error."
@@ -117,7 +118,8 @@ def main(wf):
 
 
 
-    cache_key = "exchange.Today" if (date_offset == "1") else "exchange.Tomorrow"
+    cache_key = get_cache_key('exchange', date_offset)
+
     notify_key = cache_key.replace('exchange.','')
 
     log.debug("-- BG: CacheKey  (exchange)   " + cache_key)
