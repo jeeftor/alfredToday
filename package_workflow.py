@@ -179,17 +179,18 @@ def build_workflow(workflow_dir, outputdir, overwrite=False, verbose=False):
     if not version:
         pl = plistlib.readPlist(u'info.plist')
         initial_version = semantic_version.Version.coerce(pl[u'version'])
-        version = str(initial_version.next_patch())
-        
-        pl[u'version'] = version
-        plistlib.writePlist(pl, u'info.plist')
+        version = initial_version
+
+        # version = str(initial_version).next_patch())
+        # pl[u'version'] = version
+        # plistlib.writePlist(pl, u'info.plist')
 
 
     name = safename(plistlib.readPlist(u'info.plist')[u'name']).replace(" ","_")
     zippath = os.path.join(outputdir, name)
 
     if version:
-        zippath += u'-' + version
+        zippath += u'-' + str(version)
     zippath += u'.alfredworkflow'
 
     if os.path.exists(zippath):
@@ -224,7 +225,19 @@ def build_workflow(workflow_dir, outputdir, overwrite=False, verbose=False):
     #Return workflow filename and actual filename
     print(name, os.path.basename(zippath), version)
     os.chdir(curdir)
+
+    # Bump version after
+    if version:
+        # pl = plistlib.readPlist(u'info.plist')
+        # initial_version = semantic_version.Version.coerce(pl[u'version'])
+        version = str(initial_version.next_patch())
+
+        pl[u'version'] = version
+        plistlib.writePlist(pl, u'info.plist')
+
     return True
+
+
 
 
 def main(args=None):

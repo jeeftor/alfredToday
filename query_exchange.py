@@ -27,9 +27,10 @@ def query_exchange_server(wf, start_search, end_search, date_offset):
     from lib.pyexchange import Exchange2010Service, ExchangeBasicAuthConnection, ExchangeNTLMAuthConnection
 
     log = wf.logger
-
-    log.info("BG: Refreshing Data Cache [Outlook]")
-    log.info(wf.cachedir)
+    log.info("BG: Querying Exchange Calendar")
+    log.info("BG:     param: start_search = " + str(start_search))
+    log.info("BG:     param:   end_search = " + str(end_search))
+    log.info("BG:     param:   date_offset = " + str(date_offset))
 
     # Get data from disk
     exchange_url, using_default_server = get_server(wf)
@@ -73,55 +74,93 @@ def build_event_set(events):
     return (serialize_event(evt) for evt in events)
 
 def main(wf):
+    log.debug('BG EXCHANGE: STARTED')
     import pytz
     from pytz import timezone
     from datetime import timedelta, datetime
     from settings import get_value_from_settings_with_default_boolean, get_value_from_settings_with_default_int
     import time
 
-    # Get arguments to call
-    args = wf.args
-    wf.logger.debug(args)
-    start_param = args[0]  # "2016-08-26-04:00:01"
-    end_param = args[1]  # "2016-08-27-03:59:59"
-    date_offset = args[2]
+    query = None
+    if len(wf.args):
+        query = wf.args[0]
+    log.debug('BG: query : {!r}'.format(query))
 
-    format = "%Y-%m-%d-%H:%M:%S"
-    start_outlook = datetime.strptime(start_param, format)#.astimezone(pytz.utc)
-    end_outlook = datetime.strptime(end_param, format)#.astimezone(pytz.utc)
+
+    # Get args or jsut run "raw dog"
+    if len(wf.args) > 1:
+        # Get arguments to call
+        args = wf.args
+        wf.logger.debug(args)
+        start_param = args[0]  # "2016-08-26-04:00:01"
+        end_param = args[1]  # "2016-08-27-03:59:59"
+        date_offset = args[2]
+        format = "%Y-%m-%d-%H:%M:%S"
+        start_outlook = datetime.strptime(start_param, format)  # .astimezone(pytz.utc)
+        end_outlook = datetime.strptime(end_param, format)  # .astimezone(pytz.utc)
+    else:
+        date_offset = 0
+        morning = timezone("US/Eastern").localize(
+            datetime.today().replace(hour=0, minute=0, second=1) + timedelta(days=date_offset))
+        night = timezone("US/Eastern").localize(
+            datetime.today().replace(hour=23, minute=59, second=59) + timedelta(days=date_offset))
+
+        # Outlook needs a different time format than google it would appear
+        start_outlook = morning.astimezone(pytz.utc)
+        end_outlook = night.astimezone(pytz.utc)
+
 
 
     def wrapper():
+        """A wrapper around doing an exchange server query"""
         return query_exchange_server(wf, start_outlook, end_outlook, date_offset)
+
 
 
     cache_key = "exchange.Today" if (date_offset == "1") else "exchange.Tomorrow"
     notify_key = cache_key.replace('exchange.','')
 
-    # Compare Old events to New events to see if something changed
+    log.debug("-- BG: CacheKey  (exchange)   " + cache_key)
+    log.debug("-- BG: NotifyKey (exchange)   " + notify_key)
+
+    # Compare old events to new events to see if somethign is changed
     old_events = wf.cached_data(cache_key)
 
-    # Force rewrite the cache
-    wf.cache_data(cache_key, query_exchange_server(wf, start_outlook, end_outlook, date_offset))
+    new_events = wrapper()
+    # Force rewrite of cache data
+    wf.cache_data(cache_key, new_events)
 
-    # Compare the new "pulled" data against what was in the cache
-    new_events = wf.cached_data(cache_key)
+    if old_events is None:
+        wf.logger.debug('**BG --- Exchange Old: None')
+
+    if new_events is None:
+        wf.logger.debug('**BG --- Exchange New: None')
+
 
     if new_events is not None:
-        new_set = build_event_set(new_events)
-        old_set = build_event_set(old_events)
+        new_set = set(map(lambda event: serialize_event(event), new_events))
+    else:
+        new_set = set()
 
-        cmd = 'tell application "Alfred 3" to run trigger "NotifyOfUpdate" in workflow "org.jeef.today" with argument "' + notify_key + '"'
+    if old_events is not None:
+        old_set = set(map(lambda event: serialize_event(event), old_events))
+    else:
+        old_set = set()
 
-        if len(new_set.symmetric_difference(old_set)) > 0:
-            wf.logger.debug('Refreshing view')
-            asrun(cmd)
+    cmd = 'tell application "Alfred 3" to run trigger "NotifyOfUpdate" in workflow "org.jeef.today" with argument "' + notify_key + '"'
 
-        log.debug(cache_key)
-        log.debug(date_offset)
+    number_of_changed_events = len(new_set.symmetric_difference(old_set))
+
+    log.debug("-- BG: Changed Event Count: " + str(number_of_changed_events))
+
+    if  number_of_changed_events  > 0:
+        wf.logger.debug('BG -- Exchange: ** Refresh required ')
+        wf.logger.debug('BG -- Exchange: ' + str(number_of_changed_events) + " events changed")
+
+        asrun(cmd)
 
 
 if __name__ == '__main__':
     wf = Workflow3(libraries=['./lib'])
     log = wf.logger
-    wf.run(main)
+    sys.exit(wf.run(main))

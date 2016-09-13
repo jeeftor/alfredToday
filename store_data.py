@@ -2,7 +2,13 @@ import sys
 import argparse
 from workflow import Workflow, ICON_WEB, ICON_WARNING, ICON_NOTE, web, PasswordNotFound, Workflow3
 
+
 def main(wf):
+    def googleFilter(filename):
+        return 'google' in filename
+
+    def exchangeFilter(filename):
+        return 'exchange' in filename
 
     import os
     from workflow.notify import notify
@@ -20,11 +26,14 @@ def main(wf):
         text = os.environ['text_to_display']
 
         if key == 'use_google':
+            wf.clear_cache(googleFilter)
+
             if value == '0':
                 notify("Google Calendar Support", u'\u274C Disabled')
             else:
                 notify("Google Calendar Support", u'\u2705 Enabled')
         elif key == 'use_exchange':
+            wf.clear_cache(exchangeFilter)
             if '0' == value:
                 notify("Exchange Server Support", u'\u274c Disabled')
             else:

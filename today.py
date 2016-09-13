@@ -6,6 +6,12 @@ from workflow.background import run_in_background, is_running
 UPDATE_SETTINGS = {'github_slug': 'jeeftor/alfredToday'}
 HELP_URL = 'https://github.com/jeeftor/AlfredToday'
 
+def get_cache_key(prefix, date_offset):
+    """Gets the cache key to be used"""
+    if date_offset in ['1',1]:
+        return prefix + ".Tomorrow"
+    return prefix + ".Today"
+
 
 def main(wf):
 
@@ -61,25 +67,24 @@ def main(wf):
         """A wrapper around doing a google query so this can be used with a cache function"""
         return query_google_calendar(wf, start_google, stop_google, date_offset)
 
-    def outlook_wrapper():
+    def exchange_wrapper():
         """Wrapper around outlook query so can be used with caching"""
         return query_exchange_server(wf,start_outlook, end_outlook, date_offset)
 
 
 
     # Format date text for displays
-    date_text = night.strftime("%A %B %d %Y")
+    date_text = night.strftime("%A %B %d, %Y")
     date_text_numeric = night.strftime("%m/%d/%y")
 
-    outlook_cache_key = "exchange.Today"
-    google_cache_key = "google.Today"
-    if date_offset in [1,'1']:
-        outlook_cache_key = "exchange.Tomorrow"
-        google_cache_key  = "google.Tomorrow"
-
+    # Build Cache Keys
+    exchange_cache_key = get_cache_key('exchange', date_offset)
+    google_cache_key  = get_cache_key('google', date_offset)
     log.debug("-- FG: CacheKey (Google)   " + google_cache_key)
-    log.debug("-- FG: CacheKey (Exchange) " + outlook_cache_key)
+    log.debug("-- FG: CacheKey (Exchange) " + exchange_cache_key)
 
+
+    # Check which calendars to use from settings
     use_exchange = get_value_from_settings_with_default_boolean(wf, 'use_exchange', False)
     use_google   = get_value_from_settings_with_default_boolean(wf, 'use_google', False)
 
@@ -88,55 +93,83 @@ def main(wf):
         wf.send_feedback()
         return
 
+    # Check cache status
+    google_fresh   = wf.cached_data_fresh(google_cache_key, max_age=cache_time)
+    exchange_fresh = wf.cached_data_fresh(exchange_cache_key, max_age=cache_time)
+
+
+    # Determine whether cache data is being shown or "live" data
+    showing_cached_data = True
+
+    if use_google:
+        showing_cached_data &= google_fresh
+
+    if use_exchange:
+        showing_cached_data &= exchange_fresh
+
+
     event_count = 0
     error_state = False
 
     if use_exchange:
-        outlook_events = wf.cached_data(outlook_cache_key, outlook_wrapper, max_age=cache_time)
 
-        cmd = ['/usr/bin/python',
-               wf.workflowfile('query_exchange.py'),
-               start_outlook.strftime("%Y-%m-%d-%H:%M:%S"),
-               end_outlook.strftime("%Y-%m-%d-%H:%M:%S"),
-               str(date_offset)]
+        # If the cache is fresh we need to do a bg refresh - because who knows what has happened
+        # If the cache is stale then directly query the exchange server
 
-         #Fire off in the background the script to update things! :)
-        run_in_background('update_exchange', cmd)
+        if exchange_fresh:
 
-        if outlook_events is None:
+            #Extract the cached events
+            exchange_events = wf.cached_data(exchange_cache_key)
+
+            # Run update in the background
+            if not is_running('update_exchange'):
+                cmd = ['/usr/bin/python',
+                       wf.workflowfile('query_exchange.py'),
+                       start_outlook.strftime("%Y-%m-%d-%H:%M:%S"),
+                       end_outlook.strftime("%Y-%m-%d-%H:%M:%S"),
+                       str(date_offset)]
+
+                # Fire off in the background the script to update things! :)
+                run_in_background('update_exchange', cmd)
+
+        else:
+
+            # Directly query the exchange server
+            exchange_events = wf.cached_data(exchange_cache_key, exchange_wrapper, max_age=cache_time)
+
+        if exchange_events is None:
             error_state = True
 
             wf.add_item('Unable to connect to exchange server', 'Check your connectivity or NTLM auth settings', icon='img/disclaimer.png')
-            outlook_events = []
+            exchange_events = []
         else:
-            event_count += len(outlook_events)
+            event_count += len(exchange_events)
     else:
-        outlook_events = []
+        exchange_events = []
 
     if use_google:
-        google_events = wf.cached_data(google_cache_key, google_wrapper, max_age=cache_time)
+        # If the cache is "fresh" we need to do a bg refresh - because we are loading from the cache
+        # If the cache isnt fresh - the server will be queried directly anyways
 
-        for e in google_events:
+        if google_fresh:
 
+            # Extract cached events
+            google_events = wf.cached_data(google_cache_key)
 
+            # Run update in background
+            if not is_running('update_google'):
+                cmd = ['/usr/bin/python',
+                       wf.workflowfile('query_google.py'),
+                       start_google,
+                       stop_google,
+                       str(date_offset)]
 
-            wf.logger.debug(' '.join(['**FG --- Google:', str(e.get(u'start').get(u'dateTime','All Day')), e.get('summary','NoTitle')]))
+                # Fire off in the background the script to update things! :)
+                run_in_background('update_google', cmd)
+        else:
 
-        cmd = ['/usr/bin/python',
-               wf.workflowfile('query_google.py'),
-               start_google,
-               stop_google,
-               str(date_offset)]
-        # Fire off in the background the script to update things! :)
-        run_in_background('update_google', cmd)
-
-
-
-
-
-
-
-
+            # Directly run event update - ignore background stuff
+            google_events = wf.cached_data(google_cache_key, google_wrapper, max_age=cache_time)
 
         if google_events is None:
 
@@ -160,11 +193,24 @@ def main(wf):
 
             google_events = []
         else:
+
+            for e in google_events:
+                wf.logger.debug(' '.join(['**FG --- Google:', str(e.get(u'start').get(u'dateTime', 'All Day')),
+                                          e.get('summary', 'NoTitle')]))
+
             event_count += len(google_events)
     else:
         google_events = []
 
-        # Build Header
+
+
+
+
+
+
+
+
+    # Build Header
     icon_file = 'img/date_span.png'
 
     if use_exchange and use_google:
@@ -176,7 +222,7 @@ def main(wf):
 
     # Fire off some log data
     log.info("Event Count   Google: " + str(len(google_events)))
-    log.info("Event Count Exchange: " + str(len(outlook_events)))
+    log.info("Event Count Exchange: " + str(len(exchange_events)))
     log.info("Event Count    Total: " + str(event_count))
 
     if event_count == 0:
@@ -188,13 +234,16 @@ def main(wf):
     first_menu_entry = wf.add_item(date_text, date_text_numeric, icon=icon_file)
 
     # Process events
-    process_events(wf, outlook_events, google_events)
+    process_events(wf, exchange_events, google_events)
 
     # Update elapsed time counter
     action_elapsed_time = time.time() - action_start_time
 
 
-    first_menu_entry.subtitle = first_menu_entry.subtitle + " query time: " + "{:.1f}".format(
+    if showing_cached_data:
+        first_menu_entry.subtitle += " - Cached Data"
+    else:
+        first_menu_entry.subtitle += " query time: " + "{:.1f}".format(
             action_elapsed_time) + " seconds"
 
     wf.send_feedback()

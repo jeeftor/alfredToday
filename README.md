@@ -14,6 +14,8 @@ Version two of this add-on supports both **Google** and **Microsoft Exchange** c
 * Version 2.0.2: Dateutil.parser added to lib list
 * Version 2.0.3: Correct event time interleaving
 * Version 3.0: HUGE SPEEDUPS.  Requires Alfred 3.1 
+* Version 3.5: Prelim NTLM support (untested)
+* Version 3.8: Rewrite of background handling for both Outlook and Exchange
 
 
 #Installation
@@ -28,6 +30,7 @@ Available Commands:
 * **Today** (shows the today list)
 * **Tomorrow** (shows list for tomorrow)
 * **tc** (loads configuration)
+* **dbgToday** debug options like open log
 
 
 
@@ -60,8 +63,7 @@ If you wish to re-authenticate make sure you remove the credentials file in your
 
 Use **today** to open the workflow and **tc** to open the config menu
 
-
-This workflow will query an EWS (Exchange Web Service) and pull down a list of Today's meetings.
+This workflow will query an EWS (Exchange Web Service) and pull down a list of Today's meetings.  It may only work with an office 365 online server, I have built NTLM authentication support but do not have an internal exchange server to test it against so I cannot be sure if it works
 
 If you are using Skype/Lync and you set the correct regex it will also parse out the Meeting URL
 
