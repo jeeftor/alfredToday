@@ -111,15 +111,21 @@ def main(wf):
     event_count = 0
     error_state = False
 
+
+    log.debug('--FG:   Use Exchange:' + str(use_exchange))
+    log.debug('--FG: Exchange Fresh:' + str(exchange_fresh))
     if use_exchange:
 
         # If the cache is fresh we need to do a bg refresh - because who knows what has happened
         # If the cache is stale then directly query the exchange server
 
         if exchange_fresh:
+            log.debug('--FG: Loading Exchange events from Cache')
 
             #Extract the cached events
             exchange_events = wf.cached_data(exchange_cache_key)
+
+            log.debug(str(exchange_events))
 
             # Run update in the background
             if not is_running('update_exchange'):
@@ -129,21 +135,27 @@ def main(wf):
                        end_outlook.strftime("%Y-%m-%d-%H:%M:%S"),
                        str(date_offset)]
 
+                log.debug('--FG: Launching background exchange update')
                 # Fire off in the background the script to update things! :)
                 run_in_background('update_exchange', cmd)
+            else:
+                log.debug('--FG: Background exchange update already running')
 
         else:
+            log.debug('--FG: Directly querying Exchange')
 
             # Directly query the exchange server
             exchange_events = wf.cached_data(exchange_cache_key, exchange_wrapper, max_age=cache_time)
 
         if exchange_events is None:
+            log.debug('--FG: Exchange Events returned NONE!!!')
             error_state = True
 
             wf.add_item('Unable to connect to exchange server', 'Check your connectivity or NTLM auth settings', icon='img/disclaimer.png')
             exchange_events = []
         else:
             event_count += len(exchange_events)
+
     else:
         exchange_events = []
 
@@ -154,7 +166,7 @@ def main(wf):
         if google_fresh:
 
             # Extract cached events
-            google_events = wf.cached_data(google_cache_key)
+            google_events = wf.cached_data(google_cache_key, max_age=0)
 
             # Run update in background
             if not is_running('update_google'):

@@ -112,7 +112,7 @@ def main(wf):
     log.debug("-- BG: NotifyKey (Google)   " + notify_key)
 
     # Compare old events to new events to see if somethign is changed
-    old_events = wf.cached_data(cache_key)
+    old_events = wf.cached_data(cache_key, max_age=0)
 
     new_events = wrapper()
     # Force rewrite of cache data
@@ -158,7 +158,7 @@ def main(wf):
         wf.logger.debug('BG -- Google: ** Refresh required ')
         wf.logger.debug('BG -- Google: ' + str(number_of_changed_events ) + " events changed")
 
-        evts = wf.cached_data(cache_key)
+        evts = wf.cached_data(cache_key, max_age=0)
         for e in evts:
             wf.logger.debug(' '.join(['**BG --- Google:', str(e['start']), e.get('summary', 'NoTitle')]))
             wf.logger.debug('BG -- Google: ' + cmd)
