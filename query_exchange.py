@@ -126,7 +126,7 @@ def main(wf):
     log.debug("-- BG: NotifyKey (exchange)   " + notify_key)
 
     # Compare old events to new events to see if somethign is changed
-    old_events = wf.cached_data(cache_key)
+    old_events = wf.cached_data(cache_key, max_age=0)
 
     new_events = wrapper()
     # Force rewrite of cache data
