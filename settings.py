@@ -261,4 +261,11 @@ def main(wf):
 
 if __name__ == u"__main__":
     wf = Workflow3(libraries=['./lib'])
+
+    wf.logger.debug('       _____ _______________________   _____________')
+    wf.logger.debug('      / ___// ____/_  __/_  __/  _/ | / / ____/ ___/')
+    wf.logger.debug('      \__ \/ __/   / /   / /  / //  |/ / / __ \__ \\')
+    wf.logger.debug('     ___/ / /___  / /   / / _/ // /|  / /_/ /___/ /')
+    wf.logger.debug('    /____/_____/ /_/   /_/ /___/_/ |_/\____//____/')
+
     sys.exit(wf.run(main))

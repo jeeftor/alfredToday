@@ -186,6 +186,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>AF5A7158-D993-4B9F-AAE9-F4774B174A3A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>714DD3C9-FEC2-4C98-B8EE-817AE843584C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>B95A7CF4-4AF9-4388-8B53-E8CB6F3350FC</key>
 		<array>
 		</array>
@@ -288,7 +301,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>9916EA2D-97B9-45BC-BAF6-C04A41BD96D3</string>
+				<string>AF5A7158-D993-4B9F-AAE9-F4774B174A3A</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -308,29 +321,6 @@
 	<string>Alfred Today</string>
 	<key>objects</key>
 	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<true/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>python authorize_google.py</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>9916EA2D-97B9-45BC-BAF6-C04A41BD96D3</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -359,6 +349,29 @@ python store_data.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<true/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>python wf_authorize_google.py</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>9916EA2D-97B9-45BC-BAF6-C04A41BD96D3</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>inputstring</key>
 				<string>{var:value_to_store}</string>
 				<key>matchcasesensitive</key>
@@ -372,6 +385,23 @@ python store_data.py $query</string>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
 			<string>E54262CD-7EE8-42E4-A277-823EB0492941</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>'{query}', {allvars}</string>
+				<key>cleardebuggertext</key>
+				<false/>
+				<key>processoutputs</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.debug</string>
+			<key>uid</key>
+			<string>AF5A7158-D993-4B9F-AAE9-F4774B174A3A</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -412,6 +442,29 @@ python store_data.py $query</string>
 			<string>BF83BB0D-9D59-416E-8049-8F1E25A79367</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<true/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>python background_auth_task.py</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>714DD3C9-FEC2-4C98-B8EE-817AE843584C</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -965,9 +1018,9 @@ It "may" be stuck on East Coast time for the time being</string>
 			<key>note</key>
 			<string>Stores configuraiton data to disk</string>
 			<key>xpos</key>
-			<integer>420</integer>
+			<integer>380</integer>
 			<key>ypos</key>
-			<integer>60</integer>
+			<integer>10</integer>
 		</dict>
 		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
 		<dict>
@@ -1046,6 +1099,17 @@ It "may" be stuck on East Coast time for the time being</string>
 			<key>ypos</key>
 			<integer>420</integer>
 		</dict>
+		<key>714DD3C9-FEC2-4C98-B8EE-817AE843584C</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>5</integer>
+			<key>note</key>
+			<string>Authorize GCAL</string>
+			<key>xpos</key>
+			<integer>870</integer>
+			<key>ypos</key>
+			<integer>130</integer>
+		</dict>
 		<key>76384EE5-7AB7-4FE2-8C3E-606BDCD5D54C</key>
 		<dict>
 			<key>note</key>
@@ -1069,9 +1133,9 @@ It "may" be stuck on East Coast time for the time being</string>
 			<key>note</key>
 			<string>If modifying google calendar settings</string>
 			<key>xpos</key>
-			<integer>610</integer>
+			<integer>580</integer>
 			<key>ypos</key>
-			<integer>80</integer>
+			<integer>40</integer>
 		</dict>
 		<key>93885FA3-1489-43F1-ABDC-C30454BCE345</key>
 		<dict>
@@ -1096,7 +1160,14 @@ It "may" be stuck on East Coast time for the time being</string>
 			<key>note</key>
 			<string>Authorize GCAL</string>
 			<key>xpos</key>
-			<integer>800</integer>
+			<integer>870</integer>
+			<key>ypos</key>
+			<integer>10</integer>
+		</dict>
+		<key>AF5A7158-D993-4B9F-AAE9-F4774B174A3A</key>
+		<dict>
+			<key>xpos</key>
+			<integer>790</integer>
 			<key>ypos</key>
 			<integer>40</integer>
 		</dict>
@@ -1123,9 +1194,9 @@ It "may" be stuck on East Coast time for the time being</string>
 			<key>note</key>
 			<string>Store &amp; Refresh Filter</string>
 			<key>xpos</key>
-			<integer>310</integer>
+			<integer>290</integer>
 			<key>ypos</key>
-			<integer>120</integer>
+			<integer>80</integer>
 		</dict>
 		<key>C648C777-D441-4C9C-97A0-F561B76C99BA</key>
 		<dict>
@@ -1166,11 +1237,11 @@ It "may" be stuck on East Coast time for the time being</string>
 			<key>xpos</key>
 			<integer>700</integer>
 			<key>ypos</key>
-			<integer>70</integer>
+			<integer>40</integer>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>3.8.2</string>
+	<string>3.9</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>

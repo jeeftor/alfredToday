@@ -2,7 +2,6 @@ import sys
 import argparse
 from workflow import Workflow, ICON_WEB, ICON_WARNING, ICON_NOTE, web, PasswordNotFound, Workflow3
 
-
 def main(wf):
     def googleFilter(filename):
         return 'google' in filename
@@ -15,6 +14,10 @@ def main(wf):
 
     key =  os.environ['settings_value']
     value =  os.environ['value_to_store']
+
+
+    wf.logger.debug("        Key: %s", key)
+    wf.logger.debug("      Value: %s", value)
 
     if key == 'password':
         wf.save_password('today.workflow.password',value)
@@ -32,6 +35,7 @@ def main(wf):
                 notify("Google Calendar Support", u'\u274C Disabled')
             else:
                 notify("Google Calendar Support", u'\u2705 Enabled')
+
         elif key == 'use_exchange':
             wf.clear_cache(exchangeFilter)
             if '0' == value:
@@ -58,4 +62,10 @@ def main(wf):
 
 if __name__ == u"__main__":
     wf = Workflow3(libraries=['./lib'])
+    wf.logger.debug('      _______________  ____  ______  ')
+    wf.logger.debug('     / ___/_  __/ __ \/ __ \/ ____/  ')
+    wf.logger.debug('     \__ \ / / / / / / /_/ / __/  ')
+    wf.logger.debug('    ___/ // / / /_/ / _, _/ /___  ')
+    wf.logger.debug('   /____//_/  \____/_/ |_/_____/  DATA  ')
+    wf.logger.debug('     ')
     sys.exit(wf.run(main))

@@ -4,6 +4,7 @@ from query_exchange import asrun, asquote
 from workflow import Workflow3, ICON_INFO
 import subprocess
 from today import  get_cache_key
+
 def query_google_calendar(wf, start_search, end_search, date_offset):
     """Queries against the GoogleCalendar API and does magical things (hopefully)"""
     log = wf.logger
@@ -43,9 +44,6 @@ def query_google_calendar(wf, start_search, end_search, date_offset):
     credentials = store.get()
     if not credentials:
         return None
-        # flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
-        # flow.user_agent = APPLICATION_NAME
-        # credentials = tools.run_flow(flow, store, None, http=HTTP_INSTANCE)
 
     if credentials.invalid:
         return None

@@ -18,7 +18,6 @@ Do the OAuth 2.0 Web Server dance for a command line application. Stores the
 generated credentials in a common file that is used by other example apps in
 the same directory.
 """
-
 from __future__ import print_function
 
 import logging
@@ -32,6 +31,7 @@ from six.moves import input
 
 from oauth2client import client
 from oauth2client import util
+from workflow.notify import notify
 
 
 __author__ = 'jcgregorio@google.com (Joe Gregorio)'
@@ -242,6 +242,151 @@ def run_flow(flow, storage, flags=None, http=None):
 
     return credential
 
+
+@util.positional(3)
+def run_flow_wf(wf, flow, storage, flags=None, http=None):
+
+    """Core code for a command-line application.
+
+    The ``run()`` function is called from your application and runs
+    through all the steps to obtain credentials. It takes a ``Flow``
+    argument and attempts to open an authorization server page in the
+    user's default web browser. The server asks the user to grant your
+    application access to the user's data. If the user grants access,
+    the ``run()`` function returns new credentials. The new credentials
+    are also stored in the ``storage`` argument, which updates the file
+    associated with the ``Storage`` object.
+
+    It presumes it is run from a command-line application and supports the
+    following flags:
+
+        ``--auth_host_name`` (string, default: ``localhost``)
+           Host name to use when running a local web server to handle
+           redirects during OAuth authorization.
+
+        ``--auth_host_port`` (integer, default: ``[8080, 8090]``)
+           Port to use when running a local web server to handle redirects
+           during OAuth authorization. Repeat this option to specify a list
+           of values.
+
+        ``--[no]auth_local_webserver`` (boolean, default: ``True``)
+           Run a local web server to handle redirects during OAuth
+           authorization.
+
+    The tools module defines an ``ArgumentParser`` the already contains the
+    flag definitions that ``run()`` requires. You can pass that
+    ``ArgumentParser`` to your ``ArgumentParser`` constructor::
+
+        parser = argparse.ArgumentParser(
+            description=__doc__,
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+            parents=[tools.argparser])
+        flags = parser.parse_args(argv)
+
+    Args:
+        flow: Flow, an OAuth 2.0 Flow to step through.
+        storage: Storage, a ``Storage`` to store the credential in.
+        flags: ``argparse.Namespace``, (Optional) The command-line flags. This
+               is the object returned from calling ``parse_args()`` on
+               ``argparse.ArgumentParser`` as described above. Defaults
+               to ``argparser.parse_args()``.
+        http: An instance of ``httplib2.Http.request`` or something that
+              acts like it.
+
+    Returns:
+        Credentials, the obtained credential.
+    """
+
+    log = wf.logger
+    log.debug('Starting auth function')
+
+
+    if flags is None:
+        flags = argparser.parse_args()
+    logging.getLogger().setLevel(getattr(logging, flags.logging_level))
+
+    if not flags.noauth_local_webserver:
+        success = False
+        port_number = 0
+        for port in flags.auth_host_port:
+            port_number = port
+            try:
+                httpd = ClientRedirectServer((flags.auth_host_name, port),
+                                             ClientRedirectHandler)
+            except socket.error as e:
+                log.info('')
+                log.info(' ******  AUTH ERROR DETECTED ****** ')
+                log.info('')
+                log.info("     %s",str(e))
+                log.info('')
+                log.info(' ********* END AUTH ERROR ********* ')
+                notify(u'Google Authorization Error',str(e))
+                return
+
+            else:
+                success = True
+                break
+        flags.noauth_local_webserver = not success
+        if not success:
+            log.debug('Failed to start a local webserver listening '
+                  'on either port 8080')
+            log.debug('or port 8090. Please check your firewall settings and locally')
+            log.debug('running programs that may be blocking or using those ports.')
+            # log.debug('')
+            # log.debug('Falling back to --noauth_local_webserver and continuing with')
+            # log.debug('authorization.')
+            # log.debug('')
+            return None
+    if not flags.noauth_local_webserver:
+        oauth_callback = 'http://%s:%s/' % (flags.auth_host_name, port_number)
+    else:
+        oauth_callback = client.OOB_CALLBACK_URN
+    flow.redirect_uri = oauth_callback
+    authorize_url = flow.step1_get_authorize_url()
+
+    if not flags.noauth_local_webserver:
+        import webbrowser
+        webbrowser.open(authorize_url, new=1, autoraise=True)
+        log.debug('Your browser has been opened to visit:')
+        log.debug('')
+        log.debug('    ' + authorize_url)
+        log.debug('')
+        log.debug('If your browser is on a different machine then '
+              'exit and re-run this')
+        log.debug('application with the command-line parameter ')
+        log.debug('')
+        log.debug('  --noauth_local_webserver')
+        log.debug('')
+    else:
+        log.debug('Go to the following link in your browser:')
+        log.debug('')
+        log.debug('    ' + authorize_url)
+        log.debug('')
+
+    code = None
+    if not flags.noauth_local_webserver:
+        httpd.handle_request()
+        if 'error' in httpd.query_params:
+            sys.exit('Authentication request was rejected.')
+        if 'code' in httpd.query_params:
+            code = httpd.query_params['code']
+        else:
+            log.debug('Failed to find "code" in the query parameters '
+                  'of the redirect.')
+            sys.exit('Try running with --noauth_local_webserver.')
+    else:
+        code = input('Enter verification code: ').strip()
+
+    try:
+        credential = flow.step2_exchange(code, http=http)
+    except client.FlowExchangeError as e:
+        sys.exit('Authentication has failed: %s' % e)
+
+    storage.put(credential)
+    credential.set_store(storage)
+    log.debug('Authentication successful.')
+
+    return credential
 
 def message_if_missing(filename):
     """Helpful message to display if the CLIENT_SECRETS file is missing."""
