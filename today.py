@@ -102,7 +102,7 @@ def main(wf):
     google_fresh   = wf.cached_data_fresh(google_cache_key, max_age=cache_time)
     exchange_fresh = wf.cached_data_fresh(exchange_cache_key, max_age=cache_time)
 
-    
+
 
     # Determine whether cache data is being shown or "live" data
     showing_cached_data = True

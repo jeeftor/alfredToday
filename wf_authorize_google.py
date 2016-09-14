@@ -1,7 +1,7 @@
 
 from __future__ import print_function
 from workflow import Workflow3
-
+from workflow.notify import notify
 
 import sys
 
