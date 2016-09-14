@@ -1241,7 +1241,7 @@ It "may" be stuck on East Coast time for the time being</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>3.9</string>
+	<string>3.9.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>

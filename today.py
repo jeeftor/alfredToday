@@ -51,7 +51,7 @@ def main(wf):
     action_start_time = time.time()
 
     # Find out cache time
-    cache_time = get_value_from_settings_with_default_int(wf, 'cache_time', 1800)
+    cache_time = get_value_from_settings_with_default_int(wf, 'cache_time', 9000)
 
     morning = timezone("US/Eastern").localize(datetime.today().replace(hour=0, minute=0, second=1) + timedelta(days=date_offset))
     night = timezone("US/Eastern").localize(datetime.today().replace(hour=23, minute=59, second=59) + timedelta(days=date_offset))
@@ -93,10 +93,16 @@ def main(wf):
         wf.send_feedback()
         return
 
+    log.debug("Max Age: %i  Cache Age Google:  %i   Exchange: %i",
+              cache_time,
+              wf.cached_data_age(google_cache_key),
+              wf.cached_data_age(exchange_cache_key)
+              )
     # Check cache status
     google_fresh   = wf.cached_data_fresh(google_cache_key, max_age=cache_time)
     exchange_fresh = wf.cached_data_fresh(exchange_cache_key, max_age=cache_time)
 
+    
 
     # Determine whether cache data is being shown or "live" data
     showing_cached_data = True

@@ -250,7 +250,7 @@ def main(wf):
             ntlm_item.setvar('settings_value', 'use_ntlm')
             ntlm_item.setvar('value_to_store', False)
 
-    cache_time = get_value_from_settings_with_default_int(wf, 'cache_time', 1800)
+    cache_time = get_value_from_settings_with_default_int(wf, 'cache_time', 9000)
 
     cache_item = wf.add_item('Cache Time: ' + str(cache_time) + " seconds",'This is the time between refreshing the calendar data cache',
                              arg=cache_time, icon='img/hourglass.png', valid=True)
