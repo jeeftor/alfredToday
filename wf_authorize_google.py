@@ -33,7 +33,7 @@ def get_credentials(wf):
     CLIENT_SECRET_FILE = 'client_secret.json'
     APPLICATION_NAME = 'Google Calendar API Python Quickstart'
 
-    HTTP_INSTANCE = httplib2.Http(get_args_for_http())
+    HTTP_INSTANCE = httplib2.Http(get_args_for_http(wf))
 
 
     home_dir = os.path.expanduser('~')
@@ -66,7 +66,7 @@ def authorize(wf):
     if credentials:
         use_ssl = get_value_from_settings_with_default_boolean(wf, 'use_ssl', True)
 
-        http = credentials.authorize(httplib2.Http(get_args_for_http()))
+        http = credentials.authorize(httplib2.Http(get_args_for_http(wf)))
 
         #, ca_certs="/usr/local/etc/openssl/cert.pem"))
         notify(u'Google Authorization', 'Success!!')

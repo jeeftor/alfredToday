@@ -5,7 +5,7 @@ import os.path
 DEFAULT_SERVER = 'https://outlook.office365.com/EWS/Exchange.asmx'
 CREDENTIAL_ENTRY = 'outlook.office365.com'
 
-def get_args_for_http():
+def get_args_for_http(wf):
     """Returns a kw_args for an HTTP_INSTANCE var"""
 
     use_ssl = get_value_from_settings_with_default_boolean(wf, 'use_ssl', True)

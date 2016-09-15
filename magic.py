@@ -15,12 +15,17 @@ def main(wf):
         query = wf.args[0]
 
     log.debug('query : {!r}'.format(query))
+
+
     #
     # wf.add_item("workflow:magic", "List available magic arguments.", arg="workflow:magic",
     #             autocomplete="workflow:magic", icon=ICON_INFO)
     wf.add_item("workflow:help",
                 "Open workflow’s help URL in default web browser. This URL is specified in the help_url argument to Workflow.",
                 arg="workflow:help", autocomplete="workflow:help", icon=ICON_INFO)
+    wf.add_item("workflow:openlog", "Open the Workflow’s log file in the default app.", arg="workflow:openlog",
+                autocomplete="workflow:openlog", icon=ICON_INFO)
+
     wf.add_item("workflow:version", "Display the installed version of the workflow (if one is set).",
                 arg="workflow:version", autocomplete="workflow:version", icon=ICON_INFO)
     wf.add_item("workflow:delcache", "Delete the Workflow’s cache.", arg="workflow:delcache",
@@ -40,8 +45,6 @@ def main(wf):
                 autocomplete="workflow:opencache", icon=ICON_INFO)
     wf.add_item("workflow:opendata", "Open the Workflow’s data directory.", arg="workflow:opendata",
                 autocomplete="workflow:opendata", icon=ICON_INFO)
-    wf.add_item("workflow:openlog", "Open the Workflow’s log file in the default app.", arg="workflow:openlog",
-                autocomplete="workflow:openlog", icon=ICON_INFO)
     wf.add_item("workflow:openterm", "Open a Terminal window in the Workflow’s root directory.",
                 arg="workflow:openterm", autocomplete="workflow:openterm", icon=ICON_INFO)
     wf.add_item("workflow:openworkflow", "Open the Workflow’s root directory (where info.plist is).",
