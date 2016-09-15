@@ -4,6 +4,7 @@ from query_exchange import asrun, asquote
 from workflow import Workflow3, ICON_INFO
 import subprocess
 from today import  get_cache_key
+from settings import  get_args_for_http
 
 def query_google_calendar(wf, start_search, end_search, date_offset):
     """Queries against the GoogleCalendar API and does magical things (hopefully)"""
@@ -30,7 +31,10 @@ def query_google_calendar(wf, start_search, end_search, date_offset):
     SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
     CLIENT_SECRET_FILE = 'client_secret.json'
     APPLICATION_NAME = 'Alfred Today'
-    HTTP_INSTANCE = httplib2.Http( disable_ssl_certificate_validation=True)
+
+
+    # Removed line calling for - ca_certs="/usr/local/etc/openssl/cert.pem"
+    HTTP_INSTANCE = httplib2.Http(get_args_for_http())
 
     # Load OAuth2.0 credentials
     home_dir = os.path.expanduser('~')

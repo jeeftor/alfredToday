@@ -12,6 +12,7 @@ from oauth2client import client
 from oauth2client import tools
 
 import datetime
+from settings import  get_args_for_http
 
 try:
     import argparse
@@ -25,7 +26,7 @@ SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Google Calendar API Python Quickstart'
 # Removed line calling for - ca_certs="/usr/local/etc/openssl/cert.pem"
-HTTP_INSTANCE = httplib2.Http(disable_ssl_certificate_validation=True)
+HTTP_INSTANCE = httplib2.Http(get_args_for_http())
 
 
 def get_credentials():

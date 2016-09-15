@@ -2,17 +2,18 @@
 from __future__ import print_function
 from workflow import Workflow3
 from workflow.notify import notify
-
+from settings import get_args_for_http
 import sys
+
 
 def get_credentials(wf):
     """Gets valid user credentials from storage.
 
     If nothing has been stored, or if the stofrom workflow.notify import notify
 
-import sys
-import os
-sys.path.insert(0, 'lib') red credentials are invalid,
+    import sys
+    import os
+    sys.path.insert(0, 'lib') red credentials are invalid,
     the OAuth2 flow is completed to obtain the new credentials.
 
     Returns:
@@ -31,8 +32,8 @@ sys.path.insert(0, 'lib') red credentials are invalid,
     SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
     CLIENT_SECRET_FILE = 'client_secret.json'
     APPLICATION_NAME = 'Google Calendar API Python Quickstart'
-    # Removed line calling for - ca_certs="/usr/local/etc/openssl/cert.pem"
-    HTTP_INSTANCE = httplib2.Http(disable_ssl_certificate_validation=True)
+
+    HTTP_INSTANCE = httplib2.Http(get_args_for_http())
 
 
     home_dir = os.path.expanduser('~')
@@ -63,14 +64,16 @@ def authorize(wf):
 
     credentials = get_credentials(wf)
     if credentials:
-        http = credentials.authorize(httplib2.Http(disable_ssl_certificate_validation=True)
+        use_ssl = get_value_from_settings_with_default_boolean(wf, 'use_ssl', True)
+
+        http = credentials.authorize(httplib2.Http(get_args_for_http()))
+
         #, ca_certs="/usr/local/etc/openssl/cert.pem"))
         notify(u'Google Authorization', 'Success!!')
 
 
 
 def main(wf):
-    import os
     authorize(wf)
 
 if __name__ == u"__main__":

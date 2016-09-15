@@ -1,9 +1,19 @@
 import sys
 import argparse
 from workflow import Workflow, ICON_WEB, ICON_WARNING, ICON_NOTE, web, PasswordNotFound, Workflow3
-
+import os.path
 DEFAULT_SERVER = 'https://outlook.office365.com/EWS/Exchange.asmx'
 CREDENTIAL_ENTRY = 'outlook.office365.com'
+
+def get_args_for_http():
+    """Returns a kw_args for an HTTP_INSTANCE var"""
+
+    use_ssl = get_value_from_settings_with_default_boolean(wf, 'use_ssl', True)
+    kwargs = {'disable_ssl_certificate_validation': use_ssl}
+    if use_ssl and os.path.isfile('/usr/local/etc/openssl/cert.pem'):
+        kwargs['ca_certs'] = '/usr/local/etc/openssl/cert.pem'
+
+    return kwargs
 
 
 def guess_domain():
@@ -174,16 +184,21 @@ def main(wf):
     # Default items for workflow
 
     wf.add_item('Today workflow configuration Menu', icon='img/gear.png')
+
+
+
+
     use_google   = get_value_from_settings_with_default_boolean(wf, 'use_google', False)
     if not use_google:
-        google_toggle = wf.add_item('Google calendar disabled', 'Toggle this to enable support', valid=True, arg="refresh", icon="img/googleNo.png")
+        google_toggle = wf.add_item('Google calendar disabled', 'Toggle this to enable support',
+                                    valid=True, arg="refresh", icon="img/googleNo.png")
         google_toggle.setvar('value_to_store', True)
     else:
         google_toggle = wf.add_item('Google calendar enabled', 'Toggle this to enable support', valid=True, arg="refresh", icon="img/googleYes.png")
         google_toggle.setvar('value_to_store', False)
 
     google_toggle.setvar('settings_value', 'use_google')
-    google_toggle.setvar('text_to_display', 'Google Calendar')
+    google_toggle.setvar('text_to_display', 'Use Google Calendar')
 
     use_exchange = get_value_from_settings_with_default_boolean(wf, 'use_exchange', False)
     if not use_exchange:
@@ -232,6 +247,17 @@ def main(wf):
             it.setvar('text_to_display','Regex:')
             it.setvar('settings_value', 'regex')
 
+        use_ssl = get_value_from_settings_with_default_boolean(wf, 'use_ssl', True)
+        if not use_ssl:
+            ssl_toggle = wf.add_item('SSL Disabled', 'It is not recommended to disable SSL',
+                                     valid=True, arg="refresh", icon="img/sslNo.png")
+            ssl_toggle.setvar('value_to_store', True)
+        else:
+            ssl_toggle = wf.add_item('SSL Enabled', 'This is good',
+                                     valid=True, arg="refresh", icon="img/sslYes.png")
+            ssl_toggle.setvar('value_to_store', False)
+        ssl_toggle.setvar('settings_value', 'use_ssl')
+        ssl_toggle.setvar('text_to_display', 'SSL')
 
         using_ntlm = get_value_from_settings_with_default_boolean(wf, 'use_ntlm', False)
         if not using_ntlm:

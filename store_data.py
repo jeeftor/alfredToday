@@ -50,12 +50,17 @@ def main(wf):
             # Clear outlook events because we are changing the auth type
             wf.clear_cache(exchangeFilter)
 
-           # outlook_events = wf.cached_data(outlook_cache_key, outlook_wrapper, max_age=cache_time)
-
             if '0' == value:
                 notify("NTLM Authentication", u'\u274c Disabled')
             else:
                 notify("NTLM Authentication", u'\u2705 Enabled')
+        elif key == 'use_ssl':
+            if '0' == value:
+                value = u'\u274c Disabled'
+            else:
+                value = u'\u2705 Enabled'
+            notify(text, value)
+
         else:
             notify('Updated ' + text, "To: " + value)
 
