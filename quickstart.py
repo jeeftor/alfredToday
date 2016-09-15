@@ -24,7 +24,8 @@ except ImportError:
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Google Calendar API Python Quickstart'
-HTTP_INSTANCE = httplib2.Http(ca_certs="/usr/local/etc/openssl/cert.pem")
+# Removed line calling for - ca_certs="/usr/local/etc/openssl/cert.pem"
+HTTP_INSTANCE = httplib2.Http(disable_ssl_certificate_validation=True)
 
 
 def get_credentials():
