@@ -4,7 +4,7 @@ from query_exchange import asrun, asquote
 from workflow import Workflow3, ICON_INFO
 import subprocess
 from today import  get_cache_key
-from settings import  get_args_for_http
+from settings import  get_http_kw_args
 
 def query_google_calendar(wf, start_search, end_search, date_offset):
     """Queries against the GoogleCalendar API and does magical things (hopefully)"""
@@ -34,7 +34,7 @@ def query_google_calendar(wf, start_search, end_search, date_offset):
 
 
     # Removed line calling for - ca_certs="/usr/local/etc/openssl/cert.pem"
-    HTTP_INSTANCE = httplib2.Http(get_args_for_http(wf))
+    HTTP_INSTANCE = httplib2.Http(**get_http_kw_args(wf))
 
     # Load OAuth2.0 credentials
     home_dir = os.path.expanduser('~')

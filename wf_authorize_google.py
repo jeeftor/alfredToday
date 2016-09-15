@@ -2,7 +2,7 @@
 from __future__ import print_function
 from workflow import Workflow3
 from workflow.notify import notify
-from settings import get_args_for_http
+from settings import get_http_kw_args
 import sys
 
 
@@ -33,7 +33,7 @@ def get_credentials(wf):
     CLIENT_SECRET_FILE = 'client_secret.json'
     APPLICATION_NAME = 'Google Calendar API Python Quickstart'
 
-    HTTP_INSTANCE = httplib2.Http(get_args_for_http(wf))
+    HTTP_INSTANCE = httplib2.Http(**get_http_kw_args(wf))
 
 
     home_dir = os.path.expanduser('~')
