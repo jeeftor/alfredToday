@@ -65,7 +65,7 @@ def main(wf):
 
 
 UPDATE_SETTINGS = {'github_slug': 'jeeftor/alfredToday'}
-HELP_URL = 'https://github.com/jeeftor/AlfredToday'
+HELP_URL = 'https://github.com/jeeftor/alfredToday/blob/master/README.md'
 
 
 if __name__ == '__main__':

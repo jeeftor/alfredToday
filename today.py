@@ -4,7 +4,7 @@ from workflow import Workflow3, ICON_INFO
 from workflow.background import run_in_background, is_running
 
 UPDATE_SETTINGS = {'github_slug': 'jeeftor/alfredToday'}
-HELP_URL = 'https://github.com/jeeftor/AlfredToday'
+HELP_URL = 'https://github.com/jeeftor/alfredToday/blob/master/README.md'
 
 def get_cache_key(prefix, date_offset):
     """Gets the cache key to be used"""
