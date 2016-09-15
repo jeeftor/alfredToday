@@ -384,7 +384,12 @@ def run_flow_wf(wf, flow, storage, flags=None, http=None):
 
     storage.put(credential)
     credential.set_store(storage)
-    log.debug('Authentication successful.')
+
+    log.info('')
+    log.info(' ******  AUTHORIZATION SUCCESS  ****** ')
+    log.info('')
+
+
 
     return credential
 

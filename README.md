@@ -39,7 +39,7 @@ Available Commands:
 
 #Authenticating against Google Calendar (oauth)
 
-The Google portion of this workflow uses oauth2 to authenticate with google and access your calendar.  When you enabled Google support via the **tc** command the script "should" open a screen in your web browswer similar to
+The Google portion of this workflow uses oauth2 to authenticate with google and access your calendar.  When you enabled Google support via the **tc** command the script "should" open a screen in your web browser similar to
 
 ![auth](docs/auth.png)
 
@@ -56,16 +56,48 @@ If you want to block access to this application perform a google [Security Check
 
 and click **Remove**.  
 
-If you wish to re-authenticate make sure you remove the credentials file in your home directory
+Disabling Google support with **tc** will delete the local credentials file.
+
+##Manual Authorization
+There are a variety of random reasons why the authorization may not work automatically.  If you are having trouble you can try to manually authorize.
+
+1) First open a terminal window by right clicking on the **Alfred Today** item in your workflow list
+
+![term](docs/rightClick.png)
+
+2) type `python wf_authorize_google.py` in the terminal.  This "should" open a web browser with the option to authorize the application.
+
+If everything works correctly you will see something like this:
+
+```
+19:55:06 tools.py:388 INFO
+19:55:06 tools.py:389 INFO      ******  AUTHORIZATION SUCCESS  ******
+19:55:06 tools.py:390 INFO
+```
+
+If there is a problem you will get something like this.
+
+```
+19:52:00 tools.py:301 DEBUG    Starting auth function
+19:52:00 tools.py:317 INFO
+19:52:00 tools.py:318 INFO      ******  AUTH ERROR DETECTED ******
+19:52:00 tools.py:319 INFO
+19:52:00 tools.py:320 INFO          [Errno 48] Address already in use
+19:52:00 tools.py:321 INFO
+19:52:00 tools.py:322 INFO      ********* END AUTH ERROR *********
+```
+
+If you run into problems open an [issue](https://github.com/jeeftor/alfredToday/issues) and/or post on [alfred forum link](http://www.alfredforum.com/topic/9271-today-view-for-google-calendar-and-microsoft-exchange/?p=46109)
 
 
-#Outlook
+
+#Exchange Servers
 
 Use **today** to open the workflow and **tc** to open the config menu
 
-This workflow will query an EWS (Exchange Web Service) and pull down a list of Today's meetings.  It may only work with an office 365 online server, I have built NTLM authentication support but do not have an internal exchange server to test it against so I cannot be sure if it works
+This workflow will query an EWS (Exchange Web Service) and pull down a list of Today's meetings.  *It may only work with an office 365 online server, I have built NTLM authentication support but do not have an internal exchange server to test it against so I cannot be sure if it works*
 
-If you are using Skype/Lync and you set the correct regex it will also parse out the Meeting URL
+If you are using **Skype/Lync** and you set the correct regex it will also parse out the Meeting URL
 
 You can click **shift** on an entry to load a **QuickLook** preview of the item.
 
@@ -129,7 +161,8 @@ This regular expression basically says:
 
 #Debug Options
 
-The command **dbgtoday** will list all the debug options available for the workflow
+The command **dbgtoday** will list all the debug options available for the workflow.  You can open up a log with:
+`dbgtoday workflow:openlog` and see fancy debug information
 
 #Feedback & Help
 
