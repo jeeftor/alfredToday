@@ -63,10 +63,39 @@ def main():
     10 events on the user's calendar.
     """
     credentials = get_credentials()
-    http = credentials.authorize(httplib2.Http())
+    http = credentials.authorize(httplib2.Http(disable_ssl_certificate_validation=True))
     service = discovery.build('calendar', 'v3', http=http)
 
+
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+
+
+
+    page_token = None
+    cals = service.calendarList().list(pageToken=page_token).execute()
+    while True:
+        calendar_list = service.calendarList().list(pageToken=page_token).execute()
+        for calendar_list_entry in calendar_list['items']:
+            print("\n********************************************")
+            print("Name: " + calendar_list_entry['summary'] + " ACL: " + calendar_list_entry['accessRole'] + "   Calendar ID: " + calendar_list_entry['id'])
+            cal_id = calendar_list_entry['id']
+            eventsResult = service.events().list(
+                calendarId=cal_id, timeMin=now, maxResults=10, singleEvents=True,
+                orderBy='startTime').execute()
+
+            events = eventsResult.get('items', [])
+
+            if not events:
+                print('No upcoming events found.')
+            for event in events:
+                start = event['start'].get('dateTime', event['start'].get('date'))
+                print(start, event['summary'])
+
+        page_token = calendar_list.get('nextPageToken')
+        if not page_token:
+            break
+
+
     print('Getting the upcoming 10 events')
     eventsResult = service.events().list(
         calendarId='primary', timeMin=now, maxResults=10, singleEvents=True,
