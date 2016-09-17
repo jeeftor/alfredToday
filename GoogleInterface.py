@@ -16,7 +16,6 @@ from settings import get_http_kw_args
 class GoogleInterface(object):
 
 
-
     def __init__(self, wf):
         self.HTTP_INSTANCE = httplib2.Http(**get_http_kw_args(wf))
         self.log = wf.logger
@@ -31,6 +30,7 @@ class GoogleInterface(object):
 
         if credentials.invalid:
             return None
+
 
         http = credentials.authorize(self.HTTP_INSTANCE)
         self.service = discovery.build('calendar', 'v3', http=http)
@@ -77,8 +77,8 @@ class GoogleInterface(object):
         while True:
             calendar_list = self.service.calendarList().list(pageToken=page_token).execute()
             for calendar_list_entry in calendar_list['items']:
-                log.info("\n********************************************")
-                log.info("Calendar Name: " + calendar_list_entry['summary'] + " ACL: " + calendar_list_entry[
+                self.log.info("\n********************************************")
+                self.log.info("Calendar Name: " + calendar_list_entry['summary'] + " ACL: " + calendar_list_entry[
                     'accessRole'] + "   Calendar ID: " + calendar_list_entry['id'])
                 cal_id = calendar_list_entry['id']
                 calendar_ids.append({'id':cal_id,'name':calendar_list_entry['summary']})
@@ -101,7 +101,7 @@ class GoogleInterface(object):
             eventsResult = self.service.events().list(calendarId=calendar_id, timeMin=start, timeMax=end,
                                                  singleEvents=True, orderBy='startTime').execute()
             event_list = eventsResult.get('items', [])
-            log.info("* Google returned " + str(len(event_list)) + " events")
+            self.log.info("* Google returned " + str(len(event_list)) + " events")
             return event_list
         except IOError as ex:
             template = "An exception of type {0} occured. Arguments:\n{1!r}"
