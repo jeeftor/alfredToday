@@ -66,7 +66,7 @@ class GoogleInterface(object):
         # if flags:
         flags = None
         self.credentials = tools.run_flow_wf(wf, flow, self.store, flags, http=self.HTTP_INSTANCE)
-        print('Storing credentials to ' + self.credential_path)
+        # print('Storing credentials to ' + self.credential_path)
         wf.logger.info("Storing credentials to [%s]", self.credential_path)
 
 
@@ -153,9 +153,6 @@ def main(wf):
 
     # print(g.get_calendars())
     # print(g.get_events_for_default_calendar())
-
-
-
 
 
 if __name__ == '__main__':
