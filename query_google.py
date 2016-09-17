@@ -4,7 +4,7 @@ from query_exchange import asrun, asquote
 from workflow import Workflow3, ICON_INFO
 from today import  get_cache_key
 import GoogleInterface
-from GoogleInterface import GoogleInterface
+from GoogleInterface import GoogleInterface, NoCalendarException
 
 
 def query_google_calendar(wf, start_search, end_search, date_offset):
@@ -19,7 +19,6 @@ def query_google_calendar(wf, start_search, end_search, date_offset):
 
     g = GoogleInterface(wf)
     return g.get_events_for_enabled_calendars(start_search, end_search)
-    # return g.get_events_for_default_calendar(start_search, end_search)
 
 
 def main(wf):

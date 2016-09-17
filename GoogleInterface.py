@@ -26,6 +26,9 @@ class AuthorizationNeededException(Exception):
     """Authorization Required"""
     pass
 
+class NoCalendarException(Exception):
+    pass
+
 class GoogleInterface(object):
 
     def __init__(self, wf):
@@ -128,9 +131,12 @@ class GoogleInterface(object):
 
     def get_events_for_enabled_calendars(self,start,stop):
         events = []
+        enabled_cal_count = 0
 
         for key in self.wf.settings:
             if 'calendar' in key:
+                enabled_cal_count += 1
+
                 enabled,color = self.wf.settings.get(key).get('value').split('\t')
                 # enabled, color = self.wf.settings.get(key).get('value')
 

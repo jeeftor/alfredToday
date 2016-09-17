@@ -96,6 +96,9 @@ def main(wf):
         wf.send_feedback()
         return
 
+
+
+
     log.debug("Max Age: %i  Cache Age Google:  %i   Exchange: %i",
               cache_time,
               wf.cached_data_age(google_cache_key),
@@ -169,9 +172,17 @@ def main(wf):
         exchange_events = []
 
     if use_google:
+        # check for any enabled calendars
+        no_google_calendars = True
+        for key in wf.settings:
+            if 'calendar' in key:
+                no_google_calendars = False
+
+        if no_google_calendars:
+            wf.add_item('Not showing any Google Calendars', 'use the tcgc command to select calendars')
+
         # If the cache is "fresh" we need to do a bg refresh - because we are loading from the cache
         # If the cache isnt fresh - the server will be queried directly anyways
-
         if google_fresh:
 
             # Extract cached events
@@ -239,6 +250,7 @@ def main(wf):
     log.info("Event Count   Google: " + str(len(google_events)))
     log.info("Event Count Exchange: " + str(len(exchange_events)))
     log.info("Event Count    Total: " + str(event_count))
+
 
     if event_count == 0:
         if error_state is False:
