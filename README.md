@@ -35,8 +35,6 @@ Available Commands:
 
 
 
-
-
 #Authenticating against Google Calendar (oauth)
 
 The Google portion of this workflow uses oauth2 to authenticate with google and access your calendar.  When you enabled Google support via the **tc** command the script "should" open a screen in your web browser similar to
@@ -158,11 +156,21 @@ This regular expression basically says:
   -- and then anything up until the 1st quotation mark
 ```
 
+#Google Calendar Selection
+
+![tgcg](docs/tgcg.png)
+
+You have the option to display calendar data from multiple Google calendars.  You can select the calendars with the **tgcg** command.  This interaction is a little slow because it directly queries the Google servers.  If it is no longer slow than I've updated the code but not updated the documentation yet
 
 #Debug Options
 
 The command **dbgtoday** will list all the debug options available for the workflow.  You can open up a log with:
 `dbgtoday workflow:openlog` and see fancy debug information
+
+
+#Troubleshooting
+
+If things are "messed up" you can always try **tcreset** and then re-setup everything
 
 #Feedback & Help
 

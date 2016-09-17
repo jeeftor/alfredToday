@@ -388,7 +388,7 @@ python store_data.py $query</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>tcgc</string>
+				<string>!tcgc</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -1006,12 +1006,12 @@ Commands:
   * tomorrow
   * dbgtoday (Lists debug menu to open log and stuff)
   * tcrest (resets data)
+  * tcgc Google calendar selection (required if using google calendars)
 
 * If you use LYNC or SKYPE and embed meetings in your events this workflow will parse them if you give it a regex in the tc menu.  Hangout links will be automaticaly parsed.
 
 Trouble Shooting:
-	If you run into issues try to enable/re-enable Google or Exchange servers
-
+	If you run into issues try to enable/re-enable Google or Exchange servers or running 'tcreset'
 
 Exchange Server Notes:
  * Supports Office 365 style exchange servers that use Basic Authorization.  I have built an untested support for Internal exchange servers which use NTLM authentication.  Please feel free to contact me if you run into issues - as I do not have an actual server to test this on.
@@ -1270,7 +1270,7 @@ It "may" be stuck on East Coast time for the time being</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>3.9.9</string>
+	<string>4.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>
