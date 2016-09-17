@@ -19,10 +19,17 @@ from lib.oauth2client import  client, tools
 import httplib2
 from settings import get_http_kw_args
 
+
+class AuthorizationNeededException(Exception):
+    """Authorization Required"""
+    pass
+
 class GoogleInterface(object):
 
 
+
     def __init__(self, wf):
+        """Construct a new GoogleInterface.  Checks Auth status and if unauthorized will prompt for authorization"""
         self.HTTP_INSTANCE = httplib2.Http(**get_http_kw_args(wf))
 
         self.log = wf.logger
@@ -33,17 +40,25 @@ class GoogleInterface(object):
         self.SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
 
         credentials = self._get_credentials()
+
+
         if not credentials or credentials.invalid:
             self._authorize_google()
-
-
 
         http = credentials.authorize(self.HTTP_INSTANCE)
         self.service = discovery.build('calendar', 'v3', http=http)
 
 
+    def __check_auth_status(self):
+        """Checks authorization status and throws an error if not found"""
+        if not self.credentials or self.credentials.invalid:
+            raise AuthorizationNeededException()
+
 
     def _authorize_google(self):
+        """Wrapper around the OAuth2 auth code"""
+
+        self.__check_auth_status()
 
         flow = client.flow_from_clientsecrets(self.CLIENT_SECRET_FILE, self.SCOPES)
         flow.user_agent = self.APPLICATION_NAME
@@ -74,23 +89,17 @@ class GoogleInterface(object):
 
         # Store fancy credential things
         self.store = oauth2client.file.Storage(self.credential_path)
-        credentials = self.store.get()
+        self.credentials = self.store.get()
 
-
-
-        # if not credentials:
-        #     return None
-        #
-        # if credentials.invalid:
-        #     return None
-
-        return credentials
+        return self.credentials
 
 
     def get_calendars(self):
         """Returns a dictionary of name and id for all calendars"""
-        page_token = None
 
+        self.__check_auth_status()
+
+        page_token = None
         cals = self.service.calendarList().list(pageToken=page_token).execute()
 
         calendar_ids = []
@@ -113,10 +122,14 @@ class GoogleInterface(object):
 
     def get_events_for_default_calendar(self, start, stop):
         """REturns events from the 'primary' calendar"""
+
+        self.__check_auth_status()
+
         return self.get_events_for_calendar_id('primary',start,stop)
 
     def get_events_for_calendar_id(self, calendar_id, start, end):
         """Queries the event set for a specific calendar in a specific time-range and date offset"""
+        self.__check_auth_status()
 
         try:
             eventsResult = self.service.events().list(calendarId=calendar_id, timeMin=start, timeMax=end,
@@ -138,7 +151,8 @@ class GoogleInterface(object):
 def main(wf):
     g = GoogleInterface(wf)
 
-    print(g.get_calendars())
+    # print(g.get_calendars())
+    # print(g.get_events_for_default_calendar())
 
 
 
