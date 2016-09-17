@@ -47,6 +47,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>25233780-2524-4D31-8D4F-3F78744A8A63</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</key>
 		<array>
 			<dict>
@@ -61,11 +74,9 @@
 			</dict>
 		</array>
 		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
-		<array>
-		</array>
+		<array/>
 		<key>3F81D499-33A5-44E8-8D22-F6309229F43B</key>
-		<array>
-		</array>
+		<array/>
 		<key>41AF5BED-C2EE-4FDC-B9DF-AFDEB347F6A8</key>
 		<array>
 			<dict>
@@ -80,8 +91,7 @@
 			</dict>
 		</array>
 		<key>5396CADE-8847-4968-9A2F-051C2730315E</key>
-		<array>
-		</array>
+		<array/>
 		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
 		<array>
 			<dict>
@@ -200,8 +210,7 @@
 			</dict>
 		</array>
 		<key>B95A7CF4-4AF9-4388-8B53-E8CB6F3350FC</key>
-		<array>
-		</array>
+		<array/>
 		<key>BB49C951-D08C-4C86-88D1-E55D150207DD</key>
 		<array>
 			<dict>
@@ -325,6 +334,29 @@
 			<key>config</key>
 			<dict>
 				<key>concurrently</key>
+				<true/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>python background_auth_task.py</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>714DD3C9-FEC2-4C98-B8EE-817AE843584C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
 				<integer>102</integer>
@@ -349,23 +381,47 @@ python store_data.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<true/>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>2</integer>
 				<key>escaping</key>
 				<integer>102</integer>
-				<key>script</key>
-				<string>python wf_authorize_google.py</string>
-				<key>scriptargtype</key>
+				<key>keyword</key>
+				<string>!tcgc</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
 				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Querying google - please wait</string>
+				<key>script</key>
+				<string>query=$1
+
+
+
+python calendar_settings.py "query"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
+				<key>subtext</key>
+				<string>Select which calendars we should be using</string>
+				<key>title</key>
+				<string>Google Calendar Selection</string>
 				<key>type</key>
 				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.script</string>
+			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>9916EA2D-97B9-45BC-BAF6-C04A41BD96D3</string>
+			<string>25233780-2524-4D31-8D4F-3F78744A8A63</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -446,29 +502,6 @@ python store_data.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<true/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>python background_auth_task.py</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>714DD3C9-FEC2-4C98-B8EE-817AE843584C</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>argumenttype</key>
@@ -486,7 +519,7 @@ python store_data.py $query</string>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string></string>
+				<string>Wait</string>
 				<key>script</key>
 				<string>query=$1
 
@@ -496,9 +529,9 @@ python settings.py</string>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string></string>
+				<string>Subtexgt</string>
 				<key>title</key>
-				<string></string>
+				<string>Configure Alfred</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -973,12 +1006,12 @@ Commands:
   * tomorrow
   * dbgtoday (Lists debug menu to open log and stuff)
   * tcrest (resets data)
+  * tcgc Google calendar selection (required if using google calendars)
 
 * If you use LYNC or SKYPE and embed meetings in your events this workflow will parse them if you give it a regex in the tc menu.  Hangout links will be automaticaly parsed.
 
 Trouble Shooting:
-	If you run into issues try to enable/re-enable Google or Exchange servers
-
+	If you run into issues try to enable/re-enable Google or Exchange servers or running 'tcreset'
 
 Exchange Server Notes:
  * Supports Office 365 style exchange servers that use Basic Authorization.  I have built an untested support for Internal exchange servers which use NTLM authentication.  Please feel free to contact me if you run into issues - as I do not have an actual server to test this on.
@@ -1012,6 +1045,13 @@ It "may" be stuck on East Coast time for the time being</string>
 			<integer>110</integer>
 			<key>ypos</key>
 			<integer>790</integer>
+		</dict>
+		<key>25233780-2524-4D31-8D4F-3F78744A8A63</key>
+		<dict>
+			<key>xpos</key>
+			<integer>10</integer>
+			<key>ypos</key>
+			<integer>10</integer>
 		</dict>
 		<key>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</key>
 		<dict>
@@ -1106,9 +1146,9 @@ It "may" be stuck on East Coast time for the time being</string>
 			<key>note</key>
 			<string>Authorize GCAL</string>
 			<key>xpos</key>
-			<integer>870</integer>
+			<integer>890</integer>
 			<key>ypos</key>
-			<integer>130</integer>
+			<integer>10</integer>
 		</dict>
 		<key>76384EE5-7AB7-4FE2-8C3E-606BDCD5D54C</key>
 		<dict>
@@ -1152,17 +1192,6 @@ It "may" be stuck on East Coast time for the time being</string>
 			<integer>310</integer>
 			<key>ypos</key>
 			<integer>610</integer>
-		</dict>
-		<key>9916EA2D-97B9-45BC-BAF6-C04A41BD96D3</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>5</integer>
-			<key>note</key>
-			<string>Authorize GCAL</string>
-			<key>xpos</key>
-			<integer>870</integer>
-			<key>ypos</key>
-			<integer>10</integer>
 		</dict>
 		<key>AF5A7158-D993-4B9F-AAE9-F4774B174A3A</key>
 		<dict>
@@ -1241,7 +1270,7 @@ It "may" be stuck on East Coast time for the time being</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>3.9.8</string>
+	<string>4.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>

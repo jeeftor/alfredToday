@@ -3,6 +3,8 @@
 from workflow import Workflow3, ICON_INFO
 from workflow.background import run_in_background, is_running
 
+from event_processor import  EventProcessor
+
 UPDATE_SETTINGS = {'github_slug': 'jeeftor/alfredToday'}
 HELP_URL = 'https://github.com/jeeftor/alfredToday/blob/master/README.md'
 
@@ -15,7 +17,7 @@ def get_cache_key(prefix, date_offset):
 
 def main(wf):
 
-    from event_processor import process_events
+
     from query_exchange   import query_exchange_server
     from query_google    import query_google_calendar
 
@@ -62,6 +64,7 @@ def main(wf):
     start_google  = morning.astimezone(pytz.utc).isoformat()
     stop_google   = night.astimezone(pytz.utc).isoformat()
 
+    log.info("%s\t\t\t%s",start_google, stop_google)
 
     def google_wrapper():
         """A wrapper around doing a google query so this can be used with a cache function"""
@@ -92,6 +95,9 @@ def main(wf):
         wf.add_item('Calendars are disabled','use the tc command to setup a calendar', icon=ICON_INFO, arg="tc")
         wf.send_feedback()
         return
+
+
+
 
     log.debug("Max Age: %i  Cache Age Google:  %i   Exchange: %i",
               cache_time,
@@ -166,9 +172,17 @@ def main(wf):
         exchange_events = []
 
     if use_google:
+        # check for any enabled calendars
+        no_google_calendars = True
+        for key in wf.settings:
+            if 'calendar' in key:
+                no_google_calendars = False
+
+        if no_google_calendars:
+            wf.add_item('Not showing any Google Calendars', 'use the tcgc command to select calendars')
+
         # If the cache is "fresh" we need to do a bg refresh - because we are loading from the cache
         # If the cache isnt fresh - the server will be queried directly anyways
-
         if google_fresh:
 
             # Extract cached events
@@ -222,12 +236,6 @@ def main(wf):
 
 
 
-
-
-
-
-
-
     # Build Header
     icon_file = 'img/date_span.png'
 
@@ -243,6 +251,7 @@ def main(wf):
     log.info("Event Count Exchange: " + str(len(exchange_events)))
     log.info("Event Count    Total: " + str(event_count))
 
+
     if event_count == 0:
         if error_state is False:
             wf.add_item('Calendar is empty', date_text, icon=icon_file)
@@ -252,7 +261,8 @@ def main(wf):
     first_menu_entry = wf.add_item(date_text, date_text_numeric, icon=icon_file)
 
     # Process events
-    process_events(wf, exchange_events, google_events)
+    EventProcessor(wf).process_events(exchange_events, google_events)
+
 
     # Update elapsed time counter
     action_elapsed_time = time.time() - action_start_time

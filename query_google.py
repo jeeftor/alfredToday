@@ -2,73 +2,23 @@
 import sys
 from query_exchange import asrun, asquote
 from workflow import Workflow3, ICON_INFO
-import subprocess
 from today import  get_cache_key
-from settings import  get_http_kw_args
+import GoogleInterface
+from GoogleInterface import GoogleInterface, NoCalendarException
+
 
 def query_google_calendar(wf, start_search, end_search, date_offset):
     """Queries against the GoogleCalendar API and does magical things (hopefully)"""
     log = wf.logger
+
 
     log.info("BG: Querying Google Calendar")
     log.info("BG:     param: start_google = " + str(start_search))
     log.info("BG:     param:   end_google = " + str(end_search))
     log.info("BG:     param:   date_offset = " + str(date_offset))
 
-
-    # Load Imports
-    import os
-    import httplib2
-    import dateutil.parser
-    from apiclient import discovery
-    import oauth2client
-    from oauth2client import client
-    from oauth2client import tools
-
-
-    # If modifying these scopes, delete your previously saved credentials
-    # at ~/.credentials/calendar-python-quickstart.json
-    SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
-    CLIENT_SECRET_FILE = 'client_secret.json'
-    APPLICATION_NAME = 'Alfred Today'
-
-
-    # Removed line calling for - ca_certs="/usr/local/etc/openssl/cert.pem"
-    HTTP_INSTANCE = httplib2.Http(**get_http_kw_args(wf))
-
-    # Load OAuth2.0 credentials
-    home_dir = os.path.expanduser('~')
-    credential_dir = os.path.join(home_dir, '.credentials')
-    if not os.path.exists(credential_dir):
-        os.makedirs(credential_dir)
-    credential_path = os.path.join(credential_dir, 'calendar-alfred-today.json')
-
-    # Store fancy credential things
-    store = oauth2client.file.Storage(credential_path)
-    credentials = store.get()
-    if not credentials:
-        return None
-
-    if credentials.invalid:
-        return None
-
-    http = credentials.authorize(HTTP_INSTANCE)
-    service = discovery.build('calendar', 'v3', http=http)
-
-    try:
-        eventsResult = service.events().list(calendarId='primary', timeMin=start_search, timeMax=end_search, singleEvents=True, orderBy='startTime').execute()
-        event_list = eventsResult.get('items', [])
-        log.info("* Google returned " + str(len(event_list)) + " events")
-        return event_list
-    except IOError as ex:
-        template = "An exception of type {0} occured. Arguments:\n{1!r}"
-        message = template.format(type(ex).__name__, ex.args)
-        log.info(message)
-        log.info("Google -- Cache error")
-        import traceback
-        log.info(traceback.format_exc())
-
-        return None
+    g = GoogleInterface(wf)
+    return g.get_events_for_enabled_calendars(start_search, end_search)
 
 
 def main(wf):
