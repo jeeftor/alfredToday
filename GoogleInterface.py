@@ -120,6 +120,15 @@ class GoogleInterface(object):
         return calendar_ids
 
 
+    def get_events_for_enabled_calendars(self,start,stop):
+        events = []
+        for key in self.wf.settings:
+            if 'calendar' in key and self.wf.settings.get(key):
+                _, id = key.split(':')
+                events += self.get_events_for_calendar_id(id,start,stop)
+
+        return events
+
     def get_events_for_default_calendar(self, start, stop):
         """REturns events from the 'primary' calendar"""
 
@@ -153,6 +162,8 @@ def main(wf):
 
     # print(g.get_calendars())
     # print(g.get_events_for_default_calendar())
+
+
 
 
 if __name__ == '__main__':

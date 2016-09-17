@@ -69,8 +69,6 @@ def main():
 
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
 
-
-
     page_token = None
     cals = service.calendarList().list(pageToken=page_token).execute()
     while True:

@@ -21,6 +21,14 @@ def main(wf):
 
     calendars = g.get_calendars()
 
+
+
+    for key in wf.settings:
+        if 'calendar' in key and wf.settings.get(key):
+            _, id = key.split(':')
+
+
+
     icon = 'img/no.png'
     for c in calendars:
 
