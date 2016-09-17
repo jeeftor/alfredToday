@@ -1,14 +1,20 @@
-import os
-import sys
-from os.path import dirname
-sys.path.append('lib')
-from workflow import Workflow3
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
+# Add local lib path to path
+sys.path = [os.path.join(os.path.dirname(__file__), 'lib')] + sys.path
+
+from workflow import Workflow3
+
 
 import oauth2client
 import googleapiclient
 from apiclient import discovery
+
+from oauth2client import client
+from oauth2client import tools
+
+from lib.apiclient import  discovery
+from lib.oauth2client import  client, tools
+
 
 import httplib2
 from settings import get_http_kw_args
@@ -18,18 +24,18 @@ class GoogleInterface(object):
 
     def __init__(self, wf):
         self.HTTP_INSTANCE = httplib2.Http(**get_http_kw_args(wf))
+
         self.log = wf.logger
+        self.wf = wf
 
         self.CLIENT_SECRET_FILE = 'client_secret.json'
         self.APPLICATION_NAME = 'Alfred Today'
+        self.SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
 
-        credentials = self.get_credentials()
+        credentials = self._get_credentials()
+        if not credentials or credentials.invalid:
+            self._authorize_google()
 
-        if not credentials:
-            return None
-
-        if credentials.invalid:
-            return None
 
 
         http = credentials.authorize(self.HTTP_INSTANCE)
@@ -37,8 +43,19 @@ class GoogleInterface(object):
 
 
 
-    @staticmethod
-    def get_credentials():
+    def _authorize_google(self):
+
+        flow = client.flow_from_clientsecrets(self.CLIENT_SECRET_FILE, self.SCOPES)
+        flow.user_agent = self.APPLICATION_NAME
+
+        # if flags:
+        flags = None
+        self.credentials = tools.run_flow_wf(wf, flow, self.store, flags, http=self.HTTP_INSTANCE)
+        print('Storing credentials to ' + self.credential_path)
+        wf.logger.info("Storing credentials to [%s]", self.credential_path)
+
+
+    def _get_credentials(self):
         """Gets valid user credentials from storage.
 
         If nothing has been stored, or if the stored credentials are invalid,
@@ -53,11 +70,14 @@ class GoogleInterface(object):
         credential_dir = os.path.join(home_dir, '.credentials')
         if not os.path.exists(credential_dir):
             os.makedirs(credential_dir)
-        credential_path = os.path.join(credential_dir, 'calendar-alfred-today.json')
+        self.credential_path = os.path.join(credential_dir, 'calendar-alfred-today.json')
 
         # Store fancy credential things
-        store = oauth2client.file.Storage(credential_path)
-        credentials = store.get()
+        self.store = oauth2client.file.Storage(self.credential_path)
+        credentials = self.store.get()
+
+
+
         # if not credentials:
         #     return None
         #
@@ -70,6 +90,7 @@ class GoogleInterface(object):
     def get_calendars(self):
         """Returns a dictionary of name and id for all calendars"""
         page_token = None
+
         cals = self.service.calendarList().list(pageToken=page_token).execute()
 
         calendar_ids = []
@@ -116,7 +137,6 @@ class GoogleInterface(object):
 
 def main(wf):
     g = GoogleInterface(wf)
-    credentials = g.get_credentials()
 
     print(g.get_calendars())
 
