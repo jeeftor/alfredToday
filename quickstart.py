@@ -77,6 +77,8 @@ def main():
             print("\n********************************************")
             print("Name: " + calendar_list_entry['summary'] + " ACL: " + calendar_list_entry['accessRole'] + "   Calendar ID: " + calendar_list_entry['id'])
             cal_id = calendar_list_entry['id']
+
+            print(cal_id)
             eventsResult = service.events().list(
                 calendarId=cal_id, timeMin=now, maxResults=10, singleEvents=True,
                 orderBy='startTime').execute()
@@ -87,24 +89,24 @@ def main():
                 print('No upcoming events found.')
             for event in events:
                 start = event['start'].get('dateTime', event['start'].get('date'))
-                print(start, event['summary'])
+                print(start, event.get('summary','No Summary Given'))
 
         page_token = calendar_list.get('nextPageToken')
         if not page_token:
             break
 
 
-    print('Getting the upcoming 10 events')
-    eventsResult = service.events().list(
-        calendarId='primary', timeMin=now, maxResults=10, singleEvents=True,
-        orderBy='startTime').execute()
-    events = eventsResult.get('items', [])
-
-    if not events:
-        print('No upcoming events found.')
-    for event in events:
-        start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'])
+    # print('Getting the upcoming 10 events')
+    # eventsResult = service.events().list(
+    #     calendarId='primary', timeMin=now, maxResults=10, singleEvents=True,
+    #     orderBy='startTime').execute()
+    # events = eventsResult.get('items', [])
+    #
+    # if not events:
+    #     print('No upcoming events found.')
+    # for event in events:
+    #     start = event['start'].get('dateTime', event['start'].get('date'))
+    #     print(start, event['summary'])
 
 
 if __name__ == '__main__':

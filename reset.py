@@ -32,8 +32,16 @@ def main(wf):
             wf.delete_password('today.workflow.password')
         except PasswordNotFound:
             pass
-        for value in ['exchange_login', 'exchange_server', 'timezone', 'use_exchange', 'use_google']:
+
+        delete_keys = []
+        for value in wf.settings:
+            if value in ['exchange_login', 'exchange_server', 'timezone', 'use_exchange',
+                         'use_google'] or 'calendar' in value:
+                delete_keys.append(value)
+
+        for value in delete_keys:
             try:
+                wf.logger.info("Deleting %s from settings", value)
                 del wf.settings[value]
             except AttributeError:
                 pass

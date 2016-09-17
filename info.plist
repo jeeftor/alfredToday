@@ -398,7 +398,7 @@ python store_data.py $query</string>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string></string>
+				<string>Querying google - please wait</string>
 				<key>script</key>
 				<string>query=$1
 
@@ -412,7 +412,7 @@ python calendar_settings.py "query"</string>
 				<key>subtext</key>
 				<string>Select which calendars we should be using</string>
 				<key>title</key>
-				<string>Alfred Today - Configure Google Calendars</string>
+				<string>Google Calendar Selection</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -519,7 +519,7 @@ python calendar_settings.py "query"</string>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string></string>
+				<string>Wait</string>
 				<key>script</key>
 				<string>query=$1
 
@@ -529,9 +529,9 @@ python settings.py</string>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string></string>
+				<string>Subtexgt</string>
 				<key>title</key>
-				<string></string>
+				<string>Configure Alfred</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>

@@ -172,8 +172,6 @@ def get_password(wf, show_alfred_items=True):
 
 def main(wf):
 
-    from workflow import Workflow3
-    wf = Workflow3()
 
     #######################
     ## Load Credentials  ##
@@ -293,5 +291,7 @@ if __name__ == u"__main__":
     wf.logger.debug('      \__ \/ __/   / /   / /  / //  |/ / / __ \__ \\')
     wf.logger.debug('     ___/ / /___  / /   / / _/ // /|  / /_/ /___/ /')
     wf.logger.debug('    /____/_____/ /_/   /_/ /___/_/ |_/\____//____/')
+
+
 
     sys.exit(wf.run(main))

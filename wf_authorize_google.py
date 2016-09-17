@@ -72,7 +72,7 @@ def authorize(wf):
 
     import httplib2
 
-    if credentials:
+    if g.credentials:
         use_ssl = get_value_from_settings_with_default_boolean(wf, 'use_ssl', True)
 
         http = g.HTTP_INSTANCE

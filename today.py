@@ -3,6 +3,8 @@
 from workflow import Workflow3, ICON_INFO
 from workflow.background import run_in_background, is_running
 
+from event_processor import  EventProcessor
+
 UPDATE_SETTINGS = {'github_slug': 'jeeftor/alfredToday'}
 HELP_URL = 'https://github.com/jeeftor/alfredToday/blob/master/README.md'
 
@@ -15,7 +17,7 @@ def get_cache_key(prefix, date_offset):
 
 def main(wf):
 
-    from event_processor import process_events
+
     from query_exchange   import query_exchange_server
     from query_google    import query_google_calendar
 
@@ -62,6 +64,7 @@ def main(wf):
     start_google  = morning.astimezone(pytz.utc).isoformat()
     stop_google   = night.astimezone(pytz.utc).isoformat()
 
+    log.info("%s\t\t\t%s",start_google, stop_google)
 
     def google_wrapper():
         """A wrapper around doing a google query so this can be used with a cache function"""
@@ -222,12 +225,6 @@ def main(wf):
 
 
 
-
-
-
-
-
-
     # Build Header
     icon_file = 'img/date_span.png'
 
@@ -252,7 +249,8 @@ def main(wf):
     first_menu_entry = wf.add_item(date_text, date_text_numeric, icon=icon_file)
 
     # Process events
-    process_events(wf, exchange_events, google_events)
+    EventProcessor(wf).process_events(exchange_events, google_events)
+
 
     # Update elapsed time counter
     action_elapsed_time = time.time() - action_start_time

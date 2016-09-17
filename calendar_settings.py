@@ -15,27 +15,22 @@ from settings import get_value_from_settings_with_default_boolean
 
 import sys
 
+
 def main(wf):
 
     g = GoogleInterface(wf)
 
     calendars = g.get_calendars()
 
-
-
-    for key in wf.settings:
-        if 'calendar' in key and wf.settings.get(key):
-            _, id = key.split(':')
-
-
-
     icon = 'img/no.png'
     for c in calendars:
 
         id = c.get('id')
         name = c.get('name','No Name Specified')
-        settings_key = "calendar:" + id
-        is_enabled = wf.settings.get(settings_key,False)
+        color_id = c.get('color_id','0')
+        settings_key = "calendar:" + id + ":" + color_id
+        is_enabled = wf.settings.get(settings_key,{'value':'0'}).get('value',None)[0] == '1'
+
 
         if is_enabled:
             icon = 'img/ok.png'
@@ -44,7 +39,7 @@ def main(wf):
 
         item = wf.add_item(name, id, icon=icon, valid=True)
         item.setvar('settings_value', settings_key)
-        item.setvar('value_to_store', not is_enabled)
+        item.setvar('value_to_store', [not is_enabled, color_id])
         item.setvar('text_to_display', 'Google Calendar Settings')
 
 

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 import sys, os
 # Add local lib path to path
 sys.path = [os.path.join(os.path.dirname(__file__), 'lib')] + sys.path
@@ -25,8 +27,6 @@ class AuthorizationNeededException(Exception):
     pass
 
 class GoogleInterface(object):
-
-
 
     def __init__(self, wf):
         """Construct a new GoogleInterface.  Checks Auth status and if unauthorized will prompt for authorization"""
@@ -58,16 +58,18 @@ class GoogleInterface(object):
     def _authorize_google(self):
         """Wrapper around the OAuth2 auth code"""
 
-        self.__check_auth_status()
+        try:
+            self.__check_auth_status()
+        except AuthorizationNeededException:
 
-        flow = client.flow_from_clientsecrets(self.CLIENT_SECRET_FILE, self.SCOPES)
-        flow.user_agent = self.APPLICATION_NAME
+            flow = client.flow_from_clientsecrets(self.CLIENT_SECRET_FILE, self.SCOPES)
+            flow.user_agent = self.APPLICATION_NAME
 
-        # if flags:
-        flags = None
-        self.credentials = tools.run_flow_wf(wf, flow, self.store, flags, http=self.HTTP_INSTANCE)
-        # print('Storing credentials to ' + self.credential_path)
-        wf.logger.info("Storing credentials to [%s]", self.credential_path)
+            # if flags:
+            flags = None
+            self.credentials = tools.run_flow_wf(self.wf, flow, self.store, flags, http=self.HTTP_INSTANCE)
+            # print('Storing credentials to ' + self.credential_path)
+            self.wf.logger.info("Storing credentials to [%s]", self.credential_path)
 
 
     def _get_credentials(self):
@@ -110,8 +112,12 @@ class GoogleInterface(object):
                 self.log.info("\n********************************************")
                 self.log.info("Calendar Name: " + calendar_list_entry['summary'] + " ACL: " + calendar_list_entry[
                     'accessRole'] + "   Calendar ID: " + calendar_list_entry['id'])
+
+                bg_color = calendar_list_entry['backgroundColor']
+                fg_color = calendar_list_entry['foregroundColor']
+                color_Id = calendar_list_entry['colorId']
                 cal_id = calendar_list_entry['id']
-                calendar_ids.append({'id':cal_id,'name':calendar_list_entry['summary']})
+                calendar_ids.append({'id':cal_id,'name':calendar_list_entry['summary'], 'color_id':color_Id})
 
             page_token = calendar_list.get('nextPageToken')
             if not page_token:
@@ -122,12 +128,25 @@ class GoogleInterface(object):
 
     def get_events_for_enabled_calendars(self,start,stop):
         events = []
-        for key in self.wf.settings:
-            if 'calendar' in key and self.wf.settings.get(key):
-                _, id = key.split(':')
-                events += self.get_events_for_calendar_id(id,start,stop)
 
+        for key in self.wf.settings:
+            if 'calendar' in key:
+                enabled,color = self.wf.settings.get(key).get('value').split('\t')
+                # enabled, color = self.wf.settings.get(key).get('value')
+
+                id = key.split(':')[1]
+
+                if enabled:
+
+                    calendar_events = self.get_events_for_calendar_id(id,start,stop)
+                    for event in calendar_events:
+                        event['color'] = color
+                        # events += event
+
+
+                    events += calendar_events
         return events
+
 
     def get_events_for_default_calendar(self, start, stop):
         """REturns events from the 'primary' calendar"""
@@ -139,9 +158,10 @@ class GoogleInterface(object):
     def get_events_for_calendar_id(self, calendar_id, start, end):
         """Queries the event set for a specific calendar in a specific time-range and date offset"""
         self.__check_auth_status()
+        self.wf.logger.info("Querying calender [%s]", calendar_id)
 
         try:
-            eventsResult = self.service.events().list(calendarId=calendar_id, timeMin=start, timeMax=end,
+            eventsResult = self.service.events().list(calendarId=str(calendar_id), timeMin=start, timeMax=end,
                                                  singleEvents=True, orderBy='startTime').execute()
             event_list = eventsResult.get('items', [])
             self.log.info("* Google returned " + str(len(event_list)) + " events")
@@ -154,6 +174,9 @@ class GoogleInterface(object):
             import traceback
             log.info(traceback.format_exc())
             return None
+        except Exception as ex:
+            log.info('HTTP ERROR [%s]', calendar_id)
+
 
 
 
@@ -161,7 +184,8 @@ def main(wf):
     g = GoogleInterface(wf)
 
     # print(g.get_calendars())
-    # print(g.get_events_for_default_calendar())
+    g.print_colors()
+    # print(g.get_events_for_enabled_calendars("2012-08-08","2012-0808"))
 
 
 
