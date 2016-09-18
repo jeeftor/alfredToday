@@ -137,9 +137,12 @@ class GoogleInterface(object):
             if 'calendar' in key:
                 enabled_cal_count += 1
 
-                enabled,color = self.wf.settings.get(key).get('value').split('\t')
-                # enabled, color = self.wf.settings.get(key).get('value')
-
+                try:
+                    enabled,color = self.wf.settings.get(key).get('value').split('\t')
+                except:
+                    enabled = self.wf.settings.get(key).get('value')
+                    color = '1'
+                
                 id = key.split(':')[1]
 
                 if enabled:
