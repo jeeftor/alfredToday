@@ -18,6 +18,26 @@ class EventProcessor(object):
         self.FUTURE_ITEMS = []
 
 
+    def write_html_template(self, id, name, organizer, month_name, month_number, time, location, body):
+        wf = self.wf
+
+        with open('html/template.html', 'r') as template:
+            html = template.read() \
+                .replace('#FROM#', organizer) \
+                .replace('#MONTH#', month_name)\
+                .replace('#DAY#',month_number).replace('#TIME#',time)\
+                .replace('#LOCATION#',location).replace('#TITLE#',name).replace('#TEXT#',body)
+
+            filename = wf.cachedir + "/" + str(id) + ".html"
+            out = open(filename, "w")
+            out.write(html.encode('ascii', 'ignore'))
+            out.close()
+
+            filename = 'file://' + filename
+            return  str(filename.replace(' ','%20'))
+
+        return None
+
     def write_file(self, name, html):
         wf = self.wf
         filename = wf.cachedir + "/" + str(name) + ".html"
@@ -53,15 +73,31 @@ class EventProcessor(object):
             loc = event['location']
             subtitle = subtitle + " [" + loc + "]"
         except:
+            loc = ''
             pass
+
+        body_html = event.get('description','No description given')
+
+        creator = event.get('creator')
+        org_name = creator.get('displayName','')
+        org_email = creator.get('email','')
+        organizer_html = org_name + " &lt;" + org_email + "&gt;"
+
+        start_datetime = datetime.strptime(startdt.split('T')[0],'%Y-%m-%d')
+
+        id =  str(event.get('etag').replace('"',''))
+
+
+        description_url = self.write_html_template(id, title, organizer_html, start_datetime.strftime('%b'),
+                                                   start_datetime.strftime('%d'), time_string, loc, body_html)
 
         # Pick icon color based on end time
         now = datetime.now(pytz.utc)
         if dateutil.parser.parse(enddt) < now:
-            self.PAST_ITEMS.append(Item3(title, subtitle, arg=url, valid=False, icon="img/eventGoogleGray.png"))
+            self.PAST_ITEMS.append(Item3(title, subtitle, arg=url, quicklookurl=description_url, type=u'file', valid=True, icon="img/eventGoogleGray.png"))
         else:
             iconfile = 'img/googleEvent_' + str(event.get('color',1)) +'.png'
-            self.FUTURE_ITEMS.append(Item3(title, subtitle, arg=url, icon=iconfile, valid=True))
+            self.FUTURE_ITEMS.append(Item3(title, subtitle, arg=url, quicklookurl=description_url, icon=iconfile, valid=True))
             try:
                 hangout_url = event['hangoutLink']
                 hangout_title = u'\u21aa Join Hangout'
@@ -72,7 +108,7 @@ class EventProcessor(object):
 
 
 
-    def process_events(self, outlook_events, google_events):
+    def process_events(self, exchange_events, google_events):
         """Processes both Google & Outlook events handling the interleving of data correctly (hopefully)"""
         wf = self.wf
 
@@ -82,7 +118,7 @@ class EventProcessor(object):
 
         utc = pytz.UTC
 
-        outlook_count = len(outlook_events)
+        outlook_count = len(exchange_events)
         google_count  = len(google_events)
 
         o = 0
@@ -92,7 +128,7 @@ class EventProcessor(object):
         while g < google_count and o < outlook_count:
 
             current_google_event = google_events[g]
-            current_outlook_event = outlook_events[o]
+            current_outlook_event = exchange_events[o]
 
             outlook_start = current_outlook_event.start #utc_to_local(current_outlook_event.start).replace(tzinfo=utc)
 
@@ -120,7 +156,7 @@ class EventProcessor(object):
             g += 1
 
         while o < outlook_count:
-            self.process_outlook_event(outlook_events[o])
+            self.process_outlook_event(exchange_events[o])
             o += 1
 
         for item in self.FUTURE_ITEMS + self.PAST_ITEMS:
@@ -143,10 +179,19 @@ class EventProcessor(object):
         end_datetime = self.utc_to_local(event.end)
         body_html = event.html_body
         online_meeting = event.is_online_meeting
+
+        time_string = start_datetime.strftime("%I:%M %p") + " - " + end_datetime.strftime("%I:%M %p")
+
+        org_name = event.organizer[0]
+        org_email = event.organizer[1]
+
+        organizer_html = org_name + " &lt;" + org_email + "&gt;"
+
         if body_html:
-            description_url = self.write_file(id, body_html)
+            description_url = self.write_html_template(id, subject, organizer_html, start_datetime.strftime('%b'), start_datetime.strftime('%d'), time_string, location, body_html)
+                # write_file(id, body_html)
         else:
-            description_url = ""
+            description_url = ''
 
         lync_url = None
         if not REGEX is None:
@@ -158,7 +203,6 @@ class EventProcessor(object):
                     lync_url = match.group(1)
 
 
-        time_string = start_datetime.strftime("%I:%M %p") + " - " + end_datetime.strftime("%I:%M %p")
 
         title = subject
         subtitle = time_string

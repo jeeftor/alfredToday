@@ -165,6 +165,7 @@ class GoogleInterface(object):
         """Queries the event set for a specific calendar in a specific time-range and date offset"""
         self.__check_auth_status()
         self.wf.logger.info("Querying calender [%s]", calendar_id)
+        log = self.wf.logger
 
         try:
             eventsResult = self.service.events().list(calendarId=str(calendar_id), timeMin=start, timeMax=end,
