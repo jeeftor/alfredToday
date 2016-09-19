@@ -142,7 +142,7 @@ class GoogleInterface(object):
                 except:
                     enabled = self.wf.settings.get(key).get('value')
                     color = '1'
-                
+
                 id = key.split(':')[1]
 
                 if enabled:

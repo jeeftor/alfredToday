@@ -180,6 +180,8 @@ class EventProcessor(object):
         body_html = event.html_body
         online_meeting = event.is_online_meeting
 
+        # self.wf.logger.info('Searching regex')
+
         time_string = start_datetime.strftime("%I:%M %p") + " - " + end_datetime.strftime("%I:%M %p")
 
         org_name = event.organizer[0]
@@ -194,6 +196,10 @@ class EventProcessor(object):
             description_url = ''
 
         lync_url = None
+
+        self.wf.logger.info('Regex: ' + REGEX)
+        self.wf.logger.info(body_html)
+
         if not REGEX is None:
             # Match pattern for LYNC
             p = re.compile(REGEX)

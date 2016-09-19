@@ -238,12 +238,12 @@ def main(wf):
         if regex is not None:
             regex = get_regex(wf)
             it = wf.add_item('Exchange Detection Regex', regex, arg=regex, copytext=regex, valid=True, icon='img/ok.png')
-            it.setvar('text_to_display', 'Regex:')
         else:
             it = wf.add_item('Meeting Detection Regex Not Set', 'Select this item to set', valid=True,
                         icon=ICON_WARNING)
-            it.setvar('text_to_display','Regex:')
-            it.setvar('settings_value', 'regex')
+        it.setvar('text_to_display','Regex:')
+        it.setvar('settings_value', 'regex')
+
 
         use_ssl = get_value_from_settings_with_default_boolean(wf, 'use_ssl', True)
         if not use_ssl:

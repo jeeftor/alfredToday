@@ -32,9 +32,6 @@ Available Commands:
 * **tc** (loads configuration)
 * **dbgToday** debug options like open log
 
-
-
-
 #Authenticating against Google Calendar (oauth)
 
 The Google portion of this workflow uses oauth2 to authenticate with google and access your calendar.  When you enabled Google support via the **tc** command the script "should" open a screen in your web browser similar to

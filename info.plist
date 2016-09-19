@@ -74,11 +74,9 @@
 			</dict>
 		</array>
 		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
-		<array>
-		</array>
+		<array/>
 		<key>3F81D499-33A5-44E8-8D22-F6309229F43B</key>
-		<array>
-		</array>
+		<array/>
 		<key>41AF5BED-C2EE-4FDC-B9DF-AFDEB347F6A8</key>
 		<array>
 			<dict>
@@ -93,8 +91,7 @@
 			</dict>
 		</array>
 		<key>5396CADE-8847-4968-9A2F-051C2730315E</key>
-		<array>
-		</array>
+		<array/>
 		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
 		<array>
 			<dict>
@@ -213,8 +210,7 @@
 			</dict>
 		</array>
 		<key>B95A7CF4-4AF9-4388-8B53-E8CB6F3350FC</key>
-		<array>
-		</array>
+		<array/>
 		<key>BB49C951-D08C-4C86-88D1-E55D150207DD</key>
 		<array>
 			<dict>
@@ -279,16 +275,6 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>67A81BBE-1261-4883-8590-56E22BC259EB</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>7B433338-B013-4871-9B80-8C2013262197</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -660,7 +646,7 @@ python store_data.py $query</string>
 
 {var:value_to_store}</string>
 				<key>cleardebuggertext</key>
-				<true/>
+				<false/>
 				<key>processoutputs</key>
 				<true/>
 			</dict>
@@ -1166,9 +1152,9 @@ It "may" be stuck on East Coast time for the time being</string>
 		<key>7B433338-B013-4871-9B80-8C2013262197</key>
 		<dict>
 			<key>xpos</key>
-			<integer>300</integer>
+			<integer>570</integer>
 			<key>ypos</key>
-			<integer>330</integer>
+			<integer>410</integer>
 		</dict>
 		<key>83FB8DCA-2FEC-4B0A-94E5-E1E35F80F549</key>
 		<dict>
@@ -1274,7 +1260,7 @@ It "may" be stuck on East Coast time for the time being</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>4.1</string>
+	<string>4.2</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>
