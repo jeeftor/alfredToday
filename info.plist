@@ -73,6 +73,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>34DD7C4D-0981-4F27-95C6-86953EE6163B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E1EA3937-8950-4C18-AFFF-D43F9539C8FA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
 		<array/>
 		<key>3F81D499-33A5-44E8-8D22-F6309229F43B</key>
@@ -96,7 +109,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</string>
+				<string>C433E48C-E157-465F-B153-EDAD351D9629</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -187,7 +200,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</string>
+				<string>C433E48C-E157-465F-B153-EDAD351D9629</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -247,6 +260,29 @@
 				<false/>
 			</dict>
 		</array>
+		<key>C433E48C-E157-465F-B153-EDAD351D9629</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D68F5B32-D530-455F-AB62-B775D04F2A3F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>34DD7C4D-0981-4F27-95C6-86953EE6163B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>C648C777-D441-4C9C-97A0-F561B76C99BA</key>
 		<array>
 			<dict>
@@ -275,6 +311,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>67A81BBE-1261-4883-8590-56E22BC259EB</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>D68F5B32-D530-455F-AB62-B775D04F2A3F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -320,54 +369,6 @@
 	<string>Alfred Today</string>
 	<key>objects</key>
 	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<true/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>python background_auth_task.py</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>714DD3C9-FEC2-4C98-B8EE-817AE843584C</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>query=$1
-
-python store_data.py $query</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -418,19 +419,67 @@ python calendar_settings.py "query"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+python store_data.py $query</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<true/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>python background_auth_task.py</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>714DD3C9-FEC2-4C98-B8EE-817AE843584C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>inputstring</key>
-				<string>{var:value_to_store}</string>
+				<string>{var:settings_value}</string>
 				<key>matchcasesensitive</key>
 				<true/>
 				<key>matchmode</key>
 				<integer>0</integer>
 				<key>matchstring</key>
-				<string>1</string>
+				<string>use_google</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
-			<string>E54262CD-7EE8-42E4-A277-823EB0492941</string>
+			<string>83FB8DCA-2FEC-4B0A-94E5-E1E35F80F549</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -455,18 +504,18 @@ python calendar_settings.py "query"</string>
 			<key>config</key>
 			<dict>
 				<key>inputstring</key>
-				<string>{var:settings_value}</string>
+				<string>{var:value_to_store}</string>
 				<key>matchcasesensitive</key>
 				<true/>
 				<key>matchmode</key>
 				<integer>0</integer>
 				<key>matchstring</key>
-				<string>use_google</string>
+				<string>1</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
-			<string>83FB8DCA-2FEC-4B0A-94E5-E1E35F80F549</string>
+			<string>E54262CD-7EE8-42E4-A277-823EB0492941</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -564,27 +613,6 @@ python settings.py</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>set value</string>
-				<key>subtext</key>
-				<string>{query}</string>
-				<key>text</key>
-				<string>Set {var:text_to_display}</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -610,13 +638,21 @@ python store_data.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>type</key>
+				<key>argumenttype</key>
 				<integer>0</integer>
+				<key>keyword</key>
+				<string>set value</string>
+				<key>subtext</key>
+				<string>{query}</string>
+				<key>text</key>
+				<string>Set {var:text_to_display}</string>
+				<key>withspace</key>
+				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.utility.transform</string>
+			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
-			<string>C648C777-D441-4C9C-97A0-F561B76C99BA</string>
+			<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -641,19 +677,13 @@ python store_data.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argument</key>
-				<string>'{query}', {allvars}
-
-{var:value_to_store}</string>
-				<key>cleardebuggertext</key>
-				<false/>
-				<key>processoutputs</key>
-				<true/>
+				<key>type</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.utility.debug</string>
+			<string>alfred.workflow.utility.transform</string>
 			<key>uid</key>
-			<string>7B433338-B013-4871-9B80-8C2013262197</string>
+			<string>C648C777-D441-4C9C-97A0-F561B76C99BA</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -773,6 +803,19 @@ python reset.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>triggerid</key>
+				<string>Today</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>93885FA3-1489-43F1-ABDC-C30454BCE345</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<true/>
 				<key>argumenttype</key>
@@ -818,19 +861,6 @@ python today.py 0 "$query"
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>triggerid</key>
-				<string>Today</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.external</string>
-			<key>uid</key>
-			<string>93885FA3-1489-43F1-ABDC-C30454BCE345</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>browser</key>
 				<string></string>
 				<key>spaces</key>
@@ -846,6 +876,56 @@ python today.py 0 "$query"
 			<string>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>update</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>D68F5B32-D530-455F-AB62-B775D04F2A3F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>C433E48C-E157-465F-B153-EDAD351D9629</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>python update_workflow.py</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>E1EA3937-8950-4C18-AFFF-D43F9539C8FA</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -902,6 +982,25 @@ python today.py 1 "$query"
 			<string>alfred.workflow.trigger.external</string>
 			<key>uid</key>
 			<string>1E30DB2A-00F2-4C02-89B0-2C51CBEF5231</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>update</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>34DD7C4D-0981-4F27-95C6-86953EE6163B</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -1052,6 +1151,17 @@ It "may" be stuck on East Coast time for the time being</string>
 			<key>ypos</key>
 			<integer>10</integer>
 		</dict>
+		<key>34DD7C4D-0981-4F27-95C6-86953EE6163B</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>2</integer>
+			<key>note</key>
+			<string>Update mode (arg = update)</string>
+			<key>xpos</key>
+			<integer>600</integer>
+			<key>ypos</key>
+			<integer>800</integer>
+		</dict>
 		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
 		<dict>
 			<key>xpos</key>
@@ -1116,9 +1226,9 @@ It "may" be stuck on East Coast time for the time being</string>
 		<key>6C376C0C-F5B2-4E9A-8E56-AB87B3C51E5E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>520</integer>
+			<integer>720</integer>
 			<key>ypos</key>
-			<integer>690</integer>
+			<integer>620</integer>
 		</dict>
 		<key>6CB617B9-B4FE-4CA5-9806-FA07E8C7DAB5</key>
 		<dict>
@@ -1148,13 +1258,6 @@ It "may" be stuck on East Coast time for the time being</string>
 			<integer>510</integer>
 			<key>ypos</key>
 			<integer>1080</integer>
-		</dict>
-		<key>7B433338-B013-4871-9B80-8C2013262197</key>
-		<dict>
-			<key>xpos</key>
-			<integer>570</integer>
-			<key>ypos</key>
-			<integer>410</integer>
 		</dict>
 		<key>83FB8DCA-2FEC-4B0A-94E5-E1E35F80F549</key>
 		<dict>
@@ -1217,6 +1320,13 @@ It "may" be stuck on East Coast time for the time being</string>
 			<key>ypos</key>
 			<integer>80</integer>
 		</dict>
+		<key>C433E48C-E157-465F-B153-EDAD351D9629</key>
+		<dict>
+			<key>xpos</key>
+			<integer>480</integer>
+			<key>ypos</key>
+			<integer>730</integer>
+		</dict>
 		<key>C648C777-D441-4C9C-97A0-F561B76C99BA</key>
 		<dict>
 			<key>xpos</key>
@@ -1233,6 +1343,15 @@ It "may" be stuck on East Coast time for the time being</string>
 			<key>ypos</key>
 			<integer>170</integer>
 		</dict>
+		<key>D68F5B32-D530-455F-AB62-B775D04F2A3F</key>
+		<dict>
+			<key>note</key>
+			<string>If the argument isn't update than we do our normal stuff and open the webpage to the preview URL</string>
+			<key>xpos</key>
+			<integer>600</integer>
+			<key>ypos</key>
+			<integer>630</integer>
+		</dict>
 		<key>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</key>
 		<dict>
 			<key>xpos</key>
@@ -1247,6 +1366,17 @@ It "may" be stuck on East Coast time for the time being</string>
 			<key>ypos</key>
 			<integer>480</integer>
 		</dict>
+		<key>E1EA3937-8950-4C18-AFFF-D43F9539C8FA</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>2</integer>
+			<key>note</key>
+			<string>wrapper around the start_update workflow method</string>
+			<key>xpos</key>
+			<integer>720</integer>
+			<key>ypos</key>
+			<integer>760</integer>
+		</dict>
 		<key>E54262CD-7EE8-42E4-A277-823EB0492941</key>
 		<dict>
 			<key>colorindex</key>
@@ -1260,7 +1390,7 @@ It "may" be stuck on East Coast time for the time being</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>4.2</string>
+	<string>4.3</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>

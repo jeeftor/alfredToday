@@ -27,14 +27,15 @@ def main(wf):
     from settings import get_value_from_settings_with_default_boolean, get_value_from_settings_with_default_int
     import time
 
+
+
     # Check to see if updates are available
     if wf.update_available:
 
-        wf.add_item('A newer version is available',
-                    '↩ to install update',
-                    autocomplete='workflow:update',
-                    icon='update-available.png')
 
+        wf.add_item('A newer version is available',
+                '↩ to install update',
+                icon='update-available.png', arg='update', valid=True)
 
     # Parse and log the query variable
     query = None
