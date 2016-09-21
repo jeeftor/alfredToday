@@ -173,7 +173,7 @@ class EventProcessor(object):
 
         # extract fields
         id = str(event.id).replace("+", "").replace('/', '')
-        location = event.location  # or "No Location Specified"
+        location = event.location or "No Location Specified"
         subject = event.subject or "No Subject"
         start_datetime = self.utc_to_local(event.start)
         end_datetime = self.utc_to_local(event.end)
