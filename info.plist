@@ -372,6 +372,54 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<true/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>python background_auth_task.py</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>714DD3C9-FEC2-4C98-B8EE-817AE843584C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+python store_data.py $query</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>argumenttype</key>
@@ -419,67 +467,19 @@ python calendar_settings.py "query"</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>query=$1
-
-python store_data.py $query</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>2FD9C804-F0F1-4F90-8C9C-59A8C2AB78A7</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<true/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>python background_auth_task.py</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>714DD3C9-FEC2-4C98-B8EE-817AE843584C</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>inputstring</key>
-				<string>{var:settings_value}</string>
+				<string>{var:value_to_store}</string>
 				<key>matchcasesensitive</key>
 				<true/>
 				<key>matchmode</key>
 				<integer>0</integer>
 				<key>matchstring</key>
-				<string>use_google</string>
+				<string>1</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
-			<string>83FB8DCA-2FEC-4B0A-94E5-E1E35F80F549</string>
+			<string>E54262CD-7EE8-42E4-A277-823EB0492941</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -504,18 +504,18 @@ python store_data.py $query</string>
 			<key>config</key>
 			<dict>
 				<key>inputstring</key>
-				<string>{var:value_to_store}</string>
+				<string>{var:settings_value}</string>
 				<key>matchcasesensitive</key>
 				<true/>
 				<key>matchmode</key>
 				<integer>0</integer>
 				<key>matchstring</key>
-				<string>1</string>
+				<string>use_google</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
-			<string>E54262CD-7EE8-42E4-A277-823EB0492941</string>
+			<string>83FB8DCA-2FEC-4B0A-94E5-E1E35F80F549</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -613,6 +613,27 @@ python settings.py</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>set value</string>
+				<key>subtext</key>
+				<string>{query}</string>
+				<key>text</key>
+				<string>Set {var:text_to_display}</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -638,21 +659,13 @@ python store_data.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
+				<key>type</key>
 				<integer>0</integer>
-				<key>keyword</key>
-				<string>set value</string>
-				<key>subtext</key>
-				<string>{query}</string>
-				<key>text</key>
-				<string>Set {var:text_to_display}</string>
-				<key>withspace</key>
-				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
+			<string>alfred.workflow.utility.transform</string>
 			<key>uid</key>
-			<string>D7C83B7F-D112-4AA1-B7A3-20257A0F3D52</string>
+			<string>C648C777-D441-4C9C-97A0-F561B76C99BA</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -671,19 +684,6 @@ python store_data.py $query</string>
 			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
 			<string>0ABF3E4E-934B-4EE9-9C6B-BA10DF534B47</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.transform</string>
-			<key>uid</key>
-			<string>C648C777-D441-4C9C-97A0-F561B76C99BA</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -803,19 +803,6 @@ python reset.py $query</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>triggerid</key>
-				<string>Today</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.external</string>
-			<key>uid</key>
-			<string>93885FA3-1489-43F1-ABDC-C30454BCE345</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>alfredfiltersresults</key>
 				<true/>
 				<key>argumenttype</key>
@@ -857,6 +844,19 @@ python today.py 0 "$query"
 			<string>9685A5A9-008A-40CA-836D-5F71CD1D7481</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>triggerid</key>
+				<string>Today</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>93885FA3-1489-43F1-ABDC-C30454BCE345</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1373,9 +1373,9 @@ It "may" be stuck on East Coast time for the time being</string>
 			<key>note</key>
 			<string>wrapper around the start_update workflow method</string>
 			<key>xpos</key>
-			<integer>720</integer>
+			<integer>740</integer>
 			<key>ypos</key>
-			<integer>760</integer>
+			<integer>780</integer>
 		</dict>
 		<key>E54262CD-7EE8-42E4-A277-823EB0492941</key>
 		<dict>
@@ -1390,7 +1390,7 @@ It "may" be stuck on East Coast time for the time being</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>4.3</string>
+	<string>4.3.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>
