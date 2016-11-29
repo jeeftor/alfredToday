@@ -197,7 +197,12 @@ class EventProcessor(object):
 
         lync_url = None
 
-        self.wf.logger.info('Regex: ' + REGEX)
+
+        if REGEX:
+            self.wf.logger.info('Regex: ' + REGEX)
+        else:
+            self.wf.logger.info('Regex: None')
+
         self.wf.logger.info(body_html)
 
         if not REGEX is None:
