@@ -153,26 +153,29 @@ This regular expression basically says:
   -- and then anything up until the 1st quotation mark
 ```
 
-#Google Calendar Selection
+# Google Calendar Selection
 
 ![tgcg](docs/tgcg.png)
 
 You have the option to display calendar data from multiple Google calendars.  You can select the calendars with the **tgcg** command.  This interaction is a little slow because it directly queries the Google servers.  If it is no longer slow than I've updated the code but not updated the documentation yet
 
-#Debug Options
+# Debug Options
 
 The command **dbgtoday** will list all the debug options available for the workflow.  You can open up a log with:
 `dbgtoday workflow:openlog` and see fancy debug information
 
 
-#Troubleshooting
+# All Day events
+
+You can now hide all day events by opening the workflow variables and setting the `hideAllDay` variable to `true` `True` or `1`
+# Troubleshooting
 
 If things are "messed up" you can always try **tcreset** and then re-setup everything
 
-#Feedback & Help
+# Feedback & Help
 
 Please open an [issue](https://github.com/jeeftor/alfredToday/issues) and/or post on [alfred forum link](http://www.alfredforum.com/topic/9271-today-view-for-google-calendar-and-microsoft-exchange/?p=46109).  You can also download a potentially not up to date versino from [Packal](http://www.packal.org/workflow/today-menu)
 
-#Icons
+# Icons
 
 Most icons in this project came from: [Icons8](https://icons8.com/web-app/new-icons/all)

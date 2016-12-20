@@ -8,6 +8,8 @@ import calendar
 from datetime import datetime, timedelta
 import logging
 import logging.handlers
+import os
+
 
 class EventProcessor(object):
 
@@ -171,6 +173,8 @@ class EventProcessor(object):
         import re
         REGEX = get_regex(self.wf)
 
+
+
         # extract fields
         id = str(event.id).replace("+", "").replace('/', '')
         location = event.location or "No Location Specified"
@@ -231,8 +235,13 @@ class EventProcessor(object):
 
         else:
 
+            hide_all_day_events = (os.environ.get('hideAllDay', False) in ('1', True, 'true','True'))
+
             if event.is_all_day:
-                self.FUTURE_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="img/eventOutlook.png"))
+                if  hide_all_day_events:
+                    pass
+                else:
+                    self.FUTURE_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="img/eventOutlook.png"))
             else:
                 self.FUTURE_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="img/eventOutlook.png"))
 
