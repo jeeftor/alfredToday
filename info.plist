@@ -87,9 +87,11 @@
 			</dict>
 		</array>
 		<key>361EEA91-97CF-4908-8628-5F29198F42E6</key>
-		<array/>
+		<array>
+		</array>
 		<key>3F81D499-33A5-44E8-8D22-F6309229F43B</key>
-		<array/>
+		<array>
+		</array>
 		<key>41AF5BED-C2EE-4FDC-B9DF-AFDEB347F6A8</key>
 		<array>
 			<dict>
@@ -104,7 +106,8 @@
 			</dict>
 		</array>
 		<key>5396CADE-8847-4968-9A2F-051C2730315E</key>
-		<array/>
+		<array>
+		</array>
 		<key>629EE274-2500-46EC-8DA5-35CD866A56C9</key>
 		<array>
 			<dict>
@@ -223,7 +226,8 @@
 			</dict>
 		</array>
 		<key>B95A7CF4-4AF9-4388-8B53-E8CB6F3350FC</key>
-		<array/>
+		<array>
+		</array>
 		<key>BB49C951-D08C-4C86-88D1-E55D150207DD</key>
 		<array>
 			<dict>
@@ -1395,7 +1399,7 @@ It "may" be stuck on East Coast time for the time being</string>
 		<string>false</string>
 	</dict>
 	<key>version</key>
-	<string>5.0.2</string>
+	<string>5.0.3</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>
