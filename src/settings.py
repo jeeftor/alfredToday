@@ -281,6 +281,11 @@ def main(wf):
     cache_item.setvar('text_to_display', 'Cache time in seconds')
     cache_item.setvar('settings_value', 'cache_time')
 
+    #
+    # all_day_show = get_value_from_settings_with_default_boolean(wf, 'show_allday', True)
+    # all_day_text = "All Day events Shown"
+    # all_day_item = wf.add_item('Show All Day Events: ' + str(all_day_show), 'Whether all day events will be shown', arg=all_day_show, valid=True)
+
     wf.send_feedback()
 
 if __name__ == u"__main__":

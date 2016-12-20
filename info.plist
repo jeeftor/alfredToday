@@ -377,7 +377,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>python background_auth_task.py</string>
+				<string>python src/background_auth_task.py</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -402,7 +402,7 @@
 				<key>script</key>
 				<string>query=$1
 
-python store_data.py $query</string>
+python src/store_data.py $query</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -443,7 +443,7 @@ python store_data.py $query</string>
 
 
 
-python calendar_settings.py "query"</string>
+python src/calendar_settings.py "query"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -562,7 +562,7 @@ python calendar_settings.py "query"</string>
 				<key>script</key>
 				<string>query=$1
 
-python settings.py</string>
+python src/settings.py</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -641,7 +641,7 @@ python settings.py</string>
 				<key>script</key>
 				<string>query=$1
 
-python store_data.py $query</string>
+python src/store_data.py $query</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -778,7 +778,7 @@ python reset.py $query</string>
 				<key>runningsubtext</key>
 				<string>Debug Menu for Today</string>
 				<key>script</key>
-				<string>python magic.py "{query}"
+				<string>python src/magic.py "{query}"
 </string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
@@ -823,7 +823,7 @@ python reset.py $query</string>
 				<string>Loading Calendar Data (this can take a few seconds)</string>
 				<key>script</key>
 				<string>query=$1
-python today.py 0 "$query"
+python src/today.py 0 "$query"
 </string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
@@ -912,7 +912,7 @@ python today.py 0 "$query"
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>python update_workflow.py</string>
+				<string>python src/update_workflow.py</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -950,7 +950,7 @@ python today.py 0 "$query"
 				<string>Loading Calendar Data (this can take a few seconds)</string>
 				<key>script</key>
 				<string>query=$1
-python today.py 1 "$query"
+python src/today.py 1 "$query"
 </string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
@@ -1389,8 +1389,13 @@ It "may" be stuck on East Coast time for the time being</string>
 			<integer>40</integer>
 		</dict>
 	</dict>
+	<key>variables</key>
+	<dict>
+		<key>showAllDayEvents</key>
+		<string>0</string>
+	</dict>
 	<key>version</key>
-	<string>4.3.1</string>
+	<string>5.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>
