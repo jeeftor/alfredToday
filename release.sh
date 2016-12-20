@@ -1,5 +1,5 @@
 #!/bin/bash
-OUTPUT=$(python build/packageWorkflow.py . -o build/)
+OUTPUT=$(python build/package_workflow.py . -o build/)
 
 
 TEXT_ARRRAY=($OUTPUT)
