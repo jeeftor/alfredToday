@@ -1,5 +1,5 @@
 #!/bin/bash
-OUTPUT=$(python build/package_workflow.py . -o build/)
+#OUTPUT=$(python build/package_workflow.py . -o build/)
 
 
 TEXT_ARRRAY=($OUTPUT)
@@ -24,6 +24,10 @@ echo ""
 git status -s
 
 echo " Commit and make a release?"
+
+# Store commit messages in a notes file
+git log origin..HEAD --pretty=%B > .notes.txt
+
 
 read -p "Are you sure? " -n 1 -r
 echo    # (optional) move to a new line
