@@ -41,12 +41,14 @@ request_headers = {
 
 print request_headers
 
+release_notes = open('.notes.txt', 'r').read
+
 # Release INFO
 payload = {
    "tag_name": "v{}".format(version),
    "target_commitish": "master",
    "name": "Release {}".format(version),
-   "body": "Auto Generated Release notes by the `release.py` script",
+   "body": "Auto Generated Release notes by the `release.py` script\n{}".format(release_notes),
    "draft": True,
    "prerelease": False
  }
