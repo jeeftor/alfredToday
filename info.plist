@@ -1399,7 +1399,7 @@ It "may" be stuck on East Coast time for the time being</string>
 		<string>false</string>
 	</dict>
 	<key>version</key>
-	<string>5.0.3</string>
+	<string>5.0.4</string>
 	<key>webaddress</key>
 	<string>https://github.com/jeeftor/alfredToday</string>
 </dict>
