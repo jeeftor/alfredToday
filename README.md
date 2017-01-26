@@ -60,7 +60,7 @@ There are a variety of random reasons why the authorization may not work automat
 
 ![term](docs/rightClick.png)
 
-2) type `python wf_authorize_google.py` in the terminal.  This "should" open a web browser with the option to authorize the application.
+2) type `python src/wf_authorize_google.py` in the terminal.  This "should" open a web browser with the option to authorize the application.
 
 If everything works correctly you will see something like this:
 
