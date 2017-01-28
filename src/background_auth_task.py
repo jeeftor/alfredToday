@@ -38,7 +38,7 @@ def main(wf):
 
     run_in_background('auth',
               ['/usr/bin/python',
-               wf.workflowfile('wf_authorize_google.py')])
+               wf.workflowfile('src/wf_authorize_google.py')])
 
 
 
