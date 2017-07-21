@@ -1,4 +1,4 @@
-#Today Workflow for Outlook365 and Google Calendar
+# Today Workflow for Outlook365 and Google Calendar
 
 
 ![today](docs/today.png)
@@ -8,7 +8,7 @@ This workflow will load a **Today** view from both Exchange365 and Google calend
 
 Version two of this add-on supports both **Google** and **Microsoft Exchange** calendars.  
 
-###Version History
+### Version History
 * Version 2.0 - Outlook + Google Support
 * Version 2.0.1: Exchange Credential Fix
 * Version 2.0.2: Dateutil.parser added to lib list
@@ -18,10 +18,10 @@ Version two of this add-on supports both **Google** and **Microsoft Exchange** c
 * Version 3.8: Rewrite of background handling for both Outlook and Exchange
 
 
-#Installation
+# Installation
 Grab the latest release [here](https://github.com/jeeftor/alfredToday/releases) 
 
-#Usage
+# Usage
 
 You can use the following commands
 
@@ -32,7 +32,7 @@ Available Commands:
 * **tc** (loads configuration)
 * **dbgToday** debug options like open log
 
-#Authenticating against Google Calendar (oauth)
+# Authenticating against Google Calendar (oauth)
 
 The Google portion of this workflow uses oauth2 to authenticate with google and access your calendar.  When you enabled Google support via the **tc** command the script "should" open a screen in your web browser similar to
 
@@ -53,7 +53,7 @@ and click **Remove**.
 
 Disabling Google support with **tc** will delete the local credentials file.
 
-##Manual Authorization
+## Manual Authorization
 There are a variety of random reasons why the authorization may not work automatically.  If you are having trouble you can try to manually authorize.
 
 1) First open a terminal window by right clicking on the **Alfred Today** item in your workflow list
@@ -86,7 +86,7 @@ If you run into problems open an [issue](https://github.com/jeeftor/alfredToday/
 
 
 
-#Exchange Servers
+# Exchange Servers
 
 Use **today** to open the workflow and **tc** to open the config menu
 
@@ -105,7 +105,7 @@ You can see configuration items with the **tc** command and make changes
 
 ![config](docs/config.png)
 
-##**Username** and **Password**
+## **Username** and **Password**
 
 The workflow will extract these entries out of the OSX keychain from the keychain entry for `outlook.office365.com`
 
