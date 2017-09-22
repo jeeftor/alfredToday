@@ -142,7 +142,9 @@ class EventProcessor(object):
 
         o = 0
         g = 0
-
+        
+        # Sort all Google events from all calendars by chronological order
+        google_events.sort(key=lambda r: r['start'].get('dateTime'))
 
         while g < google_count and o < outlook_count:
 
