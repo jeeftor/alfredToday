@@ -84,6 +84,7 @@ If there is a problem you will get something like this.
 
 If you run into problems open an [issue](https://github.com/jeeftor/alfredToday/issues) and/or post on [alfred forum link](http://www.alfredforum.com/topic/9271-today-view-for-google-calendar-and-microsoft-exchange/?p=46109)
 
+Lastly you can always check to make sure nothing is running on port `8080` with this command: `sudo lsof -i :8080`  If a process (like NGNIX is running on this port you will be unable to complete the authentication process I believe - until you kill the process.
 
 
 # Exchange Servers
