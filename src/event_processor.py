@@ -3,13 +3,12 @@ from workflow.workflow3 import  Item3
 
 #import calendar
 #from datetime import datetime, timedelta
-from settings import get_login, get_password, get_regex, get_server, get_timezone
+from settings import get_login, get_password, get_regex, get_server
 import calendar
 from datetime import datetime, timedelta
 import logging
 import logging.handlers
 import os
-
 
 class EventProcessor(object):
 
@@ -18,7 +17,6 @@ class EventProcessor(object):
 
         self.PAST_ITEMS = []
         self.FUTURE_ITEMS = []
-
 
     def write_html_template(self, id, name, organizer, month_name, month_number, time, location, body):
         wf = self.wf
@@ -47,7 +45,6 @@ class EventProcessor(object):
         out.write(html.encode('ascii','ignore'))
         out.close()
         return filename
-
 
     def process_google_event(self, event):
         wf = self.wf
@@ -80,8 +77,6 @@ class EventProcessor(object):
             all_day_event = False
             time_string = start + " - " + end
 
-
-
         subtitle = time_string
         title = event.get('summary','No Title')
         url = event['htmlLink']
@@ -108,7 +103,6 @@ class EventProcessor(object):
         description_url = self.write_html_template(id, title, organizer_html, start_datetime.strftime('%b'),
                                                    start_datetime.strftime('%d'), time_string, loc, body_html)
 
-
         # Pick icon color based on end time
         now = datetime.now(pytz.utc)
 
@@ -125,8 +119,6 @@ class EventProcessor(object):
             except:
                 pass
 
-
-
     def process_events(self, exchange_events, google_events):
         """Processes both Google & Outlook events handling the interleving of data correctly (hopefully)"""
         wf = self.wf
@@ -142,7 +134,7 @@ class EventProcessor(object):
 
         o = 0
         g = 0
-        
+
         # Sort all Google events from all calendars by chronological order
         google_events.sort(key=lambda r: r['start'].get('dateTime'))
 
@@ -185,14 +177,10 @@ class EventProcessor(object):
                 item.setvar(k, wf.variables[k])
             wf._items.append(item)
 
-
-
     def process_outlook_event(self, event):
         """Reads and processes an outlook event.  The UID field will be responsible for handling the sorting inside of Alfred"""
         import re
         REGEX = get_regex(self.wf)
-
-
 
         # extract fields
         id = str(event.id).replace("+", "").replace('/', '')
@@ -218,8 +206,7 @@ class EventProcessor(object):
         else:
             description_url = ''
 
-        lync_url = None
-
+        online_meeting_url = None
 
         if REGEX:
             self.wf.logger.info('Regex: ' + REGEX)
@@ -229,14 +216,14 @@ class EventProcessor(object):
         self.wf.logger.info(body_html)
 
         if not REGEX is None:
-            # Match pattern for LYNC
+            # Match pattern for online_meeting
             p = re.compile(REGEX)
-            if online_meeting == u'true' and body_html:
+            # not sure what event.is_online_meeting is but outlook / chime doesn't pass the check
+            # if online_meeting == u'true' and body_html:
+            if body_html:
                 match = re.search(p, body_html)
                 if match:
-                    lync_url = match.group(1)
-
-
+                    online_meeting_url = match.group(1)
 
         title = subject
         subtitle = time_string
@@ -264,13 +251,18 @@ class EventProcessor(object):
             else:
                 self.FUTURE_ITEMS.append(Item3(title, subtitle, type=u'file', arg=description_url, valid=False, icon="img/eventOutlook.png"))
 
-
-            if lync_url != None:
-                # subtitle += " [" + lync_url + "]"
-                lync_title = u'\u21aa Join Meeting'
-                lync_subtitle = "        " + lync_url
-                self.FUTURE_ITEMS.append(Item3(lync_title, lync_subtitle, arg=lync_url, valid=True, icon='img/skype.png'))
-
+            if online_meeting_url != None:
+                online_meeting_img = 'img/online_meeting.png'
+                online_meeting_title = u'\u21aa Join Meeting'
+                online_meeting_subtitle = "        " + online_meeting_url
+                # subtitle += " [" + online_meeting_url + "]"
+                if 'chime' in online_meeting_url:
+                    online_meeting_img = 'img/chime.png'
+                    online_meeting_title = u'\u21aa Join Chime Meeting'
+                elif 'skype' in online_meeting_url:
+                    online_meeting_img = 'img/skype.png'
+                    online_meeting_title = u'\u21aa Join Skype Meeting'
+                self.FUTURE_ITEMS.append(Item3(online_meeting_title, online_meeting_subtitle, arg=online_meeting_url, valid=True, icon=online_meeting_img))
 
     def utc_to_local(self, utc_dt):
         # get integer timestamp to avoid precision lost
@@ -278,5 +270,3 @@ class EventProcessor(object):
         local_dt = datetime.fromtimestamp(timestamp)
         assert utc_dt.resolution >= timedelta(microseconds=1)
         return local_dt.replace(microsecond=utc_dt.microsecond)
-
-
