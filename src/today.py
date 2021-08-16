@@ -3,7 +3,7 @@
 from workflow import Workflow3, ICON_INFO
 from workflow.background import run_in_background, is_running
 
-from event_processor import  EventProcessor
+from event_processor import EventProcessor
 
 UPDATE_SETTINGS = {'github_slug': 'jeeftor/alfredToday'}
 HELP_URL = 'https://github.com/jeeftor/alfredToday/blob/master/README.md'
@@ -24,7 +24,7 @@ def main(wf):
     import pytz
     from pytz import timezone
     from datetime import timedelta, datetime
-    from settings import get_value_from_settings_with_default_boolean, get_value_from_settings_with_default_int
+    from settings import get_value_from_settings_with_default_boolean, get_value_from_settings_with_default_int, get_value_from_settings_with_default_string
     import time
 
 
@@ -55,8 +55,11 @@ def main(wf):
     # Find out cache time
     cache_time = get_value_from_settings_with_default_int(wf, 'cache_time', 9000)
 
-    morning = timezone("US/Eastern").localize(datetime.today().replace(hour=0, minute=0, second=1) + timedelta(days=date_offset))
-    night = timezone("US/Eastern").localize(datetime.today().replace(hour=23, minute=59, second=59) + timedelta(days=date_offset))
+    time_zone = get_value_from_settings_with_default_string(wf, 'time_zone', "US/Eastern")
+
+    # https://en.wikipedia.org/wiki/List_of_tz_database_timezones
+    morning = timezone(time_zone).localize(datetime.today().replace(hour=0, minute=0, second=1) + timedelta(days=date_offset))
+    night = timezone(time_zone).localize(datetime.today().replace(hour=23, minute=59, second=59) + timedelta(days=date_offset))
 
     # Outlook needs a different time format than google it would appear
     start_outlook = morning.astimezone(pytz.utc)
@@ -233,8 +236,6 @@ def main(wf):
             event_count += len(google_events)
     else:
         google_events = []
-
-
 
 
     # Build Header

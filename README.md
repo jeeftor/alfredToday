@@ -6,20 +6,20 @@
 This workflow will load a **Today** view from both Exchange365 and Google calendars.  It will interleave the events, extract relevant meeting information and allow you to open links directly to your **Hangout** or **Skype** meeting - if one exists.
 
 
-Version two of this add-on supports both **Google** and **Microsoft Exchange** calendars.  
+Version two of this add-on supports both **Google** and **Microsoft Exchange** calendars.
 
 ### Version History
 * Version 2.0 - Outlook + Google Support
 * Version 2.0.1: Exchange Credential Fix
 * Version 2.0.2: Dateutil.parser added to lib list
 * Version 2.0.3: Correct event time interleaving
-* Version 3.0: HUGE SPEEDUPS.  Requires Alfred 3.1 
+* Version 3.0: HUGE SPEEDUPS.  Requires Alfred 3.1
 * Version 3.5: Prelim NTLM support (untested)
 * Version 3.8: Rewrite of background handling for both Outlook and Exchange
 
 
 # Installation
-Grab the latest release [here](https://github.com/jeeftor/alfredToday/releases) 
+Grab the latest release [here](https://github.com/jeeftor/alfredToday/releases)
 
 # Usage
 
@@ -38,18 +38,18 @@ The Google portion of this workflow uses oauth2 to authenticate with google and 
 
 ![auth](docs/auth.png)
 
-When you hit allow this will store a file in you home directory called 
+When you hit allow this will store a file in you home directory called
 
 ```bash
 ~/.credentials/calendar-alfred-today.json
 ```
-This file is an authorization key that will allow the software to work.  If you are running into issues please ask for help in the [issue](https://github.com/jeeftor/alfredToday/issues) section or on the [alfred forum link](http://www.alfredforum.com/topic/9271-today-view-for-google-calendar-and-microsoft-exchange/?p=46109).  
+This file is an authorization key that will allow the software to work.  If you are running into issues please ask for help in the [issue](https://github.com/jeeftor/alfredToday/issues) section or on the [alfred forum link](http://www.alfredforum.com/topic/9271-today-view-for-google-calendar-and-microsoft-exchange/?p=46109).
 
 If you want to block access to this application perform a google [Security Checkup](https://security.google.com/settings/security/secureaccount) and look for the item similar to:
 
 ![security](docs/googlePermission.png)
 
-and click **Remove**.  
+and click **Remove**.
 
 Disabling Google support with **tc** will delete the local credentials file.
 
@@ -114,11 +114,11 @@ If your keychain does not contain this value, or you wish to use a different acc
 
 ![error](docs/keychain_error.png)
 
-If you've logged into the Outlook / Exchange online website you should have this value.  If auto-detect does not work just select both the **Login** and **Password** options to set the correct credentials for login. 
+If you've logged into the Outlook / Exchange online website you should have this value.  If auto-detect does not work just select both the **Login** and **Password** options to set the correct credentials for login.
 
 ## Exchange Server
 
-This workflow uses a version of PyExchange modified to use **Basic Authorization** instead of **NTLM** to connect to the exchange server.  According to Microsoft NTLM is only available for internal exchange servers - so its possible this workflow will only work with cloud hosted servers.  
+This workflow uses a version of PyExchange modified to use **Basic Authorization** instead of **NTLM** to connect to the exchange server.  According to Microsoft NTLM is only available for internal exchange servers - so its possible this workflow will only work with cloud hosted servers.
 
 The default server is `https://outlook.office365.com/EWS/Exchange.asmx`.  This _is_ a configurable option, however, I do not have any different exchange servers to test against so please let me know if it actually works
 
@@ -127,14 +127,14 @@ The default server is `https://outlook.office365.com/EWS/Exchange.asmx`.  This _
 
 If you are using Skype, Lync and a calendar entry has an embedded online meeting URL, the workflow can be configured to detect and extract these URLs.
 
-For example if your online meeting URL is defined in text similar to 
+For example if your online meeting URL is defined in text similar to
 
     "http://meet.github.com/alfred/332344"
 
 you could use a regex of
 
 ```perl
-(https:\/\/meet.alfred.com[^"]*)
+(http(s)?\:\/\/meet\.github\.com\/(.*)?)\"
 ```
 to extract these meeting URLs
 
@@ -152,6 +152,18 @@ This regular expression basically says:
   -- followed by ://
   -- followed by meet.github
   -- and then anything up until the 1st quotation mark
+```
+
+Just for clarity, here is an aws chime regex example:
+
+```perl
+((http)s?:\/\/chime.aws\/\d+)
+```
+
+Which matches:
+
+```
+https://chime.aws/1234567890
 ```
 
 # Google Calendar Selection

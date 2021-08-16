@@ -2,8 +2,10 @@ import sys
 import argparse
 from workflow import Workflow, ICON_WEB, ICON_WARNING, ICON_NOTE, web, PasswordNotFound, Workflow3
 import os.path
+
 DEFAULT_SERVER = 'https://outlook.office365.com/EWS/Exchange.asmx'
 CREDENTIAL_ENTRY = 'outlook.office365.com'
+DEFAULT_timezone = "US/Eastern"
 
 def get_http_kw_args(wf):
     """Returns a kw_args for an HTTP_INSTANCE var"""
@@ -37,10 +39,10 @@ def get_server(wf):
         return server, False
 
 def get_timezone(wf):
-    """Returns the timezone as stored on disk - defaults to US/Eastern """
-    stored_timezone = get_value_from_settings(wf, 'timezone')
+    """Returns the time_zone as stored on disk - defaults to US/Eastern """
+    stored_timezone = get_value_from_settings(wf, 'time_zone')
     if stored_timezone is None:
-        return "US/Eastern", True
+        return DEFAULT_timezone, True
     else:
         return stored_timezone, False
 
@@ -58,7 +60,6 @@ def get_stored_password(wf):
     except:
         return None
 
-
 def get_value_from_settings(wf, value):
     try:
         ret = wf.settings[value]['value']
@@ -74,6 +75,13 @@ def get_value_from_settings_with_default_int(wf, value, default_value):
     except KeyError:
         return default_value
 
+def get_value_from_settings_with_default_string(wf, value, default_value):
+    """Returns either a value as set in the settings file or a default as specified by caller"""
+    try:
+        ret = wf.settings[value]['value']
+        return str(ret)
+    except KeyError:
+        return default_value
 
 def get_value_from_settings_with_default_boolean(wf, value, default_value):
     """Returns either a value as set in the settings file or a default as specified by caller"""
@@ -113,7 +121,6 @@ def autodetect_login(wf):
     if m:
         return m.group(1)
     return None
-
 
 
 def get_login(wf, show_alfred_items=True):
@@ -169,9 +176,7 @@ def get_password(wf, show_alfred_items=True):
     return ret
 
 
-
 def main(wf):
-
 
     #######################
     ## Load Credentials  ##
@@ -182,8 +187,6 @@ def main(wf):
     # Default items for workflow
 
     wf.add_item('Today workflow configuration Menu', icon='img/gear.png')
-
-
 
 
     use_google   = get_value_from_settings_with_default_boolean(wf, 'use_google', False)
@@ -214,7 +217,6 @@ def main(wf):
 
         get_login(wf)
         get_password(wf)
-        tz = get_timezone(wf)
 
         #################
         ## Load Server ##
@@ -241,8 +243,25 @@ def main(wf):
         else:
             it = wf.add_item('Meeting Detection Regex Not Set', 'Select this item to set', valid=True,
                         icon=ICON_WARNING)
+
         it.setvar('text_to_display','Regex:')
         it.setvar('settings_value', 'regex')
+
+
+        ########################
+        ## Load Time Zone SEttings
+        ########################
+
+        # https://en.wikipedia.org/wiki/List_of_tz_database_timezones
+        time_zone, using_default_tz = get_timezone(wf)
+        if not using_default_tz:
+            tz_item = wf.add_item('Time Zone', time_zone, arg=time_zone, copytext=time_zone, valid=True, icon='img/ok.png')
+            tz_item.setvar('text_to_display', 'Time Zone:')
+            tz_item.setvar('settings_value', 'time_zone')
+        else:
+            tz_item = wf.add_item('Time Zone (Using Default)', DEFAULT_timezone, copytext=server, arg=DEFAULT_timezone, valid=True, icon=ICON_NOTE)
+            tz_item.setvar('text_to_display', 'Time Zone:')
+            tz_item.setvar('settings_value', 'time_zone')
 
 
         use_ssl = get_value_from_settings_with_default_boolean(wf, 'use_ssl', True)
@@ -296,7 +315,5 @@ if __name__ == u"__main__":
     wf.logger.debug('      \__ \/ __/   / /   / /  / //  |/ / / __ \__ \\')
     wf.logger.debug('     ___/ / /___  / /   / / _/ // /|  / /_/ /___/ /')
     wf.logger.debug('    /____/_____/ /_/   /_/ /___/_/ |_/\____//____/')
-
-
 
     sys.exit(wf.run(main))
